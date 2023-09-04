@@ -13,13 +13,13 @@ leftSpeed = 64
 rightSpeed = 66
 
 def halfeight():
- print(arlo.go_diff(60, 15, 1, 1))
+ print(arlo.go_diff(60, 16, 1, 1))
  
  # Wait a bit while robot moves forward
  sleep(9)
  
  # turn 
- print(arlo.go_diff(30, 15, 1, 1))
+ print(arlo.go_diff(30, 16, 1, 1))
  sleep()
  
 
