@@ -16,7 +16,7 @@ def driveAndturn():
  print(arlo.go_diff(leftSpeed, rightSpeed, 1, 1))
  
  # Wait a bit while robot moves forward
- sleep(3)
+ sleep(1.5)
  
  # send a stop command
  print(arlo.stop())
@@ -40,8 +40,7 @@ def oneSquare():
 
 oneSquare()
 oneSquare()
-oneSquare()
-oneSquare()
+
 
 """ 
 
