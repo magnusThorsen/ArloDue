@@ -16,11 +16,11 @@ def halfeight():
  print(arlo.go_diff(60, 30, 1, 1))
  
  # Wait a bit while robot moves forward
- sleep(3)
+ sleep(8)
  
  # turn 
  print(arlo.go_diff(30, 60, 1, 1))
- sleep(3)
+ sleep(8)
  
 
 def eight():
