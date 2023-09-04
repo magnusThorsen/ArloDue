@@ -20,7 +20,7 @@ def halfeight():
  
  # turn 
  print(arlo.go_diff(30, 80, 1, 1))
- sleep(8)
+ sleep(7.5)
  
 
 def eight():
