@@ -34,8 +34,11 @@ def driveAndturn():
  # Wait a bit before next command
  sleep(0.041)
 
-for i in range(3):
- driveAndturn()
+def oneSquare():
+ for i in range(4):
+  driveAndturn()
+
+oneSquare()
 
 """ 
 
