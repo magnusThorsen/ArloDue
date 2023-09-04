@@ -11,33 +11,31 @@ print("Running ...")
 # send a go_diff command to drive forward
 leftSpeed = 64
 rightSpeed = 64
-print(arlo.go_diff(leftSpeed, rightSpeed, 1, 1))
 
-# Wait a bit while robot moves forward
-sleep(3)
+def driveAndturn():
+ print(arlo.go_diff(leftSpeed, rightSpeed, 1, 1))
+ 
+ # Wait a bit while robot moves forward
+ sleep(3)
+ 
+ # send a stop command
+ print(arlo.stop())
+ 
+ # turn 
+ print(arlo.go_diff(0, rightSpeed, 1, 1))
+ sleep(1.4)
+ 
+ # Wait a bit before next command
+ sleep(0.041)
 
-# send a stop command
-print(arlo.stop())
+ # send a stop command
+ print(arlo.stop())
+ 
+ # Wait a bit before next command
+ sleep(0.041)
 
-# turn 
-print(arlo.go_diff(0, rightSpeed, 1, 1))
-sleep(1.4)
-
-# Wait a bit before next command
-sleep(0.041)
-
-# send a go_diff command to drive backwards the same way we came from
-print(arlo.go_diff(leftSpeed, rightSpeed, 1, 1))
-
-# Wait a bit while robot moves backwards
-sleep(3)
-
-# send a stop command
-print(arlo.stop())
-
-# Wait a bit before next command
-sleep(0.041)
-
+driveAndturn()
+driveAndturn()
 """ 
 
 # request to read Front sonar ping sensor
