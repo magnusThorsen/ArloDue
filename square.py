@@ -39,6 +39,9 @@ def oneSquare():
   driveAndturn()
 
 oneSquare()
+oneSquare()
+oneSquare()
+oneSquare()
 
 """ 
 
