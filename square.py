@@ -34,8 +34,9 @@ def driveAndturn():
  # Wait a bit before next command
  sleep(0.041)
 
-driveAndturn()
-driveAndturn()
+for i in range(3):
+ driveAndturn()
+
 """ 
 
 # request to read Front sonar ping sensor
