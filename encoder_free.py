@@ -24,7 +24,7 @@ print("Left sensor = ", arlo.read_left_ping_sensor())
 
 def turnLeft(degree):
    sleep(0.041)
-   print(arlo.go_diff(64, 64, 0, 1))
+   print(arlo.go_diff(64, 68, 0, 1))
 
    sleep(0.0074 * degree + ((degree**2)*0.000001))
    # send a stop command
@@ -35,7 +35,7 @@ def turnLeft(degree):
 
 def turnRight(degree):
    sleep(0.041)
-   print(arlo.go_diff(64, 64, 1, 0))
+   print(arlo.go_diff(64, 68, 1, 0))
 
    sleep(0.0074 * degree + ((degree**2)*0.000001))
    # send a stop command
@@ -58,26 +58,26 @@ while (isDriving): # or some other form of loop
         if rightSensor < 200:
             turnLeft(90)
             sleep(1.0)
-            print(arlo.go_diff(40, 40, 1, 1))
+            print(arlo.go_diff(64, 68, 1, 1))
             sleep(1.0)
             turnRight(90)
         elif leftSensor < 200:
             turnRight(90)
             sleep(1.0)
-            print(arlo.go_diff(40, 40, 1, 1))
+            print(arlo.go_diff(64, 68, 1, 1))
             sleep(1.0)
             turnLeft(90)
         elif frontSensor < 200:
             if leftSensor < rightSensor:
                 turnRight(90)
                 sleep(1.0)
-                print(arlo.go_diff(40, 40, 1, 1))
+                print(arlo.go_diff(64, 68, 1, 1))
                 sleep(1.0)
                 turnLeft(90)
             else:
                 turnLeft(90)
                 sleep(1.0)
-                print(arlo.go_diff(40, 40, 1, 1))
+                print(arlo.go_diff(64, 68, 1, 1))
                 sleep(1.0)
                 turnRight(90)
             
