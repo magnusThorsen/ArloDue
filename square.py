@@ -41,7 +41,7 @@ def turn(degree):
    sleep(0.041)
    print(arlo.go_diff(leftSpeed, rightSpeed, 0, 1))
 
-   sleep(0.0068 * degree)
+   sleep(0.007 * degree)
  
    sleep(0.041)
 
