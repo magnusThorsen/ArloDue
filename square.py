@@ -9,8 +9,8 @@ print("Running ...")
 
 
 # send a go_diff command to drive forward
-leftSpeed = 64
-rightSpeed = 66
+leftSpeed = 64/2
+rightSpeed = 66/2
 
 def driveAndturn():
  print(arlo.go_diff(leftSpeed, rightSpeed, 1, 1))
