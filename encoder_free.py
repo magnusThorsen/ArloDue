@@ -21,8 +21,19 @@ print("Right sensor = ", arlo.read_right_ping_sensor())
 
 # request to read Left sonar ping sensor
 print("Left sensor = ", arlo.read_left_ping_sensor())  
+
+def turnLeft(degree):
+   sleep(0.041)
+   print(arlo.go_diff(leftSpeed, rightSpeed, 0, 1))
+
+   sleep(0.0074 * degree + ((degree**2)*0.000001))
+   # send a stop command
+   print(arlo.stop())
     
-print(arlo.go_diff(64, 64, 1, 1))
+   # Wait a bit before next command
+   sleep(0.5)
+
+print(arlo.go_diff(16, 16, 1, 1))
 isDriving = True
 while (isDriving): # or some other form of loop
     frontSensor = arlo.read_front_ping_sensor()
@@ -30,7 +41,7 @@ while (isDriving): # or some other form of loop
     rightSensor = arlo.read_right_ping_sensor()
     leftSensor = arlo.read_left_ping_sensor()
 
-    if frontSensor < 200:
+    if frontSensor < 100:
         print(arlo.go_diff(64, 64, 0, 0))
         sleep(0.5)
         isDriving = False
