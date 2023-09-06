@@ -11,7 +11,7 @@ print("Running ...")
 # send a go_diff command to drive forward
 leftSpeed = 64
 rightSpeed = 69
-turnTime = 1.32
+turnTime = 0.65
 forwardTime = 1.5
 
 
@@ -41,7 +41,7 @@ def turnnintydegrees():
    sleep(0.041)
    print(arlo.go_diff(leftSpeed, rightSpeed, 0, 1))
 
-   sleep(turnTime/2-0.085)
+   sleep(turnTime)
  
    sleep(0.041)
 
