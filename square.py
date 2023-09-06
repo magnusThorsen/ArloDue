@@ -56,6 +56,8 @@ turnnintydegrees()
 drive1Meter()
 drive1Meter()
 drive1Meter()
+turnnintydegrees()
+turnnintydegrees()
 """ 
 
 # request to read Front sonar ping sensor
