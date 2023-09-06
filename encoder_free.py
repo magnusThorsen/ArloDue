@@ -59,7 +59,6 @@ while (isDriving): # or some other form of loop
 
         """ print(arlo.go_diff(64, 64, 0, 0))
         sleep(0.5) """
-        isDriving = False
         
 
 print("Finished")
