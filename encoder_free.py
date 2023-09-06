@@ -46,7 +46,7 @@ def turnRight(degree):
 
 isDriving = True
 while (isDriving): # or some other form of loop
-    print(arlo.go_diff(40, 40, 1, 1))
+    print(arlo.go_diff(64, 68, 1, 1))
     frontSensor = arlo.read_front_ping_sensor()
     backSensor = arlo.read_back_ping_sensor()
     rightSensor = arlo.read_right_ping_sensor()
