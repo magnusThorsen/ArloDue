@@ -54,6 +54,9 @@ def betterGoDiff(leftSpeed, rightSpeed, directionL, directionR, sleeptime):
    sleep(sleeptime-0.1)
  
 oneSquare()
+oneSquare()
+oneSquare()
+
 
 """ 
 
