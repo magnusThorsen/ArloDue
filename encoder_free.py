@@ -22,7 +22,7 @@ print("Right sensor = ", arlo.read_right_ping_sensor())
 # request to read Left sonar ping sensor
 print("Left sensor = ", arlo.read_left_ping_sensor())
 
-
+"""""
 # send a go_diff command to drive forward in a curve turning right
 leftSpeed = 64
 rightSpeed = 64
@@ -64,6 +64,6 @@ sleep(3)
 
 # send a stop command
 print(arlo.stop())
-
+"""
 
 print("Finished")
