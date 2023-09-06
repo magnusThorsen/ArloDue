@@ -26,10 +26,10 @@ def oneSquare():
    turnLeft(90)
 
 def drive1Meter():
-    print(arlo.go_diff(leftSpeed, rightSpeed, 1, 1))
-    
+   
+    betterGoDiff(leftSpeed, rightSpeed, 1, 1, 2.2)
     # Wait a bit while robot moves forward
-    sleep(2.2)
+   
     
     # send a stop command
     #print(arlo.stop())
@@ -43,7 +43,11 @@ def turnLeft(degree):
 
    sleep(0.0074 * degree + ((degree**2)*0.000001))
  
-
+def betterGoDiff(leftSpeed, rightSpeed, directionL, directionR, sleeptime):
+   print(arlo.go_diff(leftSpeed/2, rightSpeed/2, directionL, directionR))
+   sleep(0.1)
+   print(arlo.go_diff(leftSpeed, rightSpeed, directionL, directionR))
+   sleep(sleeptime-0.1)
    
 print(arlo.go_diff(0, rightSpeed, 1, 1))
 sleep(0.2)
