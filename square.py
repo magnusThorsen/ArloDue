@@ -14,36 +14,16 @@ rightSpeed = 70
 turnTime = 1.32
 forwardTime = 1.5
 
-def driveAndturn():
- print(arlo.go_diff(leftSpeed, rightSpeed, 1, 1))
- 
- # Wait a bit while robot moves forward
- sleep(forwardTime)
- 
- # send a stop command
- print(arlo.stop())
- 
- # turn 
- print(arlo.go_diff(0, rightSpeed, 1, 1))
- sleep(turnTime)
- 
- # Wait a bit before next command
- sleep(0.041)
-
- # send a stop command
- print(arlo.stop())
- 
- # Wait a bit before next command
- sleep(0.041)
 
 def oneSquare():
- for i in range(4):
-  driveAndturn()
-
-#oneSquare()
-#oneSquare()
-#oneSquare()
-#oneSquare()
+   drive1Meter()
+   turnnintydegrees()
+   drive1Meter()
+   turnnintydegrees()
+   drive1Meter()
+   turnnintydegrees()
+   drive1Meter()
+   turnnintydegrees()
 
 def drive1Meter():
     print(arlo.go_diff(leftSpeed, rightSpeed, 1, 1))
@@ -64,19 +44,10 @@ def turnnintydegrees():
    sleep(turnTime/2-0.07)
  
    sleep(0.041)
-   #print(arlo.go_diff(0, 0, 0, 1))
-   #sleep(1.)
 
 
-#drive1Meter()
-drive1Meter()
-turnnintydegrees()
-drive1Meter()
-turnnintydegrees()
-drive1Meter()
-turnnintydegrees()
-drive1Meter()
-turnnintydegrees()
+oneSquare()
+
 
 """ 
 
