@@ -63,7 +63,6 @@ while (isDriving): # or some other form of loop
             turnRight(90)
 
 
-        turnLeft(90)
 
         """ print(arlo.go_diff(64, 64, 0, 0))
         sleep(0.5) """
