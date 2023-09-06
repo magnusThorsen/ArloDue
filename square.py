@@ -41,7 +41,7 @@ def turnnintydegrees():
    sleep(0.041)
    print(arlo.go_diff(leftSpeed, rightSpeed, 0, 1))
 
-   sleep(turnTime/2-0.07)
+   sleep(turnTime/2-0.09)
  
    sleep(0.041)
 
