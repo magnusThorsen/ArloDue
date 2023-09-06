@@ -58,6 +58,7 @@ def drive1Meter():
     sleep(0.041)
 
 def turnnintydegrees():
+   sleep(0.041)
    print(arlo.go_diff(leftSpeed, rightSpeed, 0, 1))
 
    sleep(turnTime/2 - 0.1)
@@ -66,6 +67,10 @@ def turnnintydegrees():
 
 #drive1Meter()
 turnnintydegrees()
+turnnintydegrees()
+turnnintydegrees()
+turnnintydegrees()
+
 """ 
 
 # request to read Front sonar ping sensor
