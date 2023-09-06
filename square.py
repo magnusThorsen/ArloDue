@@ -47,7 +47,7 @@ def turnnintydegrees():
 
    
 print(arlo.go_diff(0, rightSpeed, 1, 1))
-sleep(0.25)
+sleep(0.2)
 drive1Meter()
 drive1Meter()
 drive1Meter()
