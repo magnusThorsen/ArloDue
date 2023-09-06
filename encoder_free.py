@@ -61,7 +61,26 @@ while (isDriving): # or some other form of loop
             print(arlo.go_diff(40, 40, 1, 1))
             sleep(1.0)
             turnRight(90)
-
+        elif leftSensor < 200:
+            turnRight(90)
+            sleep(1.0)
+            print(arlo.go_diff(40, 40, 1, 1))
+            sleep(1.0)
+            turnLeft(90)
+        elif frontSensor < 200:
+            if leftSensor < rightSensor:
+                turnRight(90)
+                sleep(1.0)
+                print(arlo.go_diff(40, 40, 1, 1))
+                sleep(1.0)
+                turnLeft(90)
+            else:
+                turnLeft(90)
+                sleep(1.0)
+                print(arlo.go_diff(40, 40, 1, 1))
+                sleep(1.0)
+                turnRight(90)
+            
 
 
         """ print(arlo.go_diff(64, 64, 0, 0))
