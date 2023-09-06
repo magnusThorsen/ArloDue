@@ -42,8 +42,10 @@ while (isDriving): # or some other form of loop
     leftSensor = arlo.read_left_ping_sensor()
 
     if frontSensor < 200:
-        print(arlo.go_diff(64, 64, 0, 0))
+        print(arlo.stop())
         sleep(0.5)
+        """ print(arlo.go_diff(64, 64, 0, 0))
+        sleep(0.5) """
         isDriving = False
         
 
