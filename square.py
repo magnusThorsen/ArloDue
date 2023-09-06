@@ -17,13 +17,13 @@ forwardTime = 1.5
 
 def oneSquare():
    drive1Meter()
-   turn()
+   turnLeft(90)
    drive1Meter()
-   turn()
+   turnLeft(90)
    drive1Meter()
-   turn()
+   turnLeft(90)
    drive1Meter()
-   turn()
+   turnLeft(90)
 
 def drive1Meter():
     print(arlo.go_diff(leftSpeed, rightSpeed, 1, 1))
@@ -37,7 +37,7 @@ def drive1Meter():
     # Wait a bit before next command
     sleep(0.041)
 
-def turn(degree):
+def turnLeft(degree):
    sleep(0.041)
    print(arlo.go_diff(leftSpeed, rightSpeed, 0, 1))
 
@@ -45,9 +45,9 @@ def turn(degree):
  
 
    
-#print(arlo.go_diff(0, rightSpeed, 1, 1))
-#sleep(0.2)
-turn(90)
+print(arlo.go_diff(0, rightSpeed, 1, 1))
+sleep(0.2)
+oneSquare()
 
 """ 
 
