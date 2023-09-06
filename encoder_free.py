@@ -33,6 +33,17 @@ def turnLeft(degree):
    # Wait a bit before next command
    sleep(0.5)
 
+def turnRight(degree):
+   sleep(0.041)
+   print(arlo.go_diff(64, 64, 1, 0))
+
+   sleep(0.0074 * degree + ((degree**2)*0.000001))
+   # send a stop command
+   print(arlo.stop())
+    
+   # Wait a bit before next command
+   sleep(0.5)
+
 print(arlo.go_diff(40, 40, 1, 1))
 isDriving = True
 while (isDriving): # or some other form of loop
@@ -44,6 +55,8 @@ while (isDriving): # or some other form of loop
     if frontSensor < 200:
         print(arlo.stop())
         sleep(0.5)
+        turnLeft(90)
+
         """ print(arlo.go_diff(64, 64, 0, 0))
         sleep(0.5) """
         isDriving = False
