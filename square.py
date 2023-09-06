@@ -11,19 +11,21 @@ print("Running ...")
 # send a go_diff command to drive forward
 leftSpeed = 64/2
 rightSpeed = 66/2
+turnTime = 1.4*2
+forwardTime = 1.5
 
 def driveAndturn():
  print(arlo.go_diff(leftSpeed, rightSpeed, 1, 1))
  
  # Wait a bit while robot moves forward
- sleep(1.5)
+ sleep(forwardTime)
  
  # send a stop command
  print(arlo.stop())
  
  # turn 
  print(arlo.go_diff(0, rightSpeed, 1, 1))
- sleep(1.4)
+ sleep(turnTime)
  
  # Wait a bit before next command
  sleep(0.041)
