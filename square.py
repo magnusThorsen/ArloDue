@@ -11,7 +11,7 @@ print("Running ...")
 # send a go_diff command to drive forward
 leftSpeed = 64
 rightSpeed = 70
-turnTime = 0.57
+turnTime = 0.58
 forwardTime = 1.5
 
 
