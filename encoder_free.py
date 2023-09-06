@@ -24,7 +24,7 @@ print("Left sensor = ", arlo.read_left_ping_sensor())
 
 def turnLeft(degree):
    sleep(0.041)
-   print(arlo.go_diff(leftSpeed, rightSpeed, 0, 1))
+   print(arlo.go_diff(64, 64, 0, 1))
 
    sleep(0.0074 * degree + ((degree**2)*0.000001))
    # send a stop command
@@ -33,7 +33,7 @@ def turnLeft(degree):
    # Wait a bit before next command
    sleep(0.5)
 
-print(arlo.go_diff(16, 16, 1, 1))
+print(arlo.go_diff(30, 30, 1, 1))
 isDriving = True
 while (isDriving): # or some other form of loop
     frontSensor = arlo.read_front_ping_sensor()
