@@ -47,6 +47,10 @@ def turnnintydegrees():
 
 
 oneSquare()
+oneSquare()
+oneSquare()
+oneSquare()
+
 
 
 """ 
