@@ -26,7 +26,7 @@ def oneSquare():
    turnLeft(90)
 
 def drive1Meter():
-    betterGoDiff(leftSpeed, rightSpeed+10, 1, 1, 0.2)
+    betterGoDiff(leftSpeed, rightSpeed+10, 1, 1, 0.5)
     betterGoDiff(leftSpeed, rightSpeed, 1, 1, 2.2)
     # Wait a bit while robot moves forward
    
