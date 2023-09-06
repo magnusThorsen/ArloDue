@@ -57,7 +57,15 @@ def drive1Meter():
     # Wait a bit before next command
     sleep(0.041)
 
-drive1Meter()
+def turnnintydegrees():
+   print(arlo.go_diff(leftSpeed, rightSpeed, 0, 1))
+
+   sleep(turnTime/2)
+ 
+   sleep(0.041)
+
+#drive1Meter()
+turnnintydegrees()
 """ 
 
 # request to read Front sonar ping sensor
