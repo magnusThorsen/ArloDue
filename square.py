@@ -51,8 +51,11 @@ sleep(0.25)
 drive1Meter()
 drive1Meter()
 drive1Meter()
-
-
+turnnintydegrees()
+turnnintydegrees()
+drive1Meter()
+drive1Meter()
+drive1Meter()
 """ 
 
 # request to read Front sonar ping sensor
