@@ -17,13 +17,13 @@ forwardTime = 1.5
 
 def oneSquare():
    drive1Meter()
-   turnnintydegrees()
+   turn()
    drive1Meter()
-   turnnintydegrees()
+   turn()
    drive1Meter()
-   turnnintydegrees()
+   turn()
    drive1Meter()
-   turnnintydegrees()
+   turn()
 
 def drive1Meter():
     print(arlo.go_diff(leftSpeed, rightSpeed, 1, 1))
@@ -37,19 +37,19 @@ def drive1Meter():
     # Wait a bit before next command
     sleep(0.041)
 
-def turnnintydegrees():
+def turn(degree):
    sleep(0.041)
    print(arlo.go_diff(leftSpeed, rightSpeed, 0, 1))
 
-   sleep(turnTime)
+   sleep(0.00644444444 * degree))
  
    sleep(0.041)
 
    
-print(arlo.go_diff(0, rightSpeed, 1, 1))
-sleep(0.2)
-oneSquare()
-oneSquare()
+#print(arlo.go_diff(0, rightSpeed, 1, 1))
+#sleep(0.2)
+turn(90)
+
 """ 
 
 # request to read Front sonar ping sensor
