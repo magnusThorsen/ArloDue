@@ -69,13 +69,13 @@ def turnnintydegrees():
 
 
 #drive1Meter()
-#drive1Meter()
+drive1Meter()
 turnnintydegrees()
-#drive1Meter()
+drive1Meter()
 turnnintydegrees()
-#drive1Meter()
+drive1Meter()
 turnnintydegrees()
-#drive1Meter()
+drive1Meter()
 turnnintydegrees()
 
 """ 
