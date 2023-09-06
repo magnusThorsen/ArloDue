@@ -11,7 +11,7 @@ print("Running ...")
 # send a go_diff command to drive forward
 leftSpeed = 64
 rightSpeed = 70
-turnTime = 1.35
+turnTime = 1.45
 forwardTime = 1.5
 
 def driveAndturn():
