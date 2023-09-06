@@ -16,8 +16,6 @@ forwardTime = 1.5
 
 
 def oneSquare():
-   print(arlo.go_diff(0, rightSpeed, 1, 1))
-   sleep(0.041)
    drive1Meter()
    turnnintydegrees()
    drive1Meter()
@@ -47,7 +45,9 @@ def turnnintydegrees():
  
    sleep(0.041)
 
-
+   
+print(arlo.go_diff(0, rightSpeed, 1, 1))
+sleep(0.041)
 oneSquare()
 oneSquare()
 oneSquare()
