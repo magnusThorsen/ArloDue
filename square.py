@@ -32,7 +32,7 @@ def drive1Meter():
     sleep(2.2)
     
     # send a stop command
-    print(arlo.stop())
+    #print(arlo.stop())
     
     # Wait a bit before next command
     sleep(0.041)
