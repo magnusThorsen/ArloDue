@@ -40,11 +40,24 @@ def oneSquare():
  for i in range(4):
   driveAndturn()
 
-oneSquare()
-oneSquare()
-oneSquare()
-oneSquare()
+#oneSquare()
+#oneSquare()
+#oneSquare()
+#oneSquare()
 
+def drive1Meter():
+    print(arlo.go_diff(leftSpeed, rightSpeed, 1, 1))
+    
+    # Wait a bit while robot moves forward
+    sleep(1)
+    
+    # send a stop command
+    print(arlo.stop())
+    
+    # Wait a bit before next command
+    sleep(0.041)
+
+drive1Meter()
 """ 
 
 # request to read Front sonar ping sensor
