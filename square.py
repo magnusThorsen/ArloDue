@@ -32,17 +32,21 @@ def drive1Meter():
    
     
     # send a stop command
-    #print(arlo.stop())
+    print(arlo.stop())
     
     # Wait a bit before next command
-    sleep(0.041)
+    sleep(0.5)
 
 def turnLeft(degree):
    sleep(0.041)
    print(arlo.go_diff(leftSpeed, rightSpeed, 0, 1))
 
    sleep(0.0074 * degree + ((degree**2)*0.000001))
- 
+   # send a stop command
+    print(arlo.stop())
+    
+    # Wait a bit before next command
+    sleep(0.5)
 def betterGoDiff(leftSpeed, rightSpeed, directionL, directionR, sleeptime):
    print(arlo.go_diff(leftSpeed/2, rightSpeed/2, directionL, directionR))
    sleep(0.1)
