@@ -47,11 +47,10 @@ def turnLeft(degree):
    # Wait a bit before next command
    sleep(0.5)
 def betterGoDiff(leftSpeed, rightSpeed, directionL, directionR, sleeptime):
-   leftList = range(30,leftSpeed,10)
-   rightList = range(30, rightSpeed, 10)
-   for i in range(10):
-    print(arlo.go_diff(leftList[i], rightList[i], directionL, directionR))
-    sleep(sleeptime/10)
+   print(arlo.go_diff(leftSpeed/2, rightSpeed/2, directionL, directionR))
+   sleep(0.1)
+   print(arlo.go_diff(leftSpeed, rightSpeed, directionL, directionR))
+   sleep(sleeptime-0.1)
  
 oneSquare()
 oneSquare()
