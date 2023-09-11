@@ -54,20 +54,20 @@ while (isDriving): # or some other form of loop
     leftSensor = arlo.read_left_ping_sensor()   
     if frontSensor < 250 or rightSensor < 300 or leftSensor < 300:
         print(arlo.stop())
-        sleep(0.5)
+        sleep(0.2)
         if rightSensor < 200:
             turnLeft(90)
-            sleep(1.0)
+            sleep(0.2)
         elif leftSensor < 200:
             turnRight(90)
-            sleep(1.0)
+            sleep(0.2)
         elif frontSensor < 250:
             if leftSensor <= rightSensor:
                 turnRight(90)
-                sleep(1.0)
+                sleep(0.2)
             else:
                 turnLeft(90)
-                sleep(1.0)
+                sleep(0.2)
     else: 
        print(arlo.go_diff(64, 68, 1, 1))
          
