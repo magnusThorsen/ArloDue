@@ -46,6 +46,11 @@ def turnRight(degree):
 
 isDriving = True
 while (isDriving): # or some other form of loop
+    frontSensor = arlo.read_front_ping_sensor()
+    print(frontSensor)
+    backSensor = arlo.read_back_ping_sensor()
+    rightSensor = arlo.read_right_ping_sensor()
+    leftSensor = arlo.read_left_ping_sensor()   
     if frontSensor < 300 or rightSensor < 300 or leftSensor < 300:
         print(arlo.stop())
         sleep(0.5)
@@ -75,11 +80,7 @@ while (isDriving): # or some other form of loop
                 sleep(1.0)
                 turnRight(90)
     print(arlo.go_diff(64, 68, 1, 1))
-    frontSensor = arlo.read_front_ping_sensor()
-    print(frontSensor)
-    backSensor = arlo.read_back_ping_sensor()
-    rightSensor = arlo.read_right_ping_sensor()
-    leftSensor = arlo.read_left_ping_sensor()            
+         
 
         
 
