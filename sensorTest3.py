@@ -48,13 +48,6 @@ rotation = 0
 
 isDriving = True
 while (isDriving): # or some other form of loop
-    if rotation <= -180:
-        turnRight(90) 
-        rotation += 90
-
-    if rotation >= 180:
-        turnLeft(90) 
-        rotation -= 90
         
     print(arlo.go_diff(64, 68, 1, 1))
     frontSensor = arlo.read_front_ping_sensor()
@@ -79,6 +72,13 @@ while (isDriving): # or some other form of loop
             sleep(1.0)
             
         elif frontSensor < 300:
+            if leftSensor > 300 and rightSensor > 300:
+               if rotation = 90:
+                  turnLeft(90)
+                  rotation -= 90
+               else:
+                  turnRight(90)
+                  rotation += 90
             if leftSensor < rightSensor:
                 rotation += 90
                 turnRight(90)
