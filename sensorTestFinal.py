@@ -32,7 +32,7 @@ def turnLeft(degree):
    print(arlo.stop())
     
    # Wait a bit before next command
-   sleep(0.5)
+   sleep(0.2)
 
 def turnRight(degree):
    sleep(0.041)
@@ -43,7 +43,7 @@ def turnRight(degree):
    print(arlo.stop())
     
    # Wait a bit before next command
-   sleep(0.5)
+   sleep(0.2)
 
 isDriving = True
 while (isDriving): # or some other form of loop
