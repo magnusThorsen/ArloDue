@@ -62,7 +62,7 @@ while (isDriving): # or some other form of loop
             turnRight(90)
             sleep(1.0)
         elif frontSensor < 250:
-            if leftSensor < rightSensor:
+            if leftSensor <= rightSensor:
                 turnRight(90)
                 sleep(1.0)
             else:
