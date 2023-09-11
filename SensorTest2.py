@@ -81,9 +81,6 @@ while (isDriving): # or some other form of loop
     rightSensor = arlo.read_right_ping_sensor()
     leftSensor = arlo.read_left_ping_sensor()            
 
-
-        """ print(arlo.go_diff(64, 64, 0, 0))
-        sleep(0.5) """
         
 
 print("Finished")
