@@ -69,7 +69,7 @@ while (isDriving): # or some other form of loop
                 turnLeft(90)
                 sleep(0.2)
     else: 
-       print(arlo.go_diff(32, 34, 1, 1))
+       print(arlo.go_diff(120, 120, 1, 1))
          
 
         
