@@ -41,7 +41,7 @@ def sampling(k,fig1,fig2):
 
     plt.xlabel('x')
     plt.ylabel('Probability Density')
-    str1 = '(NORMAL)Histogram of x1_values with k = ' + str(k)
+    str1 = '(NORMAL)Histogram of first drawn samples with k = ' + str(k)
     plt.title(str1)
     plt.legend()
     plt.grid(True)
@@ -52,9 +52,14 @@ def sampling(k,fig1,fig2):
     plt.figure(figsize=(10, 6))
     plt.hist(x1_samples, bins=50, density=True, alpha=0.6, color='blue', label='p(x) Histogram')
 
+    # plotting p(x) as a function of x for comparison
+    x_values = np.linspace(-5, 15, 1000)
+    p_values = [p(x) for x in x_values]
+    plt.plot(x_values, p_values, color='red', label='p(x)')
+
     plt.xlabel('x')
     plt.ylabel('Probability Density')
-    str2 = '(NORMAL)Histogram of x1_samples with k = ' + str(k)
+    str2 = '(NORMAL)Histogram of resampled samples with k = ' + str(k)
     plt.title(str2)
     plt.legend()
     plt.grid(True)
