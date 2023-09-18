@@ -47,7 +47,7 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
     if cv2.waitKey(4) == 32: #takes picture when pressing space
         cnt += 20
         print("pressed space")
-        path = '/Documents/ArloTre/Pictures'
+        path = '/Pictures'
         filename = 'Pictures/' + str(cnt) + '.jpg'
         cv2.imwrite(filename, image)
 
