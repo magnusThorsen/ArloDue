@@ -4,7 +4,7 @@
 import cv2 # Import the OpenCV library
 
 
-def gstreamer_pipeline(capture_width=1024, capture_height=720, framerate=30):
+def gstreamer_pipeline(capture_width=800, capture_height=600, framerate=30):
     """Utility function for setting parameters for the gstreamer camera pipeline"""
     return (
         "libcamerasrc !"
