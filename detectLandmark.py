@@ -46,7 +46,7 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
     # Show frames
     cv2.imshow(WIN_RF, image)
 
-    print(cv2.arucuo.detectMarkers(image, cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)))
+    print(cv2.arucu.detectMarkers(image, cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)))
     
 
 # Finished successfully
