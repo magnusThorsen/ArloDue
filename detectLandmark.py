@@ -51,7 +51,7 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
     # Detect markers in the image
     corners, ids, rejected = cv2.aruco.detectMarkers(image, dictionary)
 
-    cv2.aruco.estimatePoseSingleMarkers()
+    #cv2.aruco.estimatePoseSingleMarkers()
 
     # Draw the detected markers on the image
     if len(corners) > 0:
