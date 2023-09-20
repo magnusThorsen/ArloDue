@@ -57,8 +57,8 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
     # Detect markers in the image
     corners, ids, rejected = cv2.aruco.detectMarkers(image, dictionary)
 
-    cameraMatrix = np.array([[focal, 0, xSize],
-                            [0, focal, ySize],
+    cameraMatrix = np.array([[focal, 0, xSize/2],
+                            [0, focal, ySize/2],
                             [0, 0, 1]])
 
    # Draw the detected markers on the image
