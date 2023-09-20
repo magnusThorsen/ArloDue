@@ -20,6 +20,8 @@ print("OpenCV version = " + cv2.__version__)
 
 xSize = 800
 ySize = 600
+focal = 2400
+#focal = 621.0034014
 
 # Open a camera device for capturing
 imageSize = (xSize, ySize)
@@ -55,8 +57,8 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
     # Detect markers in the image
     corners, ids, rejected = cv2.aruco.detectMarkers(image, dictionary)
 
-    cameraMatrix = np.array([[621.0034014, 0, xSize],
-                            [0, 621.0034014, ySize],
+    cameraMatrix = np.array([[focal, 0, xSize],
+                            [0, focal, ySize],
                             [0, 0, 1]])
 
    # Draw the detected markers on the image
