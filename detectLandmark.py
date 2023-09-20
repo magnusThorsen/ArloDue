@@ -51,14 +51,18 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
     # Detect markers in the image
     corners, ids, rejected = cv2.aruco.detectMarkers(image, dictionary)
 
-    #cv2.aruco.estimatePoseSingleMarkers()
-
-    # Draw the detected markers on the image
+   # Draw the detected markers on the image
     if len(corners) > 0:
         cv2.aruco.drawDetectedMarkers(image, corners, ids)
+        
+        # Estimate pose for each detected marker
+        rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(corners, 200, cv2.cameraMatrix, cv2.distCoeffs)
 
+        # Iterate through the detected markers and print their IDs and pose information
         for i in range(len(ids)):
             print(f"Detected Marker ID: {ids[i][0]}")
+            print(f"Translation Vector: {tvecs[i]}")
+            print(f"Rotation Vector: {rvecs[i]}")
 
     # Display the image with detected markers
     cv2.imshow("Detected Markers", image)
