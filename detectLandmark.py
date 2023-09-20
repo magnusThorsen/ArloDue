@@ -20,7 +20,7 @@ print("OpenCV version = " + cv2.__version__)
 
 xSize = 800
 ySize = 600
-focal = 400
+focal = 350
 #focal = 621.0034014
 
 # Open a camera device for capturing
@@ -84,4 +84,3 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
     
 
 # Finished successfully
-#test
