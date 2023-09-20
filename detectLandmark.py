@@ -1,9 +1,11 @@
-# This script shows how to open a camera the picamera2 module and grab frames and show these.
-# Kim S. Pedersen, 2023
-
-import cv2 # Import the OpenCV library
 import time
+from time import sleep
 from pprint import *
+import robot
+import cv2 # Import the OpenCV library
+
+# Create a robot object and initialize
+arlo = robot.Robot()
 
 try:
     import picamera2
@@ -12,10 +14,8 @@ except ImportError:
     print("Camera.py: picamera2 module not available")
     exit(-1)
 
-
-
-
 print("OpenCV version = " + cv2.__version__)
+
 
 # Open a camera device for capturing
 imageSize = (800, 600)
@@ -40,16 +40,13 @@ cv2.namedWindow(WIN_RF)
 cv2.moveWindow(WIN_RF, 100, 100)
 
 
-detected = False
-
-while cv2.waitKey(detected == False): 
+while cv2.waitKey(4) == -1: # Wait for a key pressed event
     image = cam.capture_array("main")
     
     # Show frames
     cv2.imshow(WIN_RF, image)
-    
-    """ if cv2.aruco.detectMarkers():
-        detected == True """
 
+    print(cv2.arucuo.detectMarkers(image, cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)))
+    
 
 # Finished successfully
