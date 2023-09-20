@@ -68,7 +68,7 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
         # Iterate through the detected markers and print their IDs and pose information
         for i in range(len(ids)):
             print(f"Detected Marker ID: {ids[i][0]}")
-            print(f"Translation Vector: {tvecs[i]}")
+            print(f"Translation Vector: {np.norm(tvecs)}")
             print(f"Rotation Vector: {rvecs[i]}")
 
     # Display the image with detected markers
