@@ -3,6 +3,7 @@ from time import sleep
 from pprint import *
 import robot
 import cv2 # Import the OpenCV library
+import cv2.aruco as aruco
 import numpy as np # Import Numpy library
 
 # Create a robot object and initialize
@@ -17,8 +18,8 @@ except ImportError:
 
 print("OpenCV version = " + cv2.__version__)
 
-xSize = 400
-ySize = 400
+xSize = 700
+ySize = 500
 
 # Open a camera device for capturing
 imageSize = (xSize, ySize)
@@ -67,9 +68,14 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
 
         # Iterate through the detected markers and print their IDs and pose information
         for i in range(len(ids)):
-            print(f"Detected Marker ID: {ids[i][0]}")
-            print(f"Translation Vector: {np.linalg.norm(tvecs)}")
-            print(f"Rotation Vector: {rvecs[i]}")
+            marker_id = ids[i][0]
+            translation_vector = tvecs[i][0]
+
+            # Calculate the Euclidean distance (norm) from the camera to the marker
+            distance = np.linalg.norm(translation_vector)
+
+            print(f"Detected Marker ID: {marker_id}")
+            print(f"Distance to Marker {marker_id}: {distance} units")
 
     # Display the image with detected markers
     cv2.imshow("Detected Markers", image)
