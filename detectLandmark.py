@@ -1,11 +1,9 @@
-import time
-from time import sleep
-from pprint import *
-import robot
-import cv2 # Import the OpenCV library
+# This script shows how to open a camera the picamera2 module and grab frames and show these.
+# Kim S. Pedersen, 2023
 
-# Create a robot object and initialize
-arlo = robot.Robot()
+import cv2 # Import the OpenCV library
+import time
+from pprint import *
 
 try:
     import picamera2
@@ -14,8 +12,10 @@ except ImportError:
     print("Camera.py: picamera2 module not available")
     exit(-1)
 
-print("OpenCV version = " + cv2.__version__)
 
+
+
+print("OpenCV version = " + cv2.__version__)
 
 # Open a camera device for capturing
 imageSize = (800, 600)
@@ -38,6 +38,7 @@ time.sleep(1)  # wait for camera to setup
 WIN_RF = "Example 1"
 cv2.namedWindow(WIN_RF)
 cv2.moveWindow(WIN_RF, 100, 100)
+
 
 detected = False
 
