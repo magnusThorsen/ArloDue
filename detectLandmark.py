@@ -18,8 +18,8 @@ except ImportError:
 
 print("OpenCV version = " + cv2.__version__)
 
-xSize = 700
-ySize = 500
+xSize = 800
+ySize = 600
 
 # Open a camera device for capturing
 imageSize = (xSize, ySize)
