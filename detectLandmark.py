@@ -41,13 +41,6 @@ cv2.moveWindow(WIN_RF, 100, 100)
 
 
 while cv2.waitKey(4) == -1: # Wait for a key pressed event
-    """ image = cam.capture_array("main")
-    
-    # Show frames
-    cv2.imshow(WIN_RF, image)
-
-    print(cv2.aruco.detectMarkers(image, cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)))
-     """
     
     # Load the image
     image = cam.capture_array("main")  # Load your image here
@@ -58,12 +51,17 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
     # Detect markers in the image
     corners, ids, rejected = cv2.aruco.detectMarkers(image, dictionary)
 
+    cv2.aruco.estimatePoseSingleMarkers()
+
     # Draw the detected markers on the image
     if len(corners) > 0:
         cv2.aruco.drawDetectedMarkers(image, corners, ids)
 
+        for i in range(len(ids)):
+            print(f"Detected Marker ID: {ids[i][0]}")
+
     # Display the image with detected markers
     cv2.imshow("Detected Markers", image)
-     
+    
 
 # Finished successfully
