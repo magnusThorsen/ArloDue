@@ -50,7 +50,7 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
      """
     
     # Load the image
-    image = cv2.imread("your_image.jpg")  # Load your image here
+    image = cam.capture_array("main")  # Load your image here
 
     # Define the dictionary
     dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
