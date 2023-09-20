@@ -39,12 +39,16 @@ WIN_RF = "Example 1"
 cv2.namedWindow(WIN_RF)
 cv2.moveWindow(WIN_RF, 100, 100)
 
+detected = False
 
-while cv2.waitKey(1): # Wait for a key pressed event
+while (detected == False): 
     image = cam.capture_array("main")
     
     # Show frames
     cv2.imshow(WIN_RF, image)
     
+    if cv2.aruco.detectMarkers():
+        detected == True
+
 
 # Finished successfully
