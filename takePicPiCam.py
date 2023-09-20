@@ -49,7 +49,7 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
         path = '/Pictures'
         filename = 'Pictures/' + str(cnt) + '.jpg'
         cv2.imwrite(filename, image)
-        cnt += 20
+        cnt += 10
 
 
 # Finished successfully
