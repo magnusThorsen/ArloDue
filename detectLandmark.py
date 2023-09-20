@@ -21,7 +21,7 @@ print("OpenCV version = " + cv2.__version__)
 xSize = 640
 ySize = 480
 #focal = 350
-focal = 621.0034014
+focal = 1335.517241
 
 # Open a camera device for capturing
 imageSize = (xSize, ySize)
