@@ -63,7 +63,7 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
         cv2.aruco.drawDetectedMarkers(image, corners, ids)
         
         # Estimate pose for each detected marker
-        rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(corners, 200, cameraMatrix)
+        rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(corners, 200, cameraMatrix, None)
 
         # Iterate through the detected markers and print their IDs and pose information
         for i in range(len(ids)):
