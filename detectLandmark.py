@@ -3,6 +3,7 @@ from time import sleep
 from pprint import *
 import robot
 import cv2 # Import the OpenCV library
+import numpy as np # Import Numpy library
 
 # Create a robot object and initialize
 arlo = robot.Robot()
@@ -16,9 +17,11 @@ except ImportError:
 
 print("OpenCV version = " + cv2.__version__)
 
+xSize = 800
+ySize = 600
 
 # Open a camera device for capturing
-imageSize = (800, 600)
+imageSize = (xSize, ySize)
 FPS = 30
 cam = picamera2.Picamera2()
 frame_duration_limit = int(1/FPS * 1000000) # Microseconds
@@ -51,12 +54,16 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
     # Detect markers in the image
     corners, ids, rejected = cv2.aruco.detectMarkers(image, dictionary)
 
+    cameraMatrix = np.array([[621.0034014, 0, xSize],
+                            [0, 621.0034014, ySize],
+                            [0, 0, 1]])
+
    # Draw the detected markers on the image
     if len(corners) > 0:
         cv2.aruco.drawDetectedMarkers(image, corners, ids)
         
         # Estimate pose for each detected marker
-        rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(corners, 200, cv2.cameraMatrix, cv2.distCoeffs)
+        rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(corners, 200, cameraMatrix)
 
         # Iterate through the detected markers and print their IDs and pose information
         for i in range(len(ids)):
