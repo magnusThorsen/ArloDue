@@ -42,7 +42,7 @@ cv2.moveWindow(WIN_RF, 100, 100)
 
 detected = False
 
-while cv2.waitkey(detected == False): 
+while cv2.waitKey(detected == False): 
     image = cam.capture_array("main")
     
     # Show frames
