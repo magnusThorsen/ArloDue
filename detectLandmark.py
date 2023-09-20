@@ -71,7 +71,7 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
         # Iterate through the detected markers and print their IDs and pose information
         for i in range(len(ids)):
             marker_id = ids[i][0]
-            translation_vector = tvecs[i][0]
+            translation_vector = tvecs
 
             # Calculate the Euclidean distance (norm) from the camera to the marker
             distance = np.linalg.norm(translation_vector)
