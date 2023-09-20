@@ -48,8 +48,8 @@ while (detected == False):
     # Show frames
     cv2.imshow(WIN_RF, image)
     
-    if cv2.aruco.detectMarkers():
-        detected == True
+    """ if cv2.aruco.detectMarkers():
+        detected == True """
 
 
 # Finished successfully
