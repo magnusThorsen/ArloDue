@@ -48,17 +48,15 @@ cv2.moveWindow(WIN_RF, 100, 100) """
 
 def turnLeft(degree):
    sleep(0.041)
-   print(arlo.go_diff(64, 68, 0, 1))
+   print(arlo.go_diff(64, 70, 0, 1))
 
-   sleep(0.0074 * degree + ((degree**2)*0.000001))
+   sleep(0.0074 * degree + ((degree**2)*0.000013))
    # send a stop command
    print(arlo.stop())
     
    # Wait a bit before next command
-   sleep(0.2)
-
-
-
+   sleep(0.5)
+   
 def searchAndshow(): 
     detected = False
     # Load the image
@@ -115,6 +113,7 @@ while val: # Wait for a key pressed event (cv2.waitKey(4) == -1)
         print("rvecs direction: ",rvecs/np.linalg.norm(rvecs))
         print("rvecs: ",np.linalg.norm(rvecs))
         print("tvecs: ",np.linalg.norm(tvecs) / 14.086079 )
+        turnLeft("turning left.. ", np.linalg.norm(rvecs))
 
         val = False
 
