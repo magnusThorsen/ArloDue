@@ -23,8 +23,8 @@ ySize = 480
 #focal = 350
 focal = 1335.517241
 
-leftSpeed = 64
-rightSpeed = 70
+leftSpeed = 32
+rightSpeed = 35
 # Open a camera device for capturing
 imageSize = (xSize, ySize)
 FPS = 30
@@ -93,7 +93,7 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
         
     else: 
         print("No markers detected")
-        turnLeft(10)
+        turnLeft(5)
 
     # Display the image with detected markers
     cv2.imshow("Detected Markers", image)
