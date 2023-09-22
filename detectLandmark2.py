@@ -9,9 +9,6 @@ import numpy as np # Import Numpy library
 # Create a robot object and initialize
 arlo = robot.Robot()
 
-leftSpeed = 64
-rightSpeed = 70
-
 try:
     import picamera2
     print("Camera.py: Using picamera2 module")
@@ -48,9 +45,6 @@ WIN_RF = "Example 1"
 cv2.namedWindow(WIN_RF)
 cv2.moveWindow(WIN_RF, 100, 100) """
 
-def rotate():
-    print(arlo.go_diff((leftSpeed, rightSpeed, 0, 1)))
-
 def turnLeft(degree):
    sleep(0.041)
    print(arlo.go_diff(64, 68, 0, 1))
@@ -62,45 +56,61 @@ def turnLeft(degree):
    # Wait a bit before next command
    sleep(0.2)
 
-def detectLandmark():
-    while (cv2.waitKey(4) == -1): # Wait for a key pressed event
-        
-        # Load the image
-        image = cam.capture_array("main")  # Load your image here
+def searchAndshow(): 
+    detected = False
+    # Load the image
+    image = cam.capture_array("main")  # Load your image here
 
-        # Define the dictionary
-        dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
+    # Define the dictionary
+    dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
 
-        # Detect markers in the image
-        corners, ids, rejected = cv2.aruco.detectMarkers(image, dictionary)
+    # Detect markers in the image
+    corners, ids, rejected = cv2.aruco.detectMarkers(image, dictionary)
 
-        cameraMatrix = np.array([[focal, 0, xSize/2],
-                                [0, focal, ySize/2],
-                                [0, 0, 1]])
-    # Draw the detected markers on the image
-        if len(corners) > 0:
-            cv2.aruco.drawDetectedMarkers(image, corners, ids)
-            
-            # Estimate pose for each detected marker
-            rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(corners, 200, cameraMatrix, None)
-
-            # Iterate through the detected markers and print their IDs and pose information
-            for i in range(len(ids)):
-                marker_id = ids[i][0]
-                translation_vector = tvecs
-
-                # Calculate the Euclidean distance (norm) from the camera to the marker
-                distance = np.linalg.norm(translation_vector)
-
-                print(f"Detected Marker ID: {marker_id}")
-                print(f"Distance to Marker {marker_id}: {distance} units")
-
-        
+    cameraMatrix = np.array([[focal, 0, xSize/2],
+                            [0, focal, ySize/2],
+                            [0, 0, 1]])
     
-        else: 
-            turnLeft(15)
+   # Draw the detected markers on the image
+    if len(corners) > 0:
+        cv2.aruco.drawDetectedMarkers(image, corners, ids)
+        
+        # Estimate pose for each detected marker
+        rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(corners, 200, cameraMatrix, None)
 
-        # Display the image with detected markers
-        cv2.imshow("Detected Markers", image)
+        # Iterate through the detected markers and print their IDs and pose information
+        for i in range(len(ids)):
+            marker_id = ids[i][0]
+            translation_vector = tvecs
+
+            # Calculate the Euclidean distance (norm) from the camera to the marker
+            distance = np.linalg.norm(translation_vector)
+
+            print(f"Detected Marker ID: {marker_id}")
+            print(f"Distance to Marker {marker_id}: {distance} units")
+        detected = True
+
+    # Display the image with detected markers
+    cv2.imshow("Detected Markers", image)
+    return detected
+
+
+def betterGoDiff(leftSpeed, rightSpeed, directionL, directionR, sleeptime):
+   print(arlo.go_diff(leftSpeed/2, rightSpeed/2, directionL, directionR))
+   sleep(0.1)
+   print(arlo.go_diff(leftSpeed, rightSpeed, directionL, directionR))
+   sleep(sleeptime-0.1)
+
+
+while cv2.waitKey(4) == -1: # Wait for a key pressed event
+    # print go diff 
+    if not searchAndshow(): 
+        turnLeft(20)
+        sleep(0.3)
+    else: 
+        print(arlo.stop())
+        betterGoDiff(64, 70, 1, 1, 0.5)
+    
+    
 
 # Finished successfully
