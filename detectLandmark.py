@@ -64,6 +64,8 @@ while not detected: # Wait for a key pressed event
     
     # Load the image
     image = cam.capture_array("main")  # Load your image here
+    
+    # Display the image with detected markers
     cv2.imshow("Detecting markers", image)
 
     # Define the dictionary
@@ -97,8 +99,7 @@ while not detected: # Wait for a key pressed event
             print(f"Distance to Marker {marker_id}: {distance} units")
         
 
-    # Display the image with detected markers
-print(arlo.stop())
+#print(arlo.stop())
 
 
      
