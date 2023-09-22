@@ -23,8 +23,6 @@ ySize = 480
 #focal = 350
 focal = 1335.517241
 
-leftSpeed = 64
-rightSpeed = 70
 # Open a camera device for capturing
 imageSize = (xSize, ySize)
 FPS = 30
@@ -47,26 +45,11 @@ WIN_RF = "Example 1"
 cv2.namedWindow(WIN_RF)
 cv2.moveWindow(WIN_RF, 100, 100) """
 
-def turnLeft(degree):
-   sleep(0.041)
-   print(arlo.go_diff(leftSpeed, rightSpeed, 0, 1))
 
-   sleep(0.0074 * degree + ((degree**2)*0.000001))
-   # send a stop command
-   print(arlo.stop())
-    
-   # Wait a bit before next command
-   sleep(0.5)
-detected = False
-#print(arlo.go_diff(leftSpeed, rightSpeed, 0, 1))
-
-while not detected: # Wait for a key pressed event
+while cv2.waitKey(4) == -1: # Wait for a key pressed event
     
     # Load the image
     image = cam.capture_array("main")  # Load your image here
-    
-    # Display the image with detected markers
-    cv2.imshow("Detecting markers", image)
 
     # Define the dictionary
     dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
@@ -80,8 +63,6 @@ while not detected: # Wait for a key pressed event
 
    # Draw the detected markers on the image
     if len(corners) > 0:
-        print(arlo.stop())
-        detected = True
         cv2.aruco.drawDetectedMarkers(image, corners, ids)
         
         # Estimate pose for each detected marker
@@ -97,12 +78,9 @@ while not detected: # Wait for a key pressed event
 
             print(f"Detected Marker ID: {marker_id}")
             print(f"Distance to Marker {marker_id}: {distance} units")
-        
 
-#print(arlo.stop())
-
-
-     
+    # Display the image with detected markers
+    cv2.imshow("Detected Markers", image)
     
 
 # Finished successfully
