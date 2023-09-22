@@ -52,9 +52,8 @@ def betterGoDiff(leftSpeed, rightSpeed, directionL, directionR, sleeptime):
    print(arlo.go_diff(leftSpeed, rightSpeed, directionL, directionR))
    sleep(sleeptime-0.1)
  
-oneSquare()
-oneSquare()
-oneSquare()
+
+turnLeft(90)
 
 
 """ 
