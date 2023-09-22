@@ -106,7 +106,7 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
     detected, rvecs = searchAndshow()
     if not detected: 
         print(arlo.go_diff(30, 30, 0, 1))
-        sleep(0.1)
+        sleep(0.15)
         print(arlo.stop())
         sleep(0.1)
     else: 
