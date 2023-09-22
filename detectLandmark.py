@@ -23,6 +23,8 @@ ySize = 480
 #focal = 350
 focal = 1335.517241
 
+leftSpeed = 64
+rightSpeed = 70
 # Open a camera device for capturing
 imageSize = (xSize, ySize)
 FPS = 30
@@ -45,6 +47,16 @@ WIN_RF = "Example 1"
 cv2.namedWindow(WIN_RF)
 cv2.moveWindow(WIN_RF, 100, 100) """
 
+def turnLeft(degree):
+   sleep(0.041)
+   print(arlo.go_diff(leftSpeed, rightSpeed, 0, 1))
+
+   sleep(0.0074 * degree + ((degree**2)*0.000001))
+   # send a stop command
+   print(arlo.stop())
+    
+   # Wait a bit before next command
+   sleep(0.5)
 
 while cv2.waitKey(4) == -1: # Wait for a key pressed event
     
@@ -78,9 +90,18 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
 
             print(f"Detected Marker ID: {marker_id}")
             print(f"Distance to Marker {marker_id}: {distance} units")
+        
+    else: 
+        print("No markers detected")
+        turnLeft(10)
 
     # Display the image with detected markers
     cv2.imshow("Detected Markers", image)
+
+
+
+
+     
     
 
 # Finished successfully
