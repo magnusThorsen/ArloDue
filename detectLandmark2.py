@@ -102,6 +102,8 @@ def detectLandmark():
 
 
 def moveToLandmark():
+    
+    
     rotate()
 
 # Finished successfully
