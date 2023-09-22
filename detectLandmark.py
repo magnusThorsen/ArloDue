@@ -99,9 +99,9 @@ def searchAndshow():
 
 
 
+val = True
 
-
-while cv2.waitKey(4) == -1: # Wait for a key pressed event
+while val: # Wait for a key pressed event (cv2.waitKey(4) == -1)
     # print go diff 
     detected, rvecs = searchAndshow()
     if not detected: 
@@ -113,7 +113,7 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
         print(arlo.stop())
         print("rvecs direction: ",rvecs/np.linalg.norm(rvecs))
         print("rvecs: ",np.linalg.norm(rvecs))
-        
+        val = False
 
     
     
