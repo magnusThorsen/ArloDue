@@ -111,7 +111,9 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
         sleep(0.1)
     else: 
         print(arlo.stop())
-        print(rvecs)
+        print("rvecs direction: ",rvecs/np.linalg.norm(rvecs))
+        print("rvecs: ",np.linalg.norm(rvecs))
+        
 
     
     
