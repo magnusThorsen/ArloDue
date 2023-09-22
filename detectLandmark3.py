@@ -54,7 +54,7 @@ def turnLeft(degree):
    print(arlo.stop())
     
    # Wait a bit before next command
-   sleep(0.5)
+   sleep(0.2)
 
 def searchAndshow(): 
     detected = False
@@ -102,6 +102,7 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
     # print go diff 
     if not searchAndshow(): 
         turnLeft(45)
+        sleep(0.5)
     else: 
         print(arlo.stop())
     
