@@ -45,6 +45,28 @@ WIN_RF = "Example 1"
 cv2.namedWindow(WIN_RF)
 cv2.moveWindow(WIN_RF, 100, 100) """
 
+def betterGoDiff(leftSpeed, rightSpeed, directionL, directionR, sleeptime):
+   print(arlo.go_diff(leftSpeed/2, rightSpeed/2, directionL, directionR))
+   sleep(0.1)
+   print(arlo.go_diff(leftSpeed, rightSpeed, directionL, directionR))
+   sleep(sleeptime-0.1)
+
+
+
+
+def drive1Meter():
+    betterGoDiff(40, 40, 1, 1, 1.6)
+    # Wait a bit while robot moves forward
+   
+    
+    # send a stop command
+    print(arlo.stop())
+    
+    # Wait a bit before next command
+    sleep(0.5)
+
+
+
 
 def turnLeft(degree):
    sleep(0.041)
@@ -115,7 +137,7 @@ while val: # Wait for a key pressed event (cv2.waitKey(4) == -1)
         print("tvecs: ",np.linalg.norm(tvecs) / 14.086079 )
         print("turning left.. ")
         turnLeft(np.linalg.norm(rvecs)*3)
-
+        drive1Meter()
         val = False
 
     
