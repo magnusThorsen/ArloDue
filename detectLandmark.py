@@ -57,8 +57,8 @@ def turnLeft(degree):
     
    # Wait a bit before next command
    sleep(0.5)
-
-while cv2.waitKey(4) == -1: # Wait for a key pressed event
+detected = False
+while not detected: # Wait for a key pressed event
     
     # Load the image
     image = cam.capture_array("main")  # Load your image here
@@ -75,6 +75,7 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
 
    # Draw the detected markers on the image
     if len(corners) > 0:
+        detected = True
         cv2.aruco.drawDetectedMarkers(image, corners, ids)
         
         # Estimate pose for each detected marker
@@ -92,11 +93,11 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
             print(f"Distance to Marker {marker_id}: {distance} units")
         
     else: 
-        print("No markers detected")
-        turnLeft(20)
+        print(arlo.go_diff(leftSpeed, rightSpeed, 0, 1))
 
     # Display the image with detected markers
     cv2.imshow("Detected Markers", image)
+print(arlo.stop())
 
 
      
