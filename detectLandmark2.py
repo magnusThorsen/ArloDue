@@ -77,7 +77,6 @@ def detectLandmark():
         cameraMatrix = np.array([[focal, 0, xSize/2],
                                 [0, focal, ySize/2],
                                 [0, 0, 1]])
-        rotate()
     # Draw the detected markers on the image
         if len(corners) > 0:
             cv2.aruco.drawDetectedMarkers(image, corners, ids)
@@ -96,8 +95,11 @@ def detectLandmark():
                 print(f"Detected Marker ID: {marker_id}")
                 print(f"Distance to Marker {marker_id}: {distance} units")
 
+        
+    
+        else: rotate()
+
         # Display the image with detected markers
         cv2.imshow("Detected Markers", image)
-    
 
 # Finished successfully

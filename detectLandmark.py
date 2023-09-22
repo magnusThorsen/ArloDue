@@ -81,8 +81,8 @@ def searchAndshow():
         detected = True
 
     # Display the image with detected markers
-    
-    return detected, image
+    cv2.imshow("Detected Markers", image)
+    return detected
 
 
 
@@ -90,12 +90,7 @@ def searchAndshow():
 
 while cv2.waitKey(4) == -1: # Wait for a key pressed event
     # print go diff 
-    detected, image = searchAndshow()
-    while detected == False:
-        #print("working") #arlo.go_diff(30, 30, 1, 0))
-        cv2.imshow("Detected Markers", image)
-        
-    
+    searchAndshow()
     
     
 
