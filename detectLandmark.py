@@ -91,7 +91,7 @@ def searchAndshow():
 while cv2.waitKey(4) == -1: # Wait for a key pressed event
     # print go diff 
     if not searchAndshow(): 
-        print(arlo.go_diff(30, 30, 0, 1))
+        print(arlo.go_diff(25, 0, 0, 1))
     else: 
         print(arlo.stop())
     
