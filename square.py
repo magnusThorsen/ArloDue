@@ -54,6 +54,12 @@ def betterGoDiff(leftSpeed, rightSpeed, directionL, directionR, sleeptime):
  
 
 turnLeft(90)
+sleep(1)
+turnLeft(90)
+sleep(1)
+turnLeft(90)
+sleep(1)
+turnLeft(90)
 
 
 """ 
