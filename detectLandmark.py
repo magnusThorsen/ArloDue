@@ -55,7 +55,7 @@ def betterGoDiff(leftSpeed, rightSpeed, directionL, directionR, sleeptime):
 
 
 def drive30CM():
-    betterGoDiff(40, 40, 1, 1, 1.6)
+    betterGoDiff(32, 35, 1, 1, 1.6)
     # Wait a bit while robot moves forward
    
     
@@ -126,7 +126,7 @@ while val: # Wait for a key pressed event (cv2.waitKey(4) == -1)
     # print go diff 
     detected, rvecs, tvecs = searchAndshow()
     if not detected: 
-        print(arlo.go_diff(30, 30, 0, 1))
+        print(arlo.go_diff(32, 35, 0, 1))
         sleep(0.15)
         print(arlo.stop())
         sleep(0.1)
