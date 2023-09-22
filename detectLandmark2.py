@@ -63,9 +63,7 @@ def turnLeft(degree):
    sleep(0.2)
 
 def detectLandmark():
-    
-
-    while cv2.waitKey(4) == -1: # Wait for a key pressed event
+    while (cv2.waitKey(4) == -1): # Wait for a key pressed event
         
         # Load the image
         image = cam.capture_array("main")  # Load your image here
@@ -101,5 +99,9 @@ def detectLandmark():
         # Display the image with detected markers
         cv2.imshow("Detected Markers", image)
     
+
+
+def moveToLandmark():
+    rotate()
 
 # Finished successfully
