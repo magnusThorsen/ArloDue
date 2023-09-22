@@ -73,7 +73,7 @@ def searchAndshow():
     cameraMatrix = np.array([[focal, 0, xSize/2],
                             [0, focal, ySize/2],
                             [0, 0, 1]])
-    
+    rvecs = None
    # Draw the detected markers on the image
     if len(corners) > 0:
         cv2.aruco.drawDetectedMarkers(image, corners, ids)
