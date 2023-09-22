@@ -64,6 +64,7 @@ while not detected: # Wait for a key pressed event
     
     # Load the image
     image = cam.capture_array("main")  # Load your image here
+    cv2.imshow("Detecting markers", image)
 
     # Define the dictionary
     dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
@@ -97,7 +98,6 @@ while not detected: # Wait for a key pressed event
         
 
     # Display the image with detected markers
-    cv2.imshow("Detected Markers", image)
 print(arlo.stop())
 
 
