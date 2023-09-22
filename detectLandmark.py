@@ -114,7 +114,7 @@ while val: # Wait for a key pressed event (cv2.waitKey(4) == -1)
         print("rvecs: ",np.linalg.norm(rvecs))
         print("tvecs: ",np.linalg.norm(tvecs) / 14.086079 )
         print("turning left.. ")
-        turnLeft(np.linalg.norm(rvecs))
+        turnLeft(np.linalg.norm(rvecs)*10)
 
         val = False
 
