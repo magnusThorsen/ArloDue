@@ -114,7 +114,7 @@ while val: # Wait for a key pressed event (cv2.waitKey(4) == -1)
         print(arlo.stop())
         print("rvecs direction: ",rvecs/np.linalg.norm(rvecs))
         print("rvecs: ",np.linalg.norm(rvecs))
-        print("tvecs: ",np.linalg.norm(tvecs) / 14 )
+        print("tvecs: ",np.linalg.norm(tvecs) / 14.086079 )
 
         val = False
 
