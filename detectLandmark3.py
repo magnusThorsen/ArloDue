@@ -45,6 +45,16 @@ WIN_RF = "Example 1"
 cv2.namedWindow(WIN_RF)
 cv2.moveWindow(WIN_RF, 100, 100) """
 
+def turnLeft(degree):
+   sleep(0.041)
+   print(arlo.go_diff(64, 68, 0, 1))
+
+   sleep(0.0074 * degree + ((degree**2)*0.000001))
+   # send a stop command
+   print(arlo.stop())
+    
+   # Wait a bit before next command
+   sleep(0.2)
 
 def searchAndshow(): 
     detected = False
@@ -91,9 +101,9 @@ def searchAndshow():
 while cv2.waitKey(4) == -1: # Wait for a key pressed event
     # print go diff 
     if not searchAndshow(): 
-        print(arlo.go_diff(30, 30, 0, 1))
+        turnLeft()
     else: 
-        print
+        print(arlo.stop())
     
     
 
