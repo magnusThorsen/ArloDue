@@ -93,7 +93,7 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
         
     else: 
         print("No markers detected")
-        turnLeft(5)
+        turnLeft(10)
 
     # Display the image with detected markers
     cv2.imshow("Detected Markers", image)
