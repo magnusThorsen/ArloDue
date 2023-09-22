@@ -109,7 +109,7 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
         sleep(0.3)
     else: 
         print(arlo.stop())
-        betterGoDiff(64, 70, 1, 1, 0.5)
+        betterGoDiff(60, 70, 1, 1, 0.5)
     
     
 
