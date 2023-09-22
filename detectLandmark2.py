@@ -101,7 +101,7 @@ def detectLandmark():
     
 
 
-def moveToLandmark():
+def ():
     
     
     rotate()
