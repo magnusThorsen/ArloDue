@@ -54,7 +54,7 @@ def betterGoDiff(leftSpeed, rightSpeed, directionL, directionR, sleeptime):
 
 
 
-def drive1Meter():
+def drive30CM():
     betterGoDiff(40, 40, 1, 1, 1.6)
     # Wait a bit while robot moves forward
    
@@ -137,7 +137,10 @@ while val: # Wait for a key pressed event (cv2.waitKey(4) == -1)
         print("tvecs: ",np.linalg.norm(tvecs) / 14.086079 )
         print("turning left.. ")
         turnLeft(np.linalg.norm(rvecs)*3)
-        drive1Meter()
+        number_of_drrives = np.linalg.norm(tvecs) / 14.086079 / 30
+        for i in range(int(number_of_drrives)):
+            print("driving 30 cm..")
+            drive30CM()
         
 
     
