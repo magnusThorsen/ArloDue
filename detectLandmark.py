@@ -46,8 +46,8 @@ cv2.namedWindow(WIN_RF)
 cv2.moveWindow(WIN_RF, 100, 100) """
 
 
-while cv2.waitKey(4) == -1: # Wait for a key pressed event
-    
+def searchAndshow(): 
+    detected = False
     # Load the image
     image = cam.capture_array("main")  # Load your image here
 
@@ -60,7 +60,7 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
     cameraMatrix = np.array([[focal, 0, xSize/2],
                             [0, focal, ySize/2],
                             [0, 0, 1]])
-
+    
    # Draw the detected markers on the image
     if len(corners) > 0:
         cv2.aruco.drawDetectedMarkers(image, corners, ids)
@@ -78,9 +78,23 @@ while cv2.waitKey(4) == -1: # Wait for a key pressed event
 
             print(f"Detected Marker ID: {marker_id}")
             print(f"Distance to Marker {marker_id}: {distance} units")
+        detected = True
 
     # Display the image with detected markers
     cv2.imshow("Detected Markers", image)
+    return detected
+
+
+
+
+
+while cv2.waitKey(4) == -1: # Wait for a key pressed event
+    # print go diff 
+    while searchAndshow() == False:
+        print(arlo.go_diff(64, 68, 1, 0))
+        sleep(0.1)
+    
+    
     
 
 # Finished successfully
