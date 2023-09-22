@@ -58,8 +58,9 @@ def turnLeft(degree):
    # Wait a bit before next command
    sleep(0.5)
 detected = False
+print(arlo.go_diff(leftSpeed, rightSpeed, 0, 1))
+
 while not detected: # Wait for a key pressed event
-    print(arlo.go_diff(leftSpeed, rightSpeed, 0, 1))
     
     # Load the image
     image = cam.capture_array("main")  # Load your image here
