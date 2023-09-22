@@ -58,7 +58,7 @@ def turnLeft(degree):
    # Wait a bit before next command
    sleep(0.5)
 detected = False
-print(arlo.go_diff(leftSpeed, rightSpeed, 0, 1))
+#print(arlo.go_diff(leftSpeed, rightSpeed, 0, 1))
 
 while not detected: # Wait for a key pressed event
     
