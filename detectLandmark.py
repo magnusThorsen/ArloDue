@@ -55,7 +55,7 @@ def betterGoDiff(leftSpeed, rightSpeed, directionL, directionR, sleeptime):
 
 
 def drive30CM():
-    betterGoDiff(32, 35, 1, 1, 1.6)
+    betterGoDiff(30, 35, 1, 1, 1.6)
     # Wait a bit while robot moves forward
    
     
