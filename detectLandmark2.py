@@ -97,7 +97,8 @@ def detectLandmark():
 
         
     
-        else: rotate()
+        else: 
+            turnLeft(15)
 
         # Display the image with detected markers
         cv2.imshow("Detected Markers", image)
