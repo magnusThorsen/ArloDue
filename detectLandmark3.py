@@ -54,7 +54,7 @@ def turnLeft(degree):
    print(arlo.stop())
     
    # Wait a bit before next command
-   sleep(0.2)
+   sleep(0.5)
 
 def searchAndshow(): 
     detected = False
