@@ -138,7 +138,7 @@ while val: # Wait for a key pressed event (cv2.waitKey(4) == -1)
         print("turning left.. ")
         turnLeft(np.linalg.norm(rvecs)*3)
         drive1Meter()
-        val = False
+        
 
     
     
