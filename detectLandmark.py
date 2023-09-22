@@ -74,6 +74,7 @@ def searchAndshow():
                             [0, focal, ySize/2],
                             [0, 0, 1]])
     rvecs = None
+    tvecs = None
    # Draw the detected markers on the image
     if len(corners) > 0:
         cv2.aruco.drawDetectedMarkers(image, corners, ids)
@@ -95,7 +96,7 @@ def searchAndshow():
 
     # Display the image with detected markers
     cv2.imshow("Detected Markers", image)
-    return detected, rvecs
+    return detected, rvecs, tvecs
 
 
 
@@ -103,7 +104,7 @@ val = True
 
 while val: # Wait for a key pressed event (cv2.waitKey(4) == -1)
     # print go diff 
-    detected, rvecs = searchAndshow()
+    detected, rvecs, tvecs = searchAndshow()
     if not detected: 
         print(arlo.go_diff(30, 30, 0, 1))
         sleep(0.15)
@@ -113,6 +114,8 @@ while val: # Wait for a key pressed event (cv2.waitKey(4) == -1)
         print(arlo.stop())
         print("rvecs direction: ",rvecs/np.linalg.norm(rvecs))
         print("rvecs: ",np.linalg.norm(rvecs))
+        print("tvecs: ",np.linalg.norm(tvecs))
+
         val = False
 
     
