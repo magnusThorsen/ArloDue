@@ -40,7 +40,7 @@ def turnLeft(degree):
    sleep(0.041)
    print(arlo.go_diff(leftSpeed, rightSpeed, 0, 1))
 
-   sleep(0.0074 * degree + ((degree**2)*0.000007))
+   sleep(0.0074 * degree + ((degree**2)*0.000008))
    # send a stop command
    print(arlo.stop())
     
