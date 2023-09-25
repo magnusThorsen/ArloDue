@@ -65,9 +65,24 @@ def drive30CM():
     # Wait a bit before next command
     sleep(0.5)
 
-def drive(cm)
+def drive(distance):
+    left_speed = 30
+    right_speed = 34
 
+    # Calculate time based on distance and wheel speeds
+    #average_speed = (left_speed + right_speed) / 2
+    time = distance / 16.75
+    print("time",time)
+    print("distance",distance)
 
+    # Move the robot
+    betterGoDiff(left_speed, right_speed, 1, 1, time)
+
+    # Send a stop command
+    print(arlo.stop())
+
+    # Wait a bit before the next command
+    sleep(0.5)
 
 
 def turnLeft(degree):
@@ -118,32 +133,27 @@ def searchAndshow():
 
     # Display the image with detected markers
     cv2.imshow("Detected Markers", image)
-    return detected, rvecs, tvecs
-
+    return detected, rvecs, tvecs, marker_id
 
 
 val = True
 
+detectedLandmarks = list()
+
 while val: # Wait for a key pressed event (cv2.waitKey(4) == -1)
-    # print go diff 
-    detected, rvecs, tvecs = searchAndshow()
+    # print go diff
+    detected, _, tvecs, marker = searchAndshow()
     if not detected: 
         print(arlo.go_diff(32, 35, 0, 1))
         sleep(0.15)
         print(arlo.stop())
         sleep(0.1)
     else: 
-        print(arlo.stop())
-        print("rvecs direction: ",rvecs/np.linalg.norm(rvecs))
-        print("rvecs: ",np.linalg.norm(rvecs))
-        print("tvecs: ",np.linalg.norm(tvecs) / 14.086079 )
-        print("turning left.. ")
-        turnLeft(np.linalg.norm(rvecs)*3)
-        number_of_drrives = np.linalg.norm(tvecs) / 14.086079 / 30
-        for i in range(int(number_of_drrives)):
-            print("driving 30 cm..")
-            drive30CM()
-        val = False
+        # checks if the marker is already in the list
+        if marker not in detectedLandmarks:
+            detectedLandmarks.append((marker, tvecs))
+    print(detectedLandmarks)
+        
         
 
     
