@@ -139,6 +139,7 @@ def searchAndshow():
 
 val = True
 
+detectedLandmarksReal = list()
 detectedLandmarks = list()
 counter = 0
 while counter < 40: # Wait for a key pressed event (cv2.waitKey(4) == -1)
@@ -147,9 +148,11 @@ while counter < 40: # Wait for a key pressed event (cv2.waitKey(4) == -1)
     if marker in detectedLandmarks:
        ()
     else: 
-        detectedLandmarks.append((marker, tvecs))
+        detectedLandmarksReal.append((marker, tvecs))
+        detectedLandmarks.append(marker)
+
         
-    print(detectedLandmarks)
+    print(detectedLandmarksReal)
     print(arlo.go_diff(32, 35, 0, 1))
     sleep(0.15)
     print(arlo.stop())
