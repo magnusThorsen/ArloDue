@@ -71,7 +71,7 @@ def drive(distance):
 
     # Calculate time based on distance and wheel speeds
     average_speed = (left_speed + right_speed) / 2
-    time = distance / (average_speed * 0.01)
+    time = distance / (average_speed * 0.01) /1000
     print("time",time)
 
     # Move the robot
@@ -156,7 +156,7 @@ while val: # Wait for a key pressed event (cv2.waitKey(4) == -1)
         print("tvecs: ",np.linalg.norm(tvecs) / 14.086079 )
         print("turning left.. ")
         turnLeft(np.linalg.norm(rvecs)*3)
-        drive(np.linalg.norm(tvecs)/100)
+        drive(np.linalg.norm(tvecs))
         val = False
         
 
