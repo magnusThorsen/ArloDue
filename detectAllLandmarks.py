@@ -142,10 +142,10 @@ val = True
 detectedLandmarksReal = list()
 detectedLandmarks = list()
 counter = 0
-while counter < 55: # Wait for a key pressed event (cv2.waitKey(4) == -1)
+while counter < 53: # Wait for a key pressed event (cv2.waitKey(4) == -1)
     # print go diff
     detected, _, tvecs, marker = searchAndshow()
-    if marker in detectedLandmarks and marker != None:
+    if marker in detectedLandmarks or marker == None:
        ()
     else: 
         detectedLandmarksReal.append((marker, tvecs))
