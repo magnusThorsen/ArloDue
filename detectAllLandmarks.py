@@ -144,14 +144,9 @@ counter = 0
 while counter < 40: # Wait for a key pressed event (cv2.waitKey(4) == -1)
     # print go diff
     detected, _, tvecs, marker = searchAndshow()
-    if not detected: 
-        ()
-    else: 
-        # check if the marker is already in the list
-        if (marker,_) in detectedLandmarks:
-            ()
-        else:        
-            detectedLandmarks.append((marker, tvecs))
+    if marker not in detectedLandmarks:
+        detectedLandmarks.append((marker, tvecs))
+        
     print(detectedLandmarks)
     print(arlo.go_diff(32, 35, 0, 1))
     sleep(0.15)
