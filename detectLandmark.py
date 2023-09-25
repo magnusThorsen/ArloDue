@@ -67,7 +67,7 @@ def drive30CM():
 
 def drive(distance):
     left_speed = 30
-    right_speed = 33.5
+    right_speed = 33.75
 
     # Calculate time based on distance and wheel speeds
     #average_speed = (left_speed + right_speed) / 2
