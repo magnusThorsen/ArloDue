@@ -71,7 +71,7 @@ def drive(distance):
 
     # Calculate time based on distance and wheel speeds
     #average_speed = (left_speed + right_speed) / 2
-    time = distance / 15.9375
+    time = distance / 16.2
     print("time",time)
     print("distance",distance)
 
