@@ -70,8 +70,8 @@ def drive(distance):
     right_speed = 35
 
     # Calculate time based on distance and wheel speeds
-    average_speed = (left_speed + right_speed) / 2
-    time = distance / (average_speed * 0.01) /1000 * 10
+    #average_speed = (left_speed + right_speed) / 2
+    time = distance / 18.75
     print("time",time)
 
     # Move the robot
