@@ -65,25 +65,9 @@ def drive30CM():
     # Wait a bit before next command
     sleep(0.5)
 
-def drive(distance):
-    left_speed = 30
-    right_speed = 35
+def drive(cm)
 
-    # Calculate time based on distance and wheel speeds
-    average_speed = (left_speed + right_speed) / 2
-    time = distance / (average_speed * 0.01)
 
-    # Move the robot
-    betterGoDiff(left_speed, right_speed, 1, 1, time)
-
-    # Wait a bit while the robot moves forward
-    sleep(time)
-
-    # Send a stop command
-    print(arlo.stop())
-
-    # Wait a bit before the next command
-    sleep(0.5)
 
 
 def turnLeft(degree):
@@ -155,7 +139,10 @@ while val: # Wait for a key pressed event (cv2.waitKey(4) == -1)
         print("tvecs: ",np.linalg.norm(tvecs) / 14.086079 )
         print("turning left.. ")
         turnLeft(np.linalg.norm(rvecs)*3)
-        drive(np.linalg.norm(tvecs)/10)
+        number_of_drrives = np.linalg.norm(tvecs) / 14.086079 / 30
+        for i in range(int(number_of_drrives)):
+            print("driving 30 cm..")
+            drive30CM()
         val = False
         
 
