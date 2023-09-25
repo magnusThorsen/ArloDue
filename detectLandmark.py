@@ -73,6 +73,7 @@ def drive(distance):
     #average_speed = (left_speed + right_speed) / 2
     time = distance / 18.75
     print("time",time)
+    print("distance",distance)
 
     # Move the robot
     betterGoDiff(left_speed, right_speed, 1, 1, time)
@@ -156,7 +157,7 @@ while val: # Wait for a key pressed event (cv2.waitKey(4) == -1)
         print("tvecs: ",np.linalg.norm(tvecs) / 14.086079 )
         print("turning left.. ")
         turnLeft(np.linalg.norm(rvecs)*3)
-        drive(np.linalg.norm(tvecs)) #
+        drive(np.linalg.norm(tvecs)/14.086079) #
         val = False
         
 
