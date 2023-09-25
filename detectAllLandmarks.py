@@ -148,7 +148,7 @@ while counter < 30: # Wait for a key pressed event (cv2.waitKey(4) == -1)
         ()
     else: 
         # check if the marker is already in the list
-        if marker in detectedLandmarks:
+        if (marker,_) in detectedLandmarks:
             ()
         else:        
             detectedLandmarks.append((marker, tvecs))
