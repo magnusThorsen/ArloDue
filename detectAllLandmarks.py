@@ -140,8 +140,8 @@ def searchAndshow():
 val = True
 
 detectedLandmarks = list()
-
-while val: # Wait for a key pressed event (cv2.waitKey(4) == -1)
+counter = 0
+while counter < 30: # Wait for a key pressed event (cv2.waitKey(4) == -1)
     # print go diff
     detected, _, tvecs, marker = searchAndshow()
     if not detected: 
@@ -149,9 +149,10 @@ while val: # Wait for a key pressed event (cv2.waitKey(4) == -1)
         sleep(0.15)
         print(arlo.stop())
         sleep(0.1)
+        counter += 1
     else: 
         # checks if the marker is already in the list
-        if marker not in detectedLandmarks:
+        if (marker, _) not in detectedLandmarks:
             detectedLandmarks.append((marker, tvecs))
     print(detectedLandmarks)
         
