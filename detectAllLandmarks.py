@@ -141,7 +141,7 @@ val = True
 
 detectedLandmarks = list()
 counter = 0
-while counter < 30: # Wait for a key pressed event (cv2.waitKey(4) == -1)
+while counter < 40: # Wait for a key pressed event (cv2.waitKey(4) == -1)
     # print go diff
     detected, _, tvecs, marker = searchAndshow()
     if not detected: 
