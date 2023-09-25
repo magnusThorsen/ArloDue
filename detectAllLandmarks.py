@@ -144,7 +144,9 @@ counter = 0
 while counter < 40: # Wait for a key pressed event (cv2.waitKey(4) == -1)
     # print go diff
     detected, _, tvecs, marker = searchAndshow()
-    if marker not in detectedLandmarks:
+    if marker in detectedLandmarks:
+       ()
+    else: 
         detectedLandmarks.append((marker, tvecs))
         
     print(detectedLandmarks)
