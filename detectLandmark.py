@@ -79,7 +79,7 @@ def drive(distance):
     betterGoDiff(left_speed, right_speed, 1, 1, time)
 
     # Wait a bit while the robot moves forward
-    sleep(time)
+    #sleep(time)
 
     # Send a stop command
     print(arlo.stop())
