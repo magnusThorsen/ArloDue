@@ -112,6 +112,7 @@ def searchAndshow():
                             [0, 0, 1]])
     rvecs = None
     tvecs = None
+    marker_id = None
    # Draw the detected markers on the image
     if len(corners) > 0:
         cv2.aruco.drawDetectedMarkers(image, corners, ids)
