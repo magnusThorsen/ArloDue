@@ -54,7 +54,7 @@ def betterGoDiff(leftSpeed, rightSpeed, directionL, directionR, sleeptime):
 
 
 
-def drive30CM(cm):
+def drive30CM():
     betterGoDiff(30, 35, 1, 1, 1.6)
     # Wait a bit while robot moves forward
    
@@ -142,6 +142,7 @@ while val: # Wait for a key pressed event (cv2.waitKey(4) == -1)
             print("driving 30 cm..")
             drive30CM()
         val = False
+        
 
     
     
