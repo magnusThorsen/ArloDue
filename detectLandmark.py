@@ -71,7 +71,7 @@ def drive(distance):
 
     # Calculate time based on distance and wheel speeds
     #average_speed = (left_speed + right_speed) / 2
-    time = distance / 20
+    time = distance / 18,75
     print("time",time)
     print("distance",distance)
 
@@ -148,6 +148,7 @@ while val: # Wait for a key pressed event (cv2.waitKey(4) == -1)
         sleep(0.15)
         print(arlo.stop())
         sleep(0.1) """
+        val = False
     else: 
         """ print(arlo.stop())
         print("rvecs direction: ",rvecs/np.linalg.norm(rvecs))
