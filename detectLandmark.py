@@ -143,18 +143,19 @@ while val: # Wait for a key pressed event (cv2.waitKey(4) == -1)
     # print go diff 
     detected, rvecs, tvecs = searchAndshow()
     if not detected: 
-        print(arlo.go_diff(32, 35, 0, 1))
+        drive(100)
+        """ print(arlo.go_diff(32, 35, 0, 1))
         sleep(0.15)
         print(arlo.stop())
-        sleep(0.1)
+        sleep(0.1) """
     else: 
-        print(arlo.stop())
+        """ print(arlo.stop())
         print("rvecs direction: ",rvecs/np.linalg.norm(rvecs))
         print("rvecs: ",np.linalg.norm(rvecs))
         print("tvecs: ",np.linalg.norm(tvecs) / 14.086079 )
         print("turning left.. ")
         turnLeft(np.linalg.norm(rvecs)*3)
-        drive(100) #np.linalg.norm(tvecs)/14.086079
+        drive(100) #np.linalg.norm(tvecs)/14.086079 """
         val = False
         
 
