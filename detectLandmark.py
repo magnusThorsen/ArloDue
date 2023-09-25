@@ -150,6 +150,7 @@ while val: # Wait for a key pressed event (cv2.waitKey(4) == -1)
         sleep(0.1) """
         val = False
     else: 
+        drive(100)
         """ print(arlo.stop())
         print("rvecs direction: ",rvecs/np.linalg.norm(rvecs))
         print("rvecs: ",np.linalg.norm(rvecs))
