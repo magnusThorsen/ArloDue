@@ -274,7 +274,7 @@ def RRT(map,goal):
         #print(path)
     return path
 
-
+""" 
 def RRT(map, goal):
     startpoint = (0, 0)
     x_goal, y_goal = goal
@@ -329,7 +329,7 @@ def RRT(map, goal):
 
 print("the right path: " , RRT((np.ones((70, 40), dtype=bool)), (10, 10))) 
 
-
+ """
 
 
 
