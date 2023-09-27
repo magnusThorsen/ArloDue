@@ -134,7 +134,7 @@ def searchAndshow():
 
     # Display the image with detected markers
     cv2.imshow("Detected Markers", image)
-    return detected, rvecs, tvecs, marker_id
+    return detected, rvecs, tvecs, ids
 
 """ 
 val = True
