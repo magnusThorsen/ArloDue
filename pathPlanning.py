@@ -233,18 +233,29 @@ def move(coordinates):
 def reset_coordinates():
     return (0, 0)
 
+def check_coordinates(map,coordinates):
+    x,y = coordinates
+    if x > 11 or x < 0 or y > 11 or y < 0:
+        return True
+        #check if the point is in an obstacle
+    if map[x][y] == False:
+        return True
+    return False
 
-
-def RRT2():
+def RRT2(map, goal):
     current_coordinates = reset_coordinates()
     path = [current_coordinates]
     visited = set()
     visited.add(current_coordinates)
     tries = 0
     
-    while current_coordinates != (10, 10):
-        current_coordinates = move(current_coordinates)
-        if current_coordinates not in visited:
+    while current_coordinates != goal :
+        tmp_coordinates = move(current_coordinates)
+        if check_coordinates(map,tmp_coordinates):
+            continue
+        else: 
+            current_coordinates = tmp_coordinates
+        if current_coordinates not in visited :
             path.append(current_coordinates)
             visited.add(current_coordinates)
         tries += 1
