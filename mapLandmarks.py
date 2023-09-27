@@ -216,7 +216,7 @@ for i in detectedLandmarksReal:
     
 
 
-print(map) 
+#print(map) 
 
 
 
@@ -230,12 +230,12 @@ ax.set_xlim(-50, 700)
 ax.set_ylim(-200, 200)
 ax.set_aspect(1)
 ax.plot(0, 0, 'o', color='red')
-for i in detectedLandmarksReal:
+""" for i in detectedLandmarksReal:
     # plot the landmarks with names on the dots: 
     ax.plot(i[1], i[2], 'o', color='blue')
-    ax.annotate(i[0], (i[1], i[2]))
-for i in range(35):
-    for j in range(20):
+    ax.annotate(i[0], (i[1], i[2])) """
+for i in range(70):
+    for j in range(40):
         if map[i][j] == True:
             ax.plot(i*5, j*5-100, 'o', color='green')
 plt.show()
