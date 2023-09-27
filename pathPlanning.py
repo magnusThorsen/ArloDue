@@ -223,7 +223,7 @@ def RRT(map,goal):
     notThereYet = True
     changedvariable = None
     path_counter = 0
-    def regret(): 
+    def regret(counter_x, counter_y, changedvariable): 
         if changedvariable[0] == counter_x:
             counter_x -= changedvariable[1]
         else: 
@@ -256,15 +256,15 @@ def RRT(map,goal):
                 changedvariable = (counter_y, -1)
         # if already in path, continue
         if (counter_x, counter_y) in path:
-            regret()
+            regret(counter_x, counter_y, changedvariable)
             continue
         #check if the point is in the map
         if counter_x > 11 or counter_x < 0 or counter_y > 11 or counter_y < 0:
-            regret()
+            regret(counter_x, counter_y, changedvariable)
             continue
         #check if the point is in an obstacle
         if map[counter_x][counter_y] == False:
-            regret()
+            regret(counter_x, counter_y, changedvariable)
             continue
         #check if the point is in the goal
         if counter_x == x_goal and counter_y == y_goal:
