@@ -231,6 +231,7 @@ def RRT(map,goal):
 
             print("no path found", path)
             path = list()
+            path.append(startpoint)
         #choose x or y randomly
         if np.random.randint(0,2) == 0:
             if np.random.randint(0,2) == 0:
