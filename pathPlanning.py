@@ -226,7 +226,8 @@ def RRT(map,goal):
         path_counter += 1
         if path_counter > 1000:
             path_counter = 0
-            print("no path found")
+
+            print("no path found", path)
             path = list()
         #choose x or y randomly
         if np.random.randint(0,2) == 0:
