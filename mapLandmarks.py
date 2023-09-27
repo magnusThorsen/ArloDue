@@ -222,7 +222,7 @@ for i in detectedLandmarksReal:
     
 
 
-#print(map) 
+print(map) 
 
 
 
