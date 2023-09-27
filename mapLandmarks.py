@@ -210,7 +210,13 @@ map = np.ones((70, 40), dtype=bool)
 for i in detectedLandmarksReal:
     # if location is on the map, set the value to false:
     if i[1] > 0 and i[1] < 700 and i[2] > -200 and i[2] < 200:
-        map[int(i[1]/10)][int(i[2]/10)] = False
+        x,y = int(i[1]/10), int(i[2]/10) 
+        # set all values in a circle around the landmark of 3 to false:
+        for j in range(-3, 3):
+            for k in range(-3, 3):
+                if x+j > 0 and x+j < 70 and y+k > 0 and y+k < 40:
+                    map[x+j][y+k] = False
+
     else:
         ()
     
@@ -230,17 +236,19 @@ ax.set_xlim(-50, 700)
 ax.set_ylim(-200, 200)
 ax.set_aspect(1)
 ax.plot(0, 0, 'o', color='red')
-""" for i in detectedLandmarksReal:
-    # plot the landmarks with names on the dots: 
-    ax.plot(i[1], i[2], 'o', color='blue')
-    ax.annotate(i[0], (i[1], i[2])) """
+
 for i in range(70):
     for j in range(-20, 20):
         if map[int(i)][int(j)] == True:
             ax.plot(i*10, j*10, 'o', color='green')
         else:
             ax.plot(i*10, j*10, 'o', color='red')
-        
+
+for i in detectedLandmarksReal:
+    # plot the landmarks with names on the dots: 
+    ax.plot(i[1], i[2], 'o', color='blue')
+    ax.annotate(i[0], (i[1], i[2]))
+
 plt.show()
 
 
