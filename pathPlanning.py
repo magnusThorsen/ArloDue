@@ -274,62 +274,12 @@ def RRT(map,goal):
         #print(path)
     return path
 
-""" 
-def RRT(map, goal):
-    startpoint = (0, 0)
-    x_goal, y_goal = goal
-    path = [startpoint]
-    counter_x = 0
-    counter_y = 0
-    notThereYet = True
-    path_counter = 0
-
-    while notThereYet:
-        path_counter += 1
-        if path_counter > 1000:
-            print("No path found")
-            return None
-
-        # Choose x or y randomly
-        if np.random.randint(0, 2) == 0:
-            if np.random.randint(0, 2) == 0:
-                counter_x += 1
-            else:
-                counter_x -= 1
-        else:
-            if np.random.randint(0, 2) == 0:
-                counter_y += 1
-            else:
-                counter_y -= 1
-
-        # Check if the point is in the map
-        if counter_x > 11 or counter_x < 0 or counter_y > 11 or counter_y < 0:
-            continue
-
-        # Check if the point is in an obstacle
-        if not map[counter_x][counter_y]:
-            continue
-
-        # Check if the point is in the goal
-        if counter_x == x_goal and counter_y == y_goal:
-            notThereYet = False
-
-        new_point = (counter_x, counter_y)
-
-        # Check if the new point is already in the path
-        if new_point in path:
-            continue
-
-        # Add the point to the path
-        path.append(new_point)
-
-    return path
 
     
 
 print("the right path: " , RRT((np.ones((70, 40), dtype=bool)), (10, 10))) 
 
- """
+
 
 
 
