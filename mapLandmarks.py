@@ -235,7 +235,7 @@ ax.plot(0, 0, 'o', color='red')
     ax.plot(i[1], i[2], 'o', color='blue')
     ax.annotate(i[0], (i[1], i[2])) """
 for i in range(70):
-    for j in range(40):
+    for j in range(-20, 20):
         if map[int(i)][int(j)] == True:
             ax.plot(i*10, j*10, 'o', color='green')
         else:
