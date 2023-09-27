@@ -195,7 +195,9 @@ def makePlot():
     ax.set_aspect(1)
     ax.plot(0, 0, 'o', color='red')
     for i in detectedLandmarksReal:
-        ax.plot(i[1], i[2], 'o', color='blue')
+        # plot the landmarks with names on the dots: 
+        ax.annotate(i[0], (i[1], i[2]))
+        #ax.plot(i[1], i[2], 'o', color='blue')
     plt.show() 
 
 makePlot()
