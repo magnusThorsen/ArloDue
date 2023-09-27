@@ -183,8 +183,21 @@ def detectCollision(x, y):
     
 
 
+detectedLandmarksReal = (searchAndshow())
 
-print(searchAndshow())
+print(detectedLandmarksReal)
+#make a plot of the landmarks and the robot in 0.0
+def makePlot():
+    import matplotlib.pyplot as plt
+    fig, ax = plt.subplots()
+    ax.set_xlim(-100, 100)
+    ax.set_ylim(-100, 100)
+    ax.set_aspect(1)
+    ax.plot(0, 0, 'o', color='red')
+    for i in detectedLandmarksReal:
+        ax.plot(i[0], i[1], 'o', color='blue')
+    plt.show() 
 
+makePlot()
 
 # Finished successfully
