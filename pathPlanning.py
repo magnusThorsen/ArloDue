@@ -213,7 +213,7 @@ def getmap():
 #make RRT
 
 #RRT takes a map and a goal as input
-""" def RRT(map,goal):
+def RRT(map,goal):
     startpoint = (0,0)
     x_goal, y_goal = goal
     path = list()
@@ -223,6 +223,11 @@ def getmap():
     notThereYet = True
     changedvariable = None
     path_counter = 0
+    def regret(): 
+        if changedvariable[0] == counter_x:
+            counter_x -= changedvariable[1]
+        else: 
+            counter_y -= changedvariable[1]
     while notThereYet:  
         path_counter += 1
         if path_counter > 1000:
@@ -251,16 +256,15 @@ def getmap():
                 changedvariable = (counter_y, -1)
         # if already in path, continue
         if (counter_x, counter_y) in path:
+            regret()
             continue
         #check if the point is in the map
         if counter_x > 11 or counter_x < 0 or counter_y > 11 or counter_y < 0:
-            if changedvariable[0] == counter_x:
-                counter_x -= changedvariable[1]
-            else: 
-                counter_y -= changedvariable[1]
+            regret()
             continue
         #check if the point is in an obstacle
         if map[counter_x][counter_y] == False:
+            regret()
             continue
         #check if the point is in the goal
         if counter_x == x_goal and counter_y == y_goal:
@@ -268,7 +272,7 @@ def getmap():
         #add the point to the path
         path.append((counter_x, counter_y))
         #print(path)
-    return path """
+    return path
 
 
 def RRT(map, goal):
