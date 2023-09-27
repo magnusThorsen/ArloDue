@@ -134,7 +134,7 @@ def searchAndshow():
             distance = np.linalg.norm(translation_vector) / 14.086079
             ycord = rvecs[i][0]/np.linalg.norm(rvecs[i][0])
             
-            returnlst.append((marker_id, ("x: ", tvecs[i][0][2]/14.086079), ("y: ", tvecs[i][0][0]/14.086079)))
+            returnlst.append((marker_id, tvecs[i][0][2]/14.086079, tvecs[i][0][0]/14.086079))
 
             """ print(f"Detected Marker ID: {marker_id}")
             print(f"Distance to Marker {marker_id}: {distance} units") """
@@ -195,7 +195,7 @@ def makePlot():
     ax.set_aspect(1)
     ax.plot(0, 0, 'o', color='red')
     for i in detectedLandmarksReal:
-        ax.plot(i[0], i[1], 'o', color='blue')
+        ax.plot(i[1], i[2], 'o', color='blue')
     plt.show() 
 
 makePlot()
