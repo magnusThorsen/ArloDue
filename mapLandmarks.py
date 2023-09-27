@@ -203,10 +203,10 @@ def makePlot():
     plt.show() 
 
 #create a boolean 2d array of size 70 * 40 and set the values to true: 
-map = np.ones((7, 4), dtype=bool)
+map = np.ones((70, 40), dtype=bool)
 # check if cordinates from detected landmarks are in the map and set the values to false:
 for i in detectedLandmarksReal:
-    map[int(i[1]/100)][int(i[2]/100)] = False
+    map[int(i[1]/10)][int(i[2]/10)+20] = False
 print(map) 
 
 
