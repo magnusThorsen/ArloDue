@@ -211,22 +211,6 @@ for i in detectedLandmarksReal:
     map[int(i[1]/5)][int(i[2]/5)+10] = False
 print(map) 
 
-#show the grid in a matplotlib plot:
-import matplotlib.pyplot as plt
-fig, ax = plt.subplots()
-ax.set_xlim(-50, 700)
-ax.set_ylim(-200, 200)
-ax.set_aspect(1)
-ax.plot(0, 0, 'o', color='red')
-for i in detectedLandmarksReal:
-    # plot the landmarks with names on the dots: 
-    ax.plot(i[1], i[2], 'o', color='blue')
-    ax.annotate(i[0], (i[1], i[2]))
-for i in range(35):
-    for j in range(20):
-        if map[i][j] == True:
-            ax.plot(i*5, j*5-100, 'o', color='green')
-plt.show()
 
 
 #makePlot()
