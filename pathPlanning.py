@@ -161,8 +161,7 @@ def detectCollision(x, y):
 
 
 detectedLandmarksReal = (searchAndshow())
-
-print(detectedLandmarksReal)
+#print(detectedLandmarksReal)
 #make a plot of the landmarks and the robot in 0.0
 
 def makePlot():
