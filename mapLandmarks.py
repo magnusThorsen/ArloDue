@@ -205,10 +205,17 @@ def makePlot():
     plt.show() 
 
 #create a boolean 2d array of size 70 * 40 and set the values to true: 
-map = np.ones((35, 20), dtype=bool)
+map = np.ones((70, 40), dtype=bool)
 # check if cordinates from detected landmarks are in the map and set the values to false:
 for i in detectedLandmarksReal:
-    map[int(i[1]/5)][int(i[2]/5)+10] = False
+    # if location is on the map, set the value to false:
+    if i[1] > 0 and i[1] < 700 and i[2] > -200 and i[2] < 200:
+        map[int(i[1]/10)][int(i[2]/10)] = False
+    else:
+        ()
+    
+
+
 print(map) 
 
 
@@ -216,6 +223,22 @@ print(map)
 #makePlot()
 
 
+#show the grid in a matplotlib plot:
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots()
+ax.set_xlim(-50, 700)
+ax.set_ylim(-200, 200)
+ax.set_aspect(1)
+ax.plot(0, 0, 'o', color='red')
+for i in detectedLandmarksReal:
+    # plot the landmarks with names on the dots: 
+    ax.plot(i[1], i[2], 'o', color='blue')
+    ax.annotate(i[0], (i[1], i[2]))
+for i in range(35):
+    for j in range(20):
+        if map[i][j] == True:
+            ax.plot(i*5, j*5-100, 'o', color='green')
+plt.show()
 
 
 # Finished successfully
