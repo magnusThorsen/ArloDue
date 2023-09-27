@@ -120,11 +120,13 @@ def searchAndshow():
         
         # Estimate pose for each detected marker
         rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(corners, 200, cameraMatrix, None)
+        print("tvecs", tvecs)
+        print("rvecs", rvecs)
 
         # Iterate through the detected markers and print their IDs and pose information
         for i in range(len(ids)):
             marker_id = ids[i][0]
-            translation_vector = tvecs
+            translation_vector = tvecs[i]
 
             # Calculate the Euclidean distance (norm) from the camera to the marker
             distance = np.linalg.norm(translation_vector) / 14.086079
