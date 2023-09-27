@@ -122,6 +122,7 @@ def searchAndshow():
         rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(corners, 200, cameraMatrix, None)
         print("tvecs", tvecs)
         print("rvecs", rvecs)
+        print("corners", corners)
 
         # Iterate through the detected markers and print their IDs and pose information
         for i in range(len(ids)):
