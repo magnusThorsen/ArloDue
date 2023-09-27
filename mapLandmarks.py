@@ -128,8 +128,8 @@ def searchAndshow():
             # Calculate the Euclidean distance (norm) from the camera to the marker
             distance = np.linalg.norm(translation_vector)
 
-            print(f"Detected Marker ID: {marker_id}")
-            print(f"Distance to Marker {marker_id}: {distance} units")
+            """ print(f"Detected Marker ID: {marker_id}")
+            print(f"Distance to Marker {marker_id}: {distance} units") """
         detected = True
 
     # Display the image with detected markers
