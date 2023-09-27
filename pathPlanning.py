@@ -6,6 +6,8 @@ import sys
 import cv2 # Import the OpenCV library
 import cv2.aruco as aruco
 import numpy as np # Import Numpy library
+import matplotlib.pyplot as plt
+
 np.set_printoptions(threshold=sys.maxsize)
 
 # Create a robot object and initialize
@@ -164,7 +166,6 @@ detectedLandmarksReal = (searchAndshow())
 #print(detectedLandmarksReal)
 #make a plot of the landmarks and the robot in 0.0
 
-import matplotlib.pyplot as plt
 def makePlot():
     fig, ax = plt.subplots()
     ax.set_xlim(-50, 700)
@@ -272,9 +273,11 @@ def getmap():
 
     
 
-print("the right path: " , RRT((np.ones((70, 40), dtype=bool)), (10, 10))) """
+print("the right path: " , RRT((np.ones((70, 40), dtype=bool)), (10, 10))) 
+ """
 
-
+import numpy as np
+import matplotlib.pyplot as plt
 
 # Function to visualize the path
 def visualize_path(map, path):
@@ -292,7 +295,7 @@ def RRT(map, goal):
 
     while True:
         # Randomly sample a point
-        sample = (np.random.randint(0, 11), np.random.randint(0, 11))
+        sample = (np.random.randint(0, 12), np.random.randint(0, 12))
 
         # Find the nearest point in the path
         nearest = min(path, key=lambda x: np.linalg.norm(np.array(x) - np.array(sample)))
@@ -328,6 +331,7 @@ path = RRT(map, goal)
 
 # Visualize the path
 visualize_path(map, path)
+
 
 
 # Finished successfully
