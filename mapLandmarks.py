@@ -178,4 +178,10 @@ def detectCollision(x, y):
 detected, _, tvecs, marker = searchAndshow()
 print("marker",marker)
 
+detected, _, tvecs, marker = searchAndshow()
+print("marker",marker)
+
+detected, _, tvecs, marker = searchAndshow()
+print("marker",marker)
+
 # Finished successfully
