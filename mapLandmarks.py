@@ -123,6 +123,7 @@ def searchAndshow():
         print("tvecs", tvecs)
         print("rvecs", rvecs)
         print("corners", corners)
+        print("ids", ids)
 
         # Iterate through the detected markers and print their IDs and pose information
         for i in range(len(ids)):
