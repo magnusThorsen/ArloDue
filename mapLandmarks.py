@@ -190,14 +190,15 @@ print(detectedLandmarksReal)
 def makePlot():
     import matplotlib.pyplot as plt
     fig, ax = plt.subplots()
-    ax.set_xlim(-100, 500)
-    ax.set_ylim(-500, 500)
+    ax.set_xlim(-100, 1000)
+    ax.set_ylim(-100, 100)
     ax.set_aspect(1)
     ax.plot(0, 0, 'o', color='red')
     for i in detectedLandmarksReal:
         # plot the landmarks with names on the dots: 
+        ax.plot(i[1], i[2], 'o', color='blue')
         ax.annotate(i[0], (i[1], i[2]))
-        #ax.plot(i[1], i[2], 'o', color='blue')
+        
     plt.show() 
 
 makePlot()
