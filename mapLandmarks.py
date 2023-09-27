@@ -234,12 +234,12 @@ ax.plot(0, 0, 'o', color='red')
     # plot the landmarks with names on the dots: 
     ax.plot(i[1], i[2], 'o', color='blue')
     ax.annotate(i[0], (i[1], i[2])) """
-for i in range(700):
-    for j in range(400):
-        if map[int(i/10)][int(j/10)] == True:
-            ax.plot(i, j, 'o', color='green')
+for i in range(70):
+    for j in range(40):
+        if map[int(i)][int(j)] == True:
+            ax.plot(i*10, j*10, 'o', color='green')
         else:
-            ax.plot(i, j, 'o', color='red')
+            ax.plot(i*10, j*10, 'o', color='red')
         
 plt.show()
 
