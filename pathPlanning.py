@@ -223,9 +223,15 @@ def RRT(map,goal):
     while notThereYet:  
         #choose x or y randomly
         if np.random.randint(0,2) == 0:
-            counter_x += 1
+            if np.random.randint(0,2) == 0:
+                counter_x += 1
+            else:
+                counter_x -= 1
         else:
-            counter_y += 1
+            if np.random.randint(0,2) == 0:
+                counter_y += 1
+            else:
+                counter_y -= 1
         #check if the point is in the map
         if counter_x > 69 or counter_x < 0 or counter_y > 19 or counter_y < -19:
             continue
@@ -237,12 +243,13 @@ def RRT(map,goal):
             notThereYet = False
         #add the point to the path
         path.append((counter_x, counter_y))
+        print(path)
     return path
 
 
     
 
-RRT((np.ones((70, 40), dtype=bool)), (10, 10))
+print(RRT((np.ones((70, 40), dtype=bool)), (10, 10)))
 
 
 # Finished successfully
