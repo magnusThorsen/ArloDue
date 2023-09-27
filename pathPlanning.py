@@ -237,6 +237,9 @@ def RRT(map,goal):
             else:
                 counter_y -= 1
                 changedvariable = (counter_x, -1)
+        # if already in path, continue
+        if (counter_x, counter_y) in path:
+            continue
         #check if the point is in the map
         if counter_x > 11 or counter_x < 0 or counter_y > 11 or counter_y < 0:
             if changedvariable[0] == counter_x:
