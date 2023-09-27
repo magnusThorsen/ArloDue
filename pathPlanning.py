@@ -7,6 +7,7 @@ import cv2 # Import the OpenCV library
 import cv2.aruco as aruco
 import numpy as np # Import Numpy library
 import matplotlib.pyplot as plt
+import random
 
 np.set_printoptions(threshold=sys.maxsize)
 
@@ -213,6 +214,52 @@ def getmap():
 #make RRT
 
 #RRT takes a map and a goal as input
+
+
+
+def move(coordinates):
+    x, y = coordinates
+    direction = random.choice(['x', 'y'])
+    
+    if direction == 'x':
+        x += random.choice([-1, 1])
+    else:
+        y += random.choice([-1, 1])
+    
+    return x, y
+
+
+
+def reset_coordinates():
+    return (0, 0)
+
+
+
+def RRT2():
+    current_coordinates = reset_coordinates()
+    path = [current_coordinates]
+    visited = set()
+    visited.add(current_coordinates)
+    tries = 0
+    
+    while current_coordinates != (10, 10):
+        current_coordinates = move(current_coordinates)
+        if current_coordinates not in visited:
+            path.append(current_coordinates)
+            visited.add(current_coordinates)
+        tries += 1
+        
+        if tries >= 1000:
+            current_coordinates = reset_coordinates()
+            path = [current_coordinates]
+            visited = set()
+            visited.add(current_coordinates)
+            tries = 0
+    
+    return path
+
+
+
 def RRT(map,goal):
     startpoint = (0,0)
     x_goal, y_goal = goal
@@ -267,8 +314,8 @@ def RRT(map,goal):
 
     
 
-print("the right path: " , RRT((np.ones((70, 40), dtype=bool)), (10, 10))) 
-
+#print("the right path: " , RRT((np.ones((70, 40), dtype=bool)), (10, 10))) 
+print("the right path", RRT2())
 
 
 
