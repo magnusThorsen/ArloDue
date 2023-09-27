@@ -134,7 +134,7 @@ def searchAndshow():
 
     # Display the image with detected markers
     cv2.imshow("Detected Markers", image)
-    return detected, rvecs, tvecs, ids
+    return detected, rvecs, tvecs, marker_id
 
 """ 
 val = True
@@ -175,13 +175,7 @@ def detectCollision(x, y):
 
 
 
-detected, _, tvecs, marker = searchAndshow()
-print("marker",marker)
+print(searchAndshow())
 
-detected, _, tvecs, marker = searchAndshow()
-print("marker",marker)
-
-detected, _, tvecs, marker = searchAndshow()
-print("marker",marker)
 
 # Finished successfully
