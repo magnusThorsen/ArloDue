@@ -97,6 +97,7 @@ def turnLeft(degree):
    sleep(0.5)
    
 def searchAndshow(): 
+    returnlst = list()
     detected = False
     # Load the image
     image = cam.capture_array("main")  # Load your image here
@@ -126,15 +127,18 @@ def searchAndshow():
             translation_vector = tvecs
 
             # Calculate the Euclidean distance (norm) from the camera to the marker
-            distance = np.linalg.norm(translation_vector)
+            distance = np.linalg.norm(translation_vector) / 14.086079
+            
+            returnlst.append((marker_id, distance, rvecs))
 
             """ print(f"Detected Marker ID: {marker_id}")
             print(f"Distance to Marker {marker_id}: {distance} units") """
+
         detected = True
 
     # Display the image with detected markers
     cv2.imshow("Detected Markers", image)
-    return detected, rvecs, tvecs, marker_id
+    return returnlst
 
 """ 
 val = True
