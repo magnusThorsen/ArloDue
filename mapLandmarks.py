@@ -194,7 +194,6 @@ def makePlot():
     ax.set_xlim(-50, 700)
     ax.set_ylim(-200, 200)
     ax.set_aspect(1)
-    ax.grid(True, which='both')
     ax.plot(0, 0, 'o', color='red')
     for i in detectedLandmarksReal:
         # plot the landmarks with names on the dots: 
@@ -203,6 +202,14 @@ def makePlot():
         
     plt.show() 
 
+#create a boolean 2d array of size 70 * 40 and set the values to true: 
+map = np.ones((70, 40), dtype=bool)
+print(map) 
+
+
 makePlot()
+
+
+
 
 # Finished successfully
