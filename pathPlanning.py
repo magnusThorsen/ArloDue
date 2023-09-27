@@ -233,7 +233,7 @@ def RRT(map,goal):
             else:
                 counter_y -= 1
         #check if the point is in the map
-        if counter_x > 69 or counter_x < 0 or counter_y > 19 or counter_y < -19:
+        if counter_x > 11 or counter_x < 0 or counter_y > 11 or counter_y < 0:
             continue
         #check if the point is in an obstacle
         if map[counter_x][counter_y] == False:
