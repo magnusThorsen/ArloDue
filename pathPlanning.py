@@ -222,7 +222,7 @@ def RRT(map,goal):
     notThereYet = True
     while notThereYet:  
         #choose x or y randomly
-        if np.random.randxnt(0,2) == 0:
+        if np.random.randint(0,2) == 0:
             counter_x += 1
         else:
             counter_y += 1
