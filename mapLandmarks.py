@@ -187,12 +187,14 @@ detectedLandmarksReal = (searchAndshow())
 
 print(detectedLandmarksReal)
 #make a plot of the landmarks and the robot in 0.0
+
 def makePlot():
     import matplotlib.pyplot as plt
     fig, ax = plt.subplots()
-    ax.set_xlim(-100, 700)
+    ax.set_xlim(-50, 700)
     ax.set_ylim(-200, 200)
     ax.set_aspect(1)
+    ax.grid(True, which='both')
     ax.plot(0, 0, 'o', color='red')
     for i in detectedLandmarksReal:
         # plot the landmarks with names on the dots: 
