@@ -214,8 +214,7 @@ for i in detectedLandmarksReal:
         # set all values in a circle around the landmark of 3 to false:
         for j in range(-3, 3):
             for k in range(-3, 3):
-                if x+j > 0 and x+j < 70 and y+k > 0 and y+k < 40:
-                    map[x+j][y+k] = False
+                map[x+j][y+k] = False
 
     else:
         ()
