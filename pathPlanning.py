@@ -221,14 +221,10 @@ def RRT(map,goal):
     counter_x = 0
     counter_y = 0
     notThereYet = True
-    changedvariable = None
     path_counter = 0
-    def regret(counter_x, counter_y, changedvariable): 
-        if changedvariable[0] == counter_x:
-            counter_x -= changedvariable[1]
-        else: 
-            counter_y -= changedvariable[1]
     while notThereYet:  
+        tmp_x = 0
+        tmp_y = 0
         path_counter += 1
         if path_counter > 1000:
             path_counter = 0
@@ -238,38 +234,32 @@ def RRT(map,goal):
             print("no path found", path)
             path = list()
             path.append(startpoint)
-            continue
         #choose x or y randomly
         if np.random.randint(0,2) == 0:
             if np.random.randint(0,2) == 0:
-                counter_x += 1
-                changedvariable = (counter_x, 1)
+                tmp_x = counter_x + 1
             else:
-                counter_x -= 1
-                changedvariable = (counter_x, -1)
+                tmp_x = counter_x - 1
         else:
             if np.random.randint(0,2) == 0:
-                counter_y += 1
-                changedvariable = (counter_y, 1)
+                tmp_y = counter_y + 1
             else:
-                counter_y -= 1
-                changedvariable = (counter_y, -1)
+                tmp_y = counter_y - 1
         # if already in path, continue
-        if (counter_x, counter_y) in path:
-            regret(counter_x, counter_y, changedvariable)
+        if (tmp_x, tmp_y) in path:
             continue
         #check if the point is in the map
-        if counter_x > 11 or counter_x < 0 or counter_y > 11 or counter_y < 0:
-            regret(counter_x, counter_y, changedvariable)
+        if tmp_x > 11 or tmp_x < 0 or tmp_y > 11 or tmp_y < 0:
             continue
         #check if the point is in an obstacle
-        if map[counter_x][counter_y] == False:
-            regret(counter_x, counter_y, changedvariable)
+        if map[tmp_x][tmp_y] == False:
             continue
         #check if the point is in the goal
-        if counter_x == x_goal and counter_y == y_goal:
+        if tmp_x == x_goal and tmp_y == y_goal:
             notThereYet = False
         #add the point to the path
+        counter_x = tmp_x
+        counter_y = tmp_y
         path.append((counter_x, counter_y))
         #print(path)
     return path
