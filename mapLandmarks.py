@@ -205,12 +205,13 @@ def makePlot():
     plt.show() 
 
 #create a boolean 2d array of size 70 * 40 and set the values to true: 
-map = np.ones((70, 40), dtype=bool)
+map = np.ones((35, 20), dtype=bool)
 # check if cordinates from detected landmarks are in the map and set the values to false:
 for i in detectedLandmarksReal:
-    map[int(i[1]/10)][int(i[2]/10)+20] = False
+    map[int(i[1]/5)][int(i[2]/5)+10] = False
 print(map) 
 
+#show the grid in a matplot
 
 #makePlot()
 
