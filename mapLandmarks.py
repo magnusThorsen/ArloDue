@@ -132,9 +132,9 @@ def searchAndshow():
 
             # Calculate the Euclidean distance (norm) from the camera to the marker
             distance = np.linalg.norm(translation_vector) / 14.086079
-            ycord = np.linalg.norm(rvecs[i][0]) / 14.086079
+            ycord = rvecs[i][0]/np.linalg.norm(rvecs[i][0])
             
-            returnlst.append((marker_id, distance, ycord))
+            returnlst.append((marker_id, distance, ("y-direction",ycord)))
 
             """ print(f"Detected Marker ID: {marker_id}")
             print(f"Distance to Marker {marker_id}: {distance} units") """
