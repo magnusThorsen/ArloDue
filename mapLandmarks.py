@@ -190,8 +190,8 @@ print(detectedLandmarksReal)
 def makePlot():
     import matplotlib.pyplot as plt
     fig, ax = plt.subplots()
-    ax.set_xlim(-100, 100)
-    ax.set_ylim(-100, 100)
+    ax.set_xlim(-1000, 1000)
+    ax.set_ylim(-1000, 1000)
     ax.set_aspect(1)
     ax.plot(0, 0, 'o', color='red')
     for i in detectedLandmarksReal:
