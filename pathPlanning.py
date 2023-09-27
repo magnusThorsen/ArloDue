@@ -225,6 +225,7 @@ def RRT(map,goal):
     while notThereYet:  
         path_counter += 1
         if path_counter > 1000:
+            path_counter = 0
             print("no path found")
             path = list()
         #choose x or y randomly
