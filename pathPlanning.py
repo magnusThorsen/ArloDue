@@ -164,8 +164,8 @@ detectedLandmarksReal = (searchAndshow())
 #print(detectedLandmarksReal)
 #make a plot of the landmarks and the robot in 0.0
 
+import matplotlib.pyplot as plt
 def makePlot():
-    import matplotlib.pyplot as plt
     fig, ax = plt.subplots()
     ax.set_xlim(-50, 700)
     ax.set_ylim(-200, 200)
@@ -212,7 +212,7 @@ def getmap():
 #make RRT
 
 #RRT takes a map and a goal as input
-def RRT(map,goal):
+""" def RRT(map,goal):
     startpoint = (0,0)
     x_goal, y_goal = goal
     path = list()
@@ -272,7 +272,62 @@ def RRT(map,goal):
 
     
 
-print("the right path: " , RRT((np.ones((70, 40), dtype=bool)), (10, 10)))
+print("the right path: " , RRT((np.ones((70, 40), dtype=bool)), (10, 10))) """
+
+
+
+# Function to visualize the path
+def visualize_path(map, path):
+    plt.imshow(map, cmap='gray')
+    plt.colorbar()
+    plt.scatter(*zip(*path), color='red', marker='.')
+    plt.gca().invert_yaxis()
+    plt.show()
+
+# RRT takes a map and a goal as input
+def RRT(map, goal):
+    x_goal, y_goal = goal
+    path = []
+    path.append((0, 0))
+
+    while True:
+        # Randomly sample a point
+        sample = (np.random.randint(0, 11), np.random.randint(0, 11))
+
+        # Find the nearest point in the path
+        nearest = min(path, key=lambda x: np.linalg.norm(np.array(x) - np.array(sample)))
+
+        # Steer towards the sampled point within a maximum step size
+        max_step = 1
+        direction = np.array(sample) - np.array(nearest)
+        if np.linalg.norm(direction) > max_step:
+            direction = direction / np.linalg.norm(direction) * max_step
+        new_point = tuple(np.array(nearest) + direction)
+
+        # Check if the new point is inside the map and not in an obstacle
+        if (0 <= new_point[0] <= 11) and (0 <= new_point[1] <= 11) and map[new_point[0]][new_point[1]]:
+            path.append(new_point)
+
+            # Check if the new point is close to the goal
+            if np.linalg.norm(np.array(new_point) - np.array(goal)) < max_step:
+                path.append(goal)
+                break
+
+    return path
+
+# Define a map with obstacles (1 represents obstacles, 0 represents free space)
+map = np.ones((12, 12), dtype=bool)
+map[1:4, 3:9] = 0
+map[5:9, 2:5] = 0
+
+# Define the goal
+goal = (10, 10)
+
+# Find the path
+path = RRT(map, goal)
+
+# Visualize the path
+visualize_path(map, path)
 
 
 # Finished successfully
