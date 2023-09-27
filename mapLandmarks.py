@@ -5,6 +5,7 @@ import robot
 import cv2 # Import the OpenCV library
 import cv2.aruco as aruco
 import numpy as np # Import Numpy library
+np.set_printoptions(threshold=sys.maxsize)
 
 # Create a robot object and initialize
 arlo = robot.Robot()
@@ -210,7 +211,7 @@ for i in detectedLandmarksReal:
 print(map) 
 
 
-makePlot()
+#makePlot()
 
 
 
