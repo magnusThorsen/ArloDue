@@ -226,6 +226,8 @@ def RRT(map,goal):
         path_counter += 1
         if path_counter > 1000:
             path_counter = 0
+            counter_x = 0
+            counter_y = 0
 
             print("no path found", path)
             path = list()
