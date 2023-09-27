@@ -224,7 +224,8 @@ def RRT(map,goal):
     path_counter = 0
     while notThereYet:  
         path_counter += 1
-        if path_counter > 100:
+        if path_counter > 1000:
+            print("no path found")
             path = list()
         #choose x or y randomly
         if np.random.randint(0,2) == 0:
@@ -259,7 +260,7 @@ def RRT(map,goal):
             notThereYet = False
         #add the point to the path
         path.append((counter_x, counter_y))
-        print(path)
+        #print(path)
     return path
 
 
