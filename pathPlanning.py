@@ -221,7 +221,11 @@ def RRT(map,goal):
     counter_y = 0
     notThereYet = True
     changedvariable = None
+    path_counter = 0
     while notThereYet:  
+        path_counter += 1
+        if path_counter > 100:
+            path = list()
         #choose x or y randomly
         if np.random.randint(0,2) == 0:
             if np.random.randint(0,2) == 0:
