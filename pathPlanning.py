@@ -232,6 +232,7 @@ def RRT(map,goal):
             print("no path found", path)
             path = list()
             path.append(startpoint)
+            continue
         #choose x or y randomly
         if np.random.randint(0,2) == 0:
             if np.random.randint(0,2) == 0:
@@ -271,7 +272,7 @@ def RRT(map,goal):
 
     
 
-print(RRT((np.ones((70, 40), dtype=bool)), (10, 10)))
+print("the right path: " , RRT((np.ones((70, 40), dtype=bool)), (10, 10)))
 
 
 # Finished successfully
