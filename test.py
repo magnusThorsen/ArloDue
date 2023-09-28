@@ -74,11 +74,11 @@ def RRT2(map, goal):
 map1 = np.ones((70, 40), dtype=bool)
 """ map1[25:45, 10:30] = False
 map1[60:70, 30:40] = False """
-map1[5:6, 0:10] = False
+map1[5:8, 5:10] = False
 
 #use matplotlib to show the map and the path 
 import matplotlib.pyplot as plt
-path, numtries = RRT2(map1, (65,10))
+path, numtries = RRT2(map1, (20,10))
 print(numtries)
 path = np.array(path)
 plt.imshow(map1.T, cmap='Greys', origin='lower')
