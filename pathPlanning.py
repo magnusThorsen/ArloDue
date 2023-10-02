@@ -295,12 +295,13 @@ def RRT2(map, goal):
 map1 = np.ones((70, 40), dtype=bool)
 map1[5:8, 5:10] = False
 
+themap = getmap()
 #use matplotlib to show the map and the path 
 import matplotlib.pyplot as plt
-path = RRT2(getmap(), (10,10))
+path = RRT2(themap, (10,10))
 print(path, len(path))
 path = np.array(path)
-plt.imshow(map1.T, cmap='Greys', origin='lower')
+plt.imshow(themap.T, cmap='Greys', origin='lower')
 plt.plot(path[:,0], path[:,1], 'r-')
 plt.show()
 
