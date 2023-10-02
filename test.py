@@ -2,7 +2,7 @@ import cv2
 import math
 import numpy as np
 import random
-import RobotDue
+import robot as RobotDue
 import FindLandmark
 from time import sleep
 import copy
