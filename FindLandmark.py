@@ -5,7 +5,7 @@ from math import degrees
 import cv2 # Import the OpenCV library
 import cv2.aruco
 import numpy as np
-import RobotDue
+import robot as RobotDue
 from time import sleep
 import math
 import time
