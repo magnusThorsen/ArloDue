@@ -292,7 +292,7 @@ def RRT2(map, goal):
 # 1. a 20*20 square in the middle
 # 2. a 10*10 square in the bottom left corner
 # 3. a 10*10 square in the top right corner
-map1 = np.ones((70, 40), dtype=bool)
+""" map1 = np.ones((70, 40), dtype=bool)
 map1[5:8, 5:10] = False
 
 themap = getmap()
@@ -304,8 +304,9 @@ path = np.array(path)
 plt.imshow(themap.T, cmap='Greys', origin='lower')
 plt.plot(path[:,0], path[:,1], 'r-')
 plt.show()
+ """
 
-
+makePlot()
 
 
 # Finished successfully
