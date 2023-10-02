@@ -182,12 +182,12 @@ def makePlot():
 
 def getmap():
     #create a boolean 2d array of size 70 * 40 and set the values to true: 
-    map = np.ones((70, 40), dtype=bool)
+    map = np.ones((35, 20), dtype=bool)
     # check if cordinates from detected landmarks are in the map and set the values to false:
     for i in detectedLandmarksReal:
         # if location is on the map, set the value to false:
-        if i[1] > 0 and i[1] < 700 and i[2] > -200 and i[2] < 200:
-            x,y = int(i[1]/10), int(i[2]/10) 
+        if i[1]/2 > 0 and i[1]/2 < 350 and i[2]/2 > -100 and i[2]/2 < 100:
+            x,y = int(i[1]/20), int(i[2]/20) 
             # set all values in a circle around the landmark of 3 to false:
             for j in range(-3, 3):
                 for k in range(-3, 3):
