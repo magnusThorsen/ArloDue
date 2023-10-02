@@ -254,7 +254,7 @@ def RRT2(map, goal):
     visited.add(current_coordinates)
     tries = 0
     
-    while numtries < 1000:
+    while numtries < 100:
         if current_coordinates == goal:
             if shortest_path == None or len(path) < len(shortest_path):
                 shortest_path = path
