@@ -225,6 +225,9 @@ def move(coordinates):
         x += random.choice([-1, 1])
     else:
         y += random.choice([-1, 1])
+
+    x = min(max(x, 0), 10)
+    y = min(max(y, 0), 10)
     
     return x, y
 
@@ -235,7 +238,7 @@ def reset_coordinates():
 
 def check_coordinates(map,coordinates):
     x,y = coordinates
-    if x > 11 or x < 0 or y > 11 or y < 0:
+    if x > 69 or x < 0 or y > 19 or y < -19:
         return True
         #check if the point is in an obstacle
     if map[x][y] == False:
@@ -243,92 +246,66 @@ def check_coordinates(map,coordinates):
     return False
 
 def RRT2(map, goal):
+    shortest_path = None
+    numtries = 0
     current_coordinates = reset_coordinates()
     path = [current_coordinates]
     visited = set()
     visited.add(current_coordinates)
     tries = 0
     
-    while current_coordinates != goal :
-        tmp_coordinates = move(current_coordinates)
-        if check_coordinates(map,tmp_coordinates):
-            continue
-        else: 
-            current_coordinates = tmp_coordinates
-        if current_coordinates not in visited :
-            path.append(current_coordinates)
-            visited.add(current_coordinates)
-        tries += 1
-        
-        if tries >= 1000:
+    while numtries < 1000:
+        if current_coordinates == goal:
+            if shortest_path == None or len(path) < len(shortest_path):
+                shortest_path = path
+                print("Current shortest Path",shortest_path, len(shortest_path))
+            
             current_coordinates = reset_coordinates()
             path = [current_coordinates]
             visited = set()
             visited.add(current_coordinates)
             tries = 0
-    
-    return path
-
-
-
-def RRT(map,goal):
-    startpoint = (0,0)
-    x_goal, y_goal = goal
-    path = list()
-    path.append(startpoint)
-    counter_x = 0
-    counter_y = 0
-    notThereYet = True
-    path_counter = 0
-    while notThereYet:  
-        tmp_x = 0
-        tmp_y = 0
-        path_counter += 1
-        if path_counter > 1000:
-            path_counter = 0
-            counter_x = 0
-            counter_y = 0
-
-            print("no path found", path)
-            path = list()
-            path.append(startpoint)
-        #choose x or y randomly
-        if np.random.randint(0,2) == 0:
-            if np.random.randint(0,2) == 0:
-                tmp_x = counter_x + 1
-            else:
-                tmp_x = counter_x - 1
-        else:
-            if np.random.randint(0,2) == 0:
-                tmp_y = counter_y + 1
-            else:
-                tmp_y = counter_y - 1
-        # if already in path, continue
-        if (tmp_x, tmp_y) in path:
+            numtries += 1
+                
+        tmp_coordinates = move(current_coordinates)
+        if check_coordinates(map,tmp_coordinates):
+            tries += 1
             continue
-        #check if the point is in the map
-        if tmp_x > 11 or tmp_x < 0 or tmp_y > 11 or tmp_y < 0:
-            continue
-        #check if the point is in an obstacle
-        if map[tmp_x][tmp_y] == False:
-            continue
-        #check if the point is in the goal
-        if tmp_x == x_goal and tmp_y == y_goal:
-            notThereYet = False
-        #add the point to the path
-        counter_x = tmp_x
-        counter_y = tmp_y
-        path.append((counter_x, counter_y))
-        #print(path)
-    return path
+        if tmp_coordinates not in visited :
+            current_coordinates = tmp_coordinates
+            path.append(current_coordinates)
+            visited.add(current_coordinates)
+        tries += 1
+
+        if tries >= 10000:
+            current_coordinates = reset_coordinates()
+            path = [current_coordinates]
+            visited = set()
+            visited.add(current_coordinates)
+            tries = 0
+            numtries += 1
+            # print numtries mod 100
+    return shortest_path
 
 
-    
+# create a 70 * 40 np bool array and set three blobs of false and the rest true: 
+# 1. a 20*20 square in the middle
+# 2. a 10*10 square in the bottom left corner
+# 3. a 10*10 square in the top right corner
+map1 = np.ones((70, 40), dtype=bool)
+map1[5:8, 5:10] = False
 
-#print("the right path: " , RRT((np.ones((70, 40), dtype=bool)), (10, 10))) 
-print("the right path", RRT2())
+#use matplotlib to show the map and the path 
+import matplotlib.pyplot as plt
+path = RRT2(map1, (10,10))
+print(path, len(path))
+path = np.array(path)
+plt.imshow(map1.T, cmap='Greys', origin='lower')
+plt.plot(path[:,0], path[:,1], 'r-')
+plt.show()
 
 
+print(getmap())
 
 
 # Finished successfully

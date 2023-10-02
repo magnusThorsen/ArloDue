@@ -31,7 +31,7 @@ def check_coordinates(map,coordinates):
     return False
 
 def RRT2(map, goal):
-    longest_path = (None,0)
+    shortest_path = None
     numtries = 0
     current_coordinates = reset_coordinates()
     path = [current_coordinates]
@@ -39,7 +39,19 @@ def RRT2(map, goal):
     visited.add(current_coordinates)
     tries = 0
     
-    while current_coordinates != goal :
+    while numtries < 1000:
+        if current_coordinates == goal:
+            if shortest_path == None or len(path) < len(shortest_path):
+                shortest_path = path
+                print("Current shortest Path",shortest_path, len(shortest_path))
+            
+            current_coordinates = reset_coordinates()
+            path = [current_coordinates]
+            visited = set()
+            visited.add(current_coordinates)
+            tries = 0
+            numtries += 1
+                
         tmp_coordinates = move(current_coordinates)
         if check_coordinates(map,tmp_coordinates):
             tries += 1
@@ -49,7 +61,7 @@ def RRT2(map, goal):
             path.append(current_coordinates)
             visited.add(current_coordinates)
         tries += 1
-        
+
         if tries >= 10000:
             current_coordinates = reset_coordinates()
             path = [current_coordinates]
@@ -58,13 +70,7 @@ def RRT2(map, goal):
             tries = 0
             numtries += 1
             # print numtries mod 100
-            if len(path) > longest_path[1]:
-                longest_path = (path, len(path))
-            if numtries % 1000 == 0:
-                print(numtries)
-                return longest_path[0], numtries
-    
-    return path, numtries
+    return shortest_path
 
 
 # create a 70 * 40 np bool array and set three blobs of false and the rest true: 
@@ -72,14 +78,12 @@ def RRT2(map, goal):
 # 2. a 10*10 square in the bottom left corner
 # 3. a 10*10 square in the top right corner
 map1 = np.ones((70, 40), dtype=bool)
-""" map1[25:45, 10:30] = False
-map1[60:70, 30:40] = False """
 map1[5:8, 5:10] = False
 
 #use matplotlib to show the map and the path 
 import matplotlib.pyplot as plt
-path, numtries = RRT2(map1, (20,10))
-print(numtries)
+path = RRT2(map1, (10,10))
+print(path, len(path))
 path = np.array(path)
 plt.imshow(map1.T, cmap='Greys', origin='lower')
 plt.plot(path[:,0], path[:,1], 'r-')
