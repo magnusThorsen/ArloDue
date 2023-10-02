@@ -296,16 +296,15 @@ map1 = np.ones((70, 40), dtype=bool)
 map1[5:8, 5:10] = False
 
 #use matplotlib to show the map and the path 
-""" import matplotlib.pyplot as plt
-path = RRT2(map1, (10,10))
+import matplotlib.pyplot as plt
+path = RRT2(getmap(), (10,10))
 print(path, len(path))
 path = np.array(path)
 plt.imshow(map1.T, cmap='Greys', origin='lower')
 plt.plot(path[:,0], path[:,1], 'r-')
-plt.show() """
+plt.show()
 
 
-print(getmap())
 
 
 # Finished successfully
