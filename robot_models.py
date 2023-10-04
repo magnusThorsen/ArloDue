@@ -66,6 +66,7 @@ class RobotModel:
         ang1 = np.arctan2(p1[1], p1[0])
         ang2 = np.arctan2(p2[1], p2[0])
 
+        print("p1, p2, ang1, ang2")
         print(p1)
         print(p2)
 
