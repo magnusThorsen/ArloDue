@@ -55,7 +55,7 @@ class GridOccupancyMap(object):
         plt.imshow(self.grid.T, cmap="Greys", origin='lower', vmin=0, vmax=1, extent=self.extent, interpolation='none')
 
 if __name__ == '__main__':
-    map = GridOccupancyMap(low = (-200, 0), high=(200, 700), res=10)
+    map = GridOccupancyMap(low = (-20, 0), high=(20, 70), res=10)
     map.populate(pp.searchAndshow())
 
     plt.clf()
