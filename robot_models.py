@@ -2,6 +2,36 @@
 some simple first-order robot dynamics models
 """
 import numpy as np
+import time
+from time import sleep
+
+import robot
+arlo = robot.Robot()
+
+
+# Create a robot object and initialize
+
+def turnLeft(degree):
+    sleep(0.041)
+    print(arlo.go_diff(64, 70, 0, 1))
+
+    sleep(0.0074 * degree + ((degree**2)*0.000001))
+    # send a stop command
+    print(arlo.stop())
+        
+    # Wait a bit before next command
+    sleep(0.5)
+
+def turnRight(degree):
+    sleep(0.041)
+    print(arlo.go_diff(64, 70, 1, 0))
+
+    sleep(0.0074 * degree + ((degree**2)*0.000001))
+    # send a stop command
+    print(arlo.stop())
+        
+    # Wait a bit before next command
+    sleep(0.5)
 
 class RobotModel:
 
@@ -17,9 +47,26 @@ class RobotModel:
     def inverse_dyn(self, x, x_goal, T):
         #return dynamically feasible path to move to the x_goal as close as possible
         return NotImplementedError
+
+
+    def angle_between(v1, v2):
+        def unit_vector(vector):
+            return vector / np.linalg.norm(vector)
+        
+        v1_u = unit_vector(v1)
+        v2_u = unit_vector(v2)
+
+        result = np.degrees(np.arccos(np.clip(np.dot(v1_u, v2_u), -1.0, 1.0)))
+        
+        if np.cross(v1, v2) > 0:
+            turnRight(result)
+        elif np.cross(v1, v2) < 0:
+            turnLeft(result)
+
     
-    #def calc_angle(self, newVec, prevVec):
-        #
+    
+
+
 
 class PointMassModel(RobotModel):
     #Note Arlo is differential driven and may be simpler to avoid Dubins car model by rotating in-place to direct and executing piecewise straight path  
