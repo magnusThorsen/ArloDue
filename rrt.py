@@ -217,7 +217,7 @@ def main():
         else:
             print("found path!!")
             path.reverse()
-            print([(x,y) for (x, y) in path])
+            finalPath = [(x,y) for (x, y) in path]
 
             # Draw final path
             if show_animation:
@@ -227,7 +227,7 @@ def main():
                 plt.pause(0.01)  # Need for Mac
                 plt.show()
                 writer.grab_frame()
-
+    return finalPath
 
 if __name__ == '__main__':
     main()
