@@ -96,7 +96,9 @@ class RobotModel:
         v2 = np.subtract(p3,p2)
 
         # calculate the angle between the two vectors using cos-1 [ (a. b) / (|a| |b|) ]
-        angle = np.arccos(np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2)))
+        angle = np.degrees(np.arccos(np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))))
+        # print angle in degrees
+
         print("Angle: ", angle)
 
 class PointMassModel(RobotModel):
