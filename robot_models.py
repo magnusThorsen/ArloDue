@@ -76,9 +76,9 @@ class RobotModel:
 
     
     
-    A = (1, 0)
+    """ A = (1, 0)
     B = (1, -1)
-    print(angle_between(B, A))
+    print(angle_between(B, A)) """
 
 
 class PointMassModel(RobotModel):
