@@ -24,7 +24,7 @@ def betterGoDiff(leftSpeed, rightSpeed, directionL, directionR, sleeptime):
    print(arlo.go_diff(leftSpeed/2, rightSpeed/2, directionL, directionR))
    sleep(0.1)
    print(arlo.go_diff(leftSpeed, rightSpeed, directionL, directionR))
-   sleep(float(sleeptime) - 0.1)  # Convert sleeptime to float and then subtract 0.1
+   sleep(float(sleeptime) - 0.1)
 
 
 
@@ -47,6 +47,8 @@ def drive(distance):
     # Wait a bit before the next command
     sleep(0.5)
 
+
+
 import rrt, robot_models
 
 def pathPlanning():
@@ -54,7 +56,7 @@ def pathPlanning():
     for i in range(len(path)-1):
         robo = robot_models.RobotModel(1)
         robo.turnRobot(path[i], path[i+1])
-        distance = np.linalg.norm(path[i],path[i+1])
+        distance = np.linalg.norm(path[i]-path[i+1])
         drive(distance * 10)
 
         
