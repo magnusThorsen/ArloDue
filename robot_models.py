@@ -18,7 +18,8 @@ class RobotModel:
         #return dynamically feasible path to move to the x_goal as close as possible
         return NotImplementedError
     
-    #def calc_angle
+    #def calc_angle(self, newVec, prevVec):
+        #
 
 class PointMassModel(RobotModel):
     #Note Arlo is differential driven and may be simpler to avoid Dubins car model by rotating in-place to direct and executing piecewise straight path  

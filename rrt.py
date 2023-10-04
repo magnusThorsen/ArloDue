@@ -215,8 +215,8 @@ def main():
             print("Cannot find path")
         else:
             print("found path!!")
-            shortestPath = path.reverse()
-            print([(x,y) for (x, y) in shortestPath])
+            path.reverse()
+            print([(x,y) for (x, y) in path])
 
             # Draw final path
             if show_animation:
