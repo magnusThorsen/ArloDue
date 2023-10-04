@@ -24,7 +24,7 @@ def betterGoDiff(leftSpeed, rightSpeed, directionL, directionR, sleeptime):
    print(arlo.go_diff(leftSpeed/2, rightSpeed/2, directionL, directionR))
    sleep(0.1)
    print(arlo.go_diff(leftSpeed, rightSpeed, directionL, directionR))
-   sleep(sleeptime-0.1)
+   sleep(float(sleeptime) - 0.1)  # Convert sleeptime to float and then subtract 0.1
 
 
 
