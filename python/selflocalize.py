@@ -21,15 +21,17 @@ def isRunningOnArlo():
 
 if isRunningOnArlo():
     # XXX: You need to change this path to point to where your robot.py file is located
-    sys.path.append("../../../../Arlo/python")
+    sys.path.append("../")
 
 
 try:
     import robot
     onRobot = True
+    
 except ImportError:
     print("selflocalize.py: robot module not present - forcing not running on Arlo!")
     onRobot = False
+
 
 
 
@@ -142,7 +144,9 @@ try:
     velocity = 0.0 # cm/sec
     angular_velocity = 0.0 # radians/sec
 
-    # Initialize the robot (XXX: You do this)
+
+    # initializing robot XXX
+    spaceRanger = robot.Robot() # Create a robot object
 
     # Allocate space for world map
     world = np.zeros((500,500,3), dtype=np.uint8)
@@ -182,6 +186,11 @@ try:
         # Use motor controls to update particles
         # XXX: Make the robot drive
         # XXX: You do this
+       
+
+        
+
+        
 
 
         # Fetch next frame
@@ -194,6 +203,7 @@ try:
             for i in range(len(objectIDs)):
                 print("Object ID = ", objectIDs[i], ", Distance = ", dists[i], ", angle = ", angles[i])
                 # XXX: Do something for each detected object - remember, the same ID may appear several times
+                
 
             # Compute particle weights
             # XXX: You do this
