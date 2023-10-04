@@ -147,7 +147,7 @@ def searchAndshow():
         detected = True
 
     # Display the image with detected markers
-    #cv2.imshow("Detected Markers", image)
+    cv2.imshow("Detected Markers", image)
     return returnlst
 
 
