@@ -26,7 +26,7 @@ class RobotModel:
         #return dynamically feasible path to move to the x_goal as close as possible
         return NotImplementedError
     
-    def turnLeft(degree):
+    def turnLeft(self, degree):
         sleep(0.041)
         print(arlo.go_diff(64, 70, 0, 1))
 
@@ -37,7 +37,7 @@ class RobotModel:
         # Wait a bit before next command
         sleep(0.5)
 
-    def turnRight(degree):
+    def turnRight(self, degree):
         sleep(0.041)
         print(arlo.go_diff(64, 70, 1, 0))
 
