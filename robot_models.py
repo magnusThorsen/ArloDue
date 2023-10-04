@@ -48,7 +48,7 @@ class RobotModel:
         # Wait a bit before next command
         sleep(0.5)
 
-    def turnRobot(self, v1, v2):
+    """ def turnRobot(self, v1, v2):
         def unit_vector(vector):
             return vector / np.linalg.norm(vector)
         
@@ -60,25 +60,23 @@ class RobotModel:
         if np.cross(v1, v2) > 0:
             self.turnRight(degrees)
         elif np.cross(v1, v2) < 0:
-            self.turnLeft(degrees)
+            self.turnLeft(degrees) """
 
-    def angle_between(self, p1, p2):
+    def turnRobot(self, p1, p2):
         ang1 = np.arctan2(*p1[::-1])
         ang2 = np.arctan2(*p2[::-1])
 
         degrees = np.rad2deg((ang1 - ang2) % (2 * np.pi))
 
         if degrees > 180:
-            degrees -= 180
-            self.turnLeft(degrees)
+            degrees -= 360
+            self.turnLeft(degrees*-1)
         elif degrees < 180:
             self.turnRight(degrees)
 
     
-    
-    """ A = (1, 0)
-    B = (1, -1)
-    print(angle_between(B, A)) """
+    """ def moveRobot(self, p1, p2):
+         """
 
 
 class PointMassModel(RobotModel):

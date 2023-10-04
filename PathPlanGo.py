@@ -117,11 +117,12 @@ import rrt, robot_models
 def pathPlanning():
     path = rrt.main()
     for i in range(len(path)-1):
-        robot_models.turnRobot((i, i+1),(i+1, i+2))
-        drive()
-        i = i + 2
+        robot_models.turnRobot(i,i+1)
+        distance = np.linalg.norm(i,i+1)
+        drive(distance * 10)
+
         
-    
+pathPlanning()
 # Finished successfully
 
 
