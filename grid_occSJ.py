@@ -4,7 +4,7 @@ Module for interfacing a 2D Map in the form of Grid Occupancy
 
 import numpy as np
 import matplotlib.pyplot as plt
-import pathPlanning as pp
+import pathPlanningSJ as pp
 import robot as rb
 class GridOccupancyMap(object):
     """
@@ -36,7 +36,7 @@ class GridOccupancyMap(object):
         """
         generate a grid map with some circle shaped obstacles
         """
-        origins = np.array([[l[1], l[2]] for l in detectedLandmarks])
+        origins = np.array([[l[2]/10 * -1, l[1]/10] for l in detectedLandmarks])
 
         print(origins)
         radius = [3] * len(origins)        #fill the grids by checking if the grid centroid is in any of the circle
@@ -55,7 +55,7 @@ class GridOccupancyMap(object):
         plt.imshow(self.grid.T, cmap="Greys", origin='lower', vmin=0, vmax=1, extent=self.extent, interpolation='none')
 
 if __name__ == '__main__':
-    map = GridOccupancyMap(low = (-20, 0), high=(20, 70), res=0.1)
+    map = GridOccupancyMap(low = (-20, 0), high=(20, 70), res=0.5)
     map.populate(pp.searchAndshow())
 
     plt.clf()
