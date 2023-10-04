@@ -204,7 +204,7 @@ def main():
         goal_sample_rate=25,
         )
     
-    show_animation = False
+    show_animation = True
     metadata = dict(title="RRT Test")
     writer = FFMpegWriter(fps=15, metadata=metadata)
     fig = plt.figure()
@@ -224,7 +224,7 @@ def main():
                 rrt.draw_graph()
                 plt.plot([x for (x, y) in path], [y for (x, y) in path], '-r')
                 plt.grid(True)
-                plt.pause(0.01)  # Need for Mac
+                plt.pause(0.001)  # Need for Mac
                 plt.show()
                 writer.grab_frame()
     return finalPath
