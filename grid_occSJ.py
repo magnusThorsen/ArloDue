@@ -4,7 +4,7 @@ Module for interfacing a 2D Map in the form of Grid Occupancy
 
 import numpy as np
 import matplotlib.pyplot as plt
-import pathPlanning as pp
+#import pathPlanning as pp
 import robot as rb
 class GridOccupancyMap(object):
     """
@@ -55,8 +55,8 @@ class GridOccupancyMap(object):
         plt.imshow(self.grid.T, cmap="Greys", origin='lower', vmin=0, vmax=1, extent=self.extent, interpolation='none')
 
 if __name__ == '__main__':
-    map = GridOccupancyMap(low = (-20, 0), high=(20, 70), res=0.1)
-    map.populate(pp.searchAndshow())
+    map = GridOccupancyMap(low = (-200, 0), high=(200, 700), res=10)
+    map.populate([[1,1,2], [2,2,4], [3,155, 23], [4,200, 444]])
 
     plt.clf()
     map.draw_map()
