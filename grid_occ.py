@@ -1,5 +1,5 @@
 """
-Module for interfacing a 2D Map in the form of Grid Occupancys
+Module for interfacing a 2D Map in the form of Grid Occupancy
 """
 
 import numpy as np
