@@ -64,10 +64,12 @@ def pathPlanning():
         drive(distance * 10) """
     # insert [0,-1] at the beginning of the path
     path.insert(0, [0,-1])
-    for i in range(len(path)-2):
-        robo.turnRobo(path[i], path[i+1], path[i+2])
+    i = 1
+    while i < (len(path)-1):
+        robo.turnRobo(path[i-1], path[i], path[i+1])
         distance = np.linalg.norm(np.subtract(path[i],path[i+1]))
         drive(distance * 10)
+        i += 1
 
         
 pathPlanning()
