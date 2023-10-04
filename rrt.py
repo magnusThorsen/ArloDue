@@ -227,7 +227,7 @@ def main():
                 plt.grid(True)
                 plt.pause(0.001)  # Need for Mac
                 writer.grab_frame()
-    plt.show()
+                #plt.show()
                 
     return finalPath
 
