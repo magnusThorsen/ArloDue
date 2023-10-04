@@ -63,8 +63,8 @@ class RobotModel:
             self.turnLeft(degrees) """
 
     def turnRobot(self, p1, p2):
-        ang1 = np.arctan2(p1[1], p1[0])
-        ang2 = np.arctan2(p2[1], p2[0])
+        ang1 = np.arctan2(float(p1[1]), float(p1[0]))
+        ang2 = np.arctan2(float(p2[1]), float(p2[0]))
 
         print("p1, p2, ang1, ang2")
         print(p1)
