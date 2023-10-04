@@ -71,46 +71,27 @@ class RobotModel:
         degrees = np.rad2deg((ang1 - ang2) % (2 * np.pi))
 
         print("P1: ", p1, "P2: ", p2)
-
-        if degrees > 180:
+        print("Degrees: ", degrees)
+        """ if degrees > 180:
             degrees -= 360
             degrees *= -1
             print("Turn Left: ", degrees)
             self.turnLeft(degrees)
         elif degrees < 180:
             print("Turn Right: ", degrees)
-            self.turnRight(degrees)
+            self.turnRight(degrees) """
 
     
     """ def moveRobot(self, p1, p2):
          """
     # a function that takes three points on a path and calculates the angle between them
     def turnRobo(self, p1, p2, p3):
-        ang1 = np.arctan2(p1[1], p1[0])
-        ang2 = np.arctan2(p2[1], p2[0])
-        ang3 = np.arctan2(p3[1], p3[0])
+        v1 = p2-p1
+        v2 = p3-p2
 
-        degrees = np.rad2deg((ang1 - ang2) % (2 * np.pi))
-        degrees2 = np.rad2deg((ang2 - ang3) % (2 * np.pi))
-
-        if degrees > 180:
-            degrees -= 360
-            degrees *= -1
-            print("Turn Left: ", degrees)
-            self.turnLeft(degrees)
-        elif degrees < 180:
-            print("Turn Right: ", degrees)
-            self.turnRight(degrees)
-
-        if degrees2 > 180:
-            degrees2 -= 360
-            degrees2 *= -1
-            print("Turn Left: ", degrees2)
-            self.turnLeft(degrees2)
-        elif degrees2 < 180:
-            print("Turn Right: ", degrees2)
-            self.turnRight(degrees2) 
-
+        # calculate the angle between the two vectors using cos-1 [ (a. b) / (|a| |b|) ]
+        angle = np.arccos(np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2)))
+        print("Angle: ", angle)
 
 class PointMassModel(RobotModel):
     #Note Arlo is differential driven and may be simpler to avoid Dubins car model by rotating in-place to direct and executing piecewise straight path  
