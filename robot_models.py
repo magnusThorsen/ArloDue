@@ -11,28 +11,6 @@ arlo = robot.Robot()
 
 # Create a robot object and initialize
 
-def turnLeft(degree):
-    sleep(0.041)
-    print(arlo.go_diff(64, 70, 0, 1))
-
-    sleep(0.0074 * degree + ((degree**2)*0.000001))
-    # send a stop command
-    print(arlo.stop())
-        
-    # Wait a bit before next command
-    sleep(0.5)
-
-def turnRight(degree):
-    sleep(0.041)
-    print(arlo.go_diff(64, 70, 1, 0))
-
-    sleep(0.0074 * degree + ((degree**2)*0.000001))
-    # send a stop command
-    print(arlo.stop())
-        
-    # Wait a bit before next command
-    sleep(0.5)
-
 class RobotModel:
 
     def __init__(self, ctrl_range) -> None:
@@ -47,25 +25,60 @@ class RobotModel:
     def inverse_dyn(self, x, x_goal, T):
         #return dynamically feasible path to move to the x_goal as close as possible
         return NotImplementedError
+    
+    def turnLeft(degree):
+        sleep(0.041)
+        print(arlo.go_diff(64, 70, 0, 1))
 
+        sleep(0.0074 * degree + ((degree**2)*0.000001))
+        # send a stop command
+        print(arlo.stop())
+            
+        # Wait a bit before next command
+        sleep(0.5)
 
-    def angle_between(v1, v2):
+    def turnRight(degree):
+        sleep(0.041)
+        print(arlo.go_diff(64, 70, 1, 0))
+
+        sleep(0.0074 * degree + ((degree**2)*0.000001))
+        # send a stop command
+        print(arlo.stop())
+            
+        # Wait a bit before next command
+        sleep(0.5)
+
+    def turnRobot(self, v1, v2):
         def unit_vector(vector):
             return vector / np.linalg.norm(vector)
         
         v1_u = unit_vector(v1)
         v2_u = unit_vector(v2)
 
-        result = np.degrees(np.arccos(np.clip(np.dot(v1_u, v2_u), -1.0, 1.0)))
+        degrees = np.degrees(np.arccos(np.clip(np.dot(v1_u, v2_u), -1.0, 1.0)))
         
         if np.cross(v1, v2) > 0:
-            turnRight(result)
+            self.turnRight(degrees)
         elif np.cross(v1, v2) < 0:
-            turnLeft(result)
+            self.turnLeft(degrees)
+
+    def angle_between(self, p1, p2):
+        ang1 = np.arctan2(*p1[::-1])
+        ang2 = np.arctan2(*p2[::-1])
+
+        degrees = np.rad2deg((ang1 - ang2) % (2 * np.pi))
+
+        if degrees > 180:
+            degrees -= 180
+            self.turnLeft(degrees)
+        elif degrees < 180:
+            self.turnRight(degrees)
 
     
     
-
+    A = (1, 0)
+    B = (1, -1)
+    print(angle_between(B, A))
 
 
 class PointMassModel(RobotModel):

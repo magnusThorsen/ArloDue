@@ -112,12 +112,16 @@ def turnRight(degree):
     # Wait a bit before next command
     sleep(0.5)
 
-import rrt
+import rrt, robot_models
 
-""" def pathPlanning():
+def pathPlanning():
     path = rrt.main()
-    for i in path: """
-
+    for i in range(len(path)-1):
+        robot_models.turnRobot((i, i+1),(i+1, i+2))
+        drive()
+        i = i + 2
+        
+    
 # Finished successfully
 
 

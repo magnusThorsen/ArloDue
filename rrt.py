@@ -218,6 +218,7 @@ def main():
             print("found path!!")
             path.reverse()
             finalPath = [(x,y) for (x, y) in path]
+            print(finalPath)
 
             # Draw final path
             if show_animation:
