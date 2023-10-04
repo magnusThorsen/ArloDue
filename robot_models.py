@@ -92,8 +92,8 @@ class RobotModel:
         
         
         
-        v1 = p2-p1
-        v2 = p3-p2
+        v1 = np.subtract(p2,p1)
+        v2 = np.subtract(p3,p2)
 
         # calculate the angle between the two vectors using cos-1 [ (a. b) / (|a| |b|) ]
         angle = np.arccos(np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2)))
