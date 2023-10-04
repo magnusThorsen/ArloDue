@@ -199,12 +199,12 @@ def main():
         goal=[0, 60],
         robot_model=robot,
         map=map,
-        expand_dis=5,
+        expand_dis=10,
         path_resolution=path_res,
         goal_sample_rate=25,
         )
     
-    show_animation = True
+    show_animation = False
     metadata = dict(title="RRT Test")
     writer = FFMpegWriter(fps=15, metadata=metadata)
     fig = plt.figure()
