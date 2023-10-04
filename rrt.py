@@ -204,7 +204,7 @@ def main():
         goal_sample_rate=25,
         )
     
-    show_animation = False
+    show_animation = True
     metadata = dict(title="RRT Test")
     writer = FFMpegWriter(fps=15, metadata=metadata)
     fig = plt.figure()

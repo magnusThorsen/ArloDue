@@ -53,9 +53,10 @@ import rrt, robot_models
 
 def pathPlanning():
     path = rrt.main()
-    for i in range(len(path)-2):
+    drive(10)
+    for i in range(len(path)-3):
         robo = robot_models.RobotModel(1)
-        robo.turnRobo(path[i], path[i+1], path[i+2])
+        robo.turnRobo(path[i+1], path[i+2], path[i+3])
         distance = np.linalg.norm(np.subtract(path[i],path[i+1]))
         drive(distance * 10)
 
