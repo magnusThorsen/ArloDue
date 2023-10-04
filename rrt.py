@@ -215,6 +215,7 @@ def main():
             print("Cannot find path")
         else:
             print("found path!!")
+            print(path)
 
             # Draw final path
             if show_animation:
