@@ -85,7 +85,13 @@ class RobotModel:
     """ def moveRobot(self, p1, p2):
          """
     # a function that takes three points on a path and calculates the angle between them
-    def turnRobo(self, p1, p2, p3):
+    def turnRobo(self, p11, p22, p33):
+        p1 = p11[0], p11[1]
+        p2 = p22[0], p22[1]
+        p3 = p33[0], p33[1]
+        
+        
+        
         v1 = p2-p1
         v2 = p3-p2
 
