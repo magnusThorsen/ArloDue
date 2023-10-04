@@ -56,7 +56,7 @@ class GridOccupancyMap(object):
 
 if __name__ == '__main__':
     map = GridOccupancyMap(low = (-200, 0), high=(200, 700), res=10)
-    map.populate([[1,1,2], [2,2,4], [3,155, 23], [4,200, 444]])
+    map.populate(pp.searchAndshow())
 
     plt.clf()
     map.draw_map()
