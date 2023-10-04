@@ -52,7 +52,8 @@ import rrt, robot_models
 def pathPlanning():
     path = rrt.main()
     for i in range(len(path)-1):
-        arlo.turnRobot(i,i+1)
+        robo = robot_models.RobotModel(1)
+        robo.turnRobot(i,i+1)
         distance = np.linalg.norm(i,i+1)
         drive(distance * 10)
 
