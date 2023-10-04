@@ -102,9 +102,9 @@ class RobotModel:
         print("Angle: ", angle)
         # turn the robot accordingly
         if np.cross(v1, v2) > 0:
-            self.turnRight(angle)
-        elif np.cross(v1, v2) < 0:
             self.turnLeft(angle)
+        elif np.cross(v1, v2) < 0:
+            self.turnRight(angle)
         else:
             print("No turn needed")
 
