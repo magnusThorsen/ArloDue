@@ -66,20 +66,17 @@ class RobotModel:
         ang1 = np.arctan2(p1[1], p1[0])
         ang2 = np.arctan2(p2[1], p2[0])
 
-        print("p1, p2, ang1, ang2")
-        print(p1)
-        print(p2)
-
-        print(ang1)
-        print(ang2)
+        
 
         degrees = np.rad2deg((ang1 - ang2) % (2 * np.pi))
 
         if degrees > 180:
             degrees -= 360
             degrees *= -1
+            print("Turn Left: ", degrees)
             self.turnLeft(degrees)
         elif degrees < 180:
+            print("Turn Right: ", degrees)
             self.turnRight(degrees)
 
     
