@@ -201,6 +201,7 @@ def main():
         map=map,
         expand_dis=2,
         path_resolution=path_res,
+        goal_sample_rate=50,
         )
     
     show_animation = True
