@@ -77,7 +77,8 @@ class RobotModel:
 
         if degrees > 180:
             degrees -= 360
-            self.turnLeft((degrees*-1))
+            degrees *= -1
+            self.turnLeft(degrees)
         elif degrees < 180:
             self.turnRight(degrees)
 
