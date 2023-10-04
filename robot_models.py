@@ -100,6 +100,13 @@ class RobotModel:
         # print angle in degrees
 
         print("Angle: ", angle)
+        # turn the robot accordingly
+        if np.cross(v1, v2) > 0:
+            self.turnRight(angle)
+        elif np.cross(v1, v2) < 0:
+            self.turnLeft(angle)
+        else:
+            print("No turn needed")
 
 class PointMassModel(RobotModel):
     #Note Arlo is differential driven and may be simpler to avoid Dubins car model by rotating in-place to direct and executing piecewise straight path  
