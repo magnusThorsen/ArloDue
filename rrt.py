@@ -215,7 +215,7 @@ def main():
             print("Cannot find path")
         else:
             print("found path!!")
-            print([x for (x, y) in path], [y for (x, y) in path])
+            print([(x,y) for (x, y) in path])
 
             # Draw final path
             if show_animation:
