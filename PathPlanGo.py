@@ -29,7 +29,7 @@ def betterGoDiff(leftSpeed, rightSpeed, directionL, directionR, sleeptime):
 
 
 def drive(distance):
-    left_speed = 30
+    left_speed = 31
     right_speed = 38
 
     # Calculate time based on distance and wheel speeds
@@ -73,6 +73,7 @@ def pathPlanning():
     while i < (len(path)-1):
         robo.turnRobo(path[i-1], path[i], path[i+1])
         distance = np.linalg.norm(np.subtract(path[i],path[i+1]))
+        print("distance",distance*10)
         drive(distance * 10)
         i += 1
 
