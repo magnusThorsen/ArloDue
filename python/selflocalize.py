@@ -215,8 +215,12 @@ try:
                     r2 = dists[i]**2
                     # set the particles x and y to the intersection of the circle and the line
                     for part in particles:
-                        part.setX(x0 + (dists[i] * np.cos(np.random.ranf() * 2 * np.pi)))
-                        part.setY(y0 + (dists[i] * np.sin(np.random.ranf() * 2 * np.pi)))
+                        # isolate y in the equation of the line #(x−x0)2+(y−y0)2=r2
+                        # a random number between 300- dist and 300 + dist
+                        x = np.random.randint(300 - dists[i], 300 + dists[i])
+                        y  = np.sqrt( (x - x0)**2 + y0**2 - r2)
+                        part.setX(x)
+                        part.setY(y)
                     
                 
                 
