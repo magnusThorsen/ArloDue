@@ -208,6 +208,17 @@ try:
             # List detected objects
             for i in range(len(objectIDs)):
                 print("Object ID = ", objectIDs[i], ", Distance = ", dists[i], ", angle = ", angles[i])
+                if objectIDs[i] == 5:
+                    #(x−x0)2+(y−y0)2=r2
+                    x0 = 300
+                    y0 = 0
+                    r2 = dists[i]**2
+                    # set the particles x and y to the intersection of the circle and the line
+                    particles.setX(x0 + (dists[i] * np.cos(angles[i])))
+                    particles.setY(y0 + (dists[i] * np.sin(angles[i])))
+                    
+                
+                
                 # XXX: Do something for each detected object - remember, the same ID may appear several times
                 
                 
