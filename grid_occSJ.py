@@ -39,7 +39,7 @@ class GridOccupancyMap(object):
         origins = np.array([[l[2]/10 * -1, l[1]/10] for l in detectedLandmarks])
 
         print(origins)
-        radius = [3] * len(origins)        #fill the grids by checking if the grid centroid is in any of the circle
+        radius = [5] * len(origins)        #fill the grids by checking if the grid centroid is in any of the circle
         for i in range(self.n_grids[0]):
             for j in range(self.n_grids[1]):
                 centroid = np.array([self.map_area[0][0] + self.resolution * (i+0.5), 
