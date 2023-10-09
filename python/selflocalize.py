@@ -217,8 +217,8 @@ try:
                     for part in particles:
                         # isolate y in the equation of the line #(x−x0)2+(y−y0)2=r2
                         # a random number between 300- dist and 300 + dist
-                        x = np.random.randint(300 - dists[i], 300 + dists[i])
-                        y  = ( (x - x0)**2 + y0**2 - r2)
+                        x = np.random.randint(300 - (dists[i]-1), 300 + (dists[i]-1))
+                        y =  (r2 - x**2 + 2*x0*x - x0**2 - y0 ** 2) / 2 * y0 + y0           # (r^2 - x^2 + 2ax - a^2 - b^2) / (2b) + b
                         part.setX(x)
                         part.setY(y)
                     
