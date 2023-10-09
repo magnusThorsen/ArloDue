@@ -187,8 +187,9 @@ try:
         
         # Use motor controls to update particles
         # XXX: Make the robot drive
-        for i in particles:
-            particle.move_particle()
+        def updateParticles():
+            for i in particles:
+                particle.move_particle()
         # XXX: You do this
         
        
