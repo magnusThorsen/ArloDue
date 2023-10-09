@@ -120,6 +120,13 @@ class PointMassModel(RobotModel):
         return path[1:]
 
     def inverse_dyn(self, x, x_goal, T):
+        """
+        x_goal: goal state
+        T: horizon
+        
+        return: dynamically feasible path to move to the x_goal as close as possible
+        
+        """
         #for point mass, the path is just a straight line by taking full ctrl_range at each step
         dir = (np.subtract(x_goal,x))/np.linalg.norm(np.subtract(x_goal,x))
 
