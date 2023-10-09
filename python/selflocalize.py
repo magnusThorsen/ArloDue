@@ -9,14 +9,13 @@ import sys
 
 # Flags
 showGUI = True  # Whether or not to open GUI windows
-onRobot = True # Whether or not we are running on the Arlo robot
+onRobot = False # Whether or not we are running on the Arlo robot
 
 
 def isRunningOnArlo():
     """Return True if we are running on Arlo, otherwise False.
       You can use this flag to switch the code from running on you laptop to Arlo - you need to do the programming here!
     """
-    
     return onRobot
 
 
@@ -147,7 +146,9 @@ try:
 
 
     # initializing robot XXX
-    spaceRanger = robot.Robot() # Create a robot object
+    if isRunningOnArlo():
+        spaceRanger = robot.Robot() # Create a robot object
+
 
     # Allocate space for world map
     world = np.zeros((500,500,3), dtype=np.uint8)
