@@ -29,7 +29,7 @@ def betterGoDiff(leftSpeed, rightSpeed, directionL, directionR, sleeptime):
 
 
 def drive(distance):
-    left_speed = 31
+    left_speed = 33
     right_speed = 38
 
     # Calculate time based on distance and wheel speeds
