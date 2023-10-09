@@ -196,7 +196,7 @@ def main():
 
     rrt = RRT(
         start=[0, 0],
-        goal=[0, 60],
+        goal=[0, 40],
         robot_model=robot,
         map=map,
         expand_dis=10,
