@@ -215,8 +215,8 @@ try:
                     r2 = dists[i]**2
                     # set the particles x and y to the intersection of the circle and the line
                     for part in particles:
-                        part.setX(x0 + (dists[i] * np.cos(angles[i])))
-                        part.setY(y0 + (dists[i] * np.sin(angles[i])))
+                        part.setX(x0 + (dists[i] * np.cos(np.random.ranf() * 2 * np.pi)))
+                        part.setY(y0 + (dists[i] * np.sin(np.random.ranf() * 2 * np.pi)))
                     
                 
                 
