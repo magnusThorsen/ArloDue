@@ -79,7 +79,7 @@ def pathPlanning():
     
     i = 1
     while i < (len(testpath)-1):
-        robo.turnRobo(path[i-1], testpath[i], testpath[i+1])
+        robo.turnRobo(testpath[i-1], testpath[i], testpath[i+1])
         distance = np.linalg.norm(np.subtract(testpath[i],testpath[i+1]))
         print("distance",distance*10)
         drive(distance * 12)
