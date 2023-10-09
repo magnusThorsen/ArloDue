@@ -28,7 +28,7 @@ class RobotModel:
     
     def turnLeft(self, degree):
         sleep(0.041)
-        print(arlo.go_diff(64, 74, 0, 1))
+        print(arlo.go_diff(64, 70, 0, 1))
 
         sleep(0.0074 * degree + ((degree**2)*0.000001))
         # send a stop command
@@ -39,7 +39,7 @@ class RobotModel:
 
     def turnRight(self, degree):
         sleep(0.041)
-        print(arlo.go_diff(64, 64, 1, 0))
+        print(arlo.go_diff(64, 70, 1, 0))
 
         sleep(0.0074 * degree + ((degree**2)*0.000001))
         # send a stop command
@@ -125,7 +125,6 @@ class PointMassModel(RobotModel):
         T: horizon
         
         return: dynamically feasible path to move to the x_goal as close as possible
-
         """
         #for point mass, the path is just a straight line by taking full ctrl_range at each step
         dir = (np.subtract(x_goal,x))/np.linalg.norm(np.subtract(x_goal,x))
