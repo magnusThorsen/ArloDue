@@ -108,7 +108,7 @@ class RRT:
             steer_path = self.robot.inverse_dyn(new_node.pos, to_node.pos, n_expand)
             #use the end position to represent the current node and update the path
             #new_node.pos = steer_path[-1]
-            new_node.path += steer_path
+            #new_node.path += steer_path
 
         d = new_node.calc_distance_to(to_node)
         if d <= self.path_resolution:
