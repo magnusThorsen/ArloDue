@@ -29,7 +29,7 @@ def betterGoDiff(leftSpeed, rightSpeed, directionL, directionR, sleeptime):
 
 
 def drive(distance):
-    left_speed = 30
+    left_speed = 31
     right_speed = 34
 
     # Calculate time based on distance and wheel speeds
@@ -65,12 +65,15 @@ def pathPlanning():
     # insert [0,-1] at the beginning of the path WITHOUT DELETING THE FIRST ELEMENT
     path.insert(0, [0,-1])
     print("new path",path)
+    # make a test path that moves in zig zag
+    testpath = [[0,-1],[0,0],[0,1],[1,1],[1,2],[0,2]]
+
+
     i = 1
-    while i < (len(path)-1):
-        robo.turnRobo(path[i-1], path[i], path[i+1])
-        distance = np.linalg.norm(np.subtract(path[i],path[i+1]))
+    while i < (len(testpath)-1):
+        robo.turnRobo(testpath[i-1], testpath[i], testpath[i+1])
+        distance = np.linalg.norm(np.subtract(testpath[i],testpath[i+1]))
         drive(distance * 10)
-        print("print works")
         i += 1
 
         
