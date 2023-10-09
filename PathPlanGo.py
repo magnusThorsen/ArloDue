@@ -63,7 +63,7 @@ def pathPlanning():
         distance = np.linalg.norm(np.subtract(path[i],path[i+1]))
         drive(distance * 10) """
     # insert [0,-1] at the beginning of the path WITHOUT DELETING THE FIRST ELEMENT
-    path.insert(0, [0,-1])
+    #path.insert(0, [0,-1])
     i = 1
     robo.turnRobo((0,-1),path[i], path[i+1])
     i += 1
