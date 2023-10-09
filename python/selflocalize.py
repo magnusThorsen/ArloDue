@@ -187,7 +187,8 @@ try:
         
         # Use motor controls to update particles
         # XXX: Make the robot drive
-        
+        for i in particles:
+            particle.move_particle()
         # XXX: You do this
         
        
@@ -208,6 +209,8 @@ try:
                 print("Object ID = ", objectIDs[i], ", Distance = ", dists[i], ", angle = ", angles[i])
                 # XXX: Do something for each detected object - remember, the same ID may appear several times
                 
+                
+            particle.add_uncertainty(particles,0.1, 0.1)
 
             # Compute particle weights
             # XXX: You do this
