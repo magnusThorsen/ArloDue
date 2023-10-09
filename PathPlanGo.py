@@ -52,7 +52,7 @@ def drive(distance):
 import rrt, robot_models
 
 def pathPlanning():
-    path = rrt.main()
+    #path = rrt.main()
 
     robo = robot_models.RobotModel(1)
    
@@ -63,8 +63,8 @@ def pathPlanning():
         distance = np.linalg.norm(np.subtract(path[i],path[i+1]))
         drive(distance * 10) """
     # insert [0,-1] at the beginning of the path WITHOUT DELETING THE FIRST ELEMENT
-    path.insert(0, [0,-1])
-    print("new path",path)
+    """ path.insert(0, [0,-1])
+    print("new path",path) """
     # make a test path that moves in zig zag
     testpath = [[0,-1],[0,0],[0,1],[1,1],[1,2],[0,2]]
 
