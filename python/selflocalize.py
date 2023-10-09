@@ -227,7 +227,7 @@ try:
                 # XXX: Do something for each detected object - remember, the same ID may appear several times
                 
                 
-            particle.add_uncertainty(particles,0.1, 0.1)
+        
 
             # Compute particle weights
             # XXX: You do this
@@ -238,11 +238,12 @@ try:
             # Draw detected objects
             cam.draw_aruco_objects(colour)
         else:
+            
             # No observation - reset weights to uniform distribution
             for p in particles:
                 p.setWeight(1.0/num_particles)
 
-    
+        particle.add_uncertainty(particles,0.1, 0.1)
         est_pose = particle.estimate_pose(particles) # The estimate of the robots current pose
 
         if showGUI:
