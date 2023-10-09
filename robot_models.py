@@ -121,7 +121,7 @@ class PointMassModel(RobotModel):
 
     def inverse_dyn(self, x, x_goal, T):
         #for point mass, the path is just a straight line by taking full ctrl_range at each step
-        dir = (x_goal-x)/np.linalg.norm(x_goal-x)
+        dir = (np.subtract(x_goal,x))/np.linalg.norm(np.subtract(x_goal,x))
 
         u = np.array([dir*self.ctrl_range[1] for _ in range(T)])
 
