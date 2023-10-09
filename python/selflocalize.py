@@ -218,7 +218,7 @@ try:
                         # isolate y in the equation of the line #(x−x0)2+(y−y0)2=r2
                         # a random number between 300- dist and 300 + dist
                         x = np.random.randint(300 - dists[i], 300 + dists[i])
-                        y  = np.sqrt( (x - x0)**2 + y0**2 - r2)
+                        y  = ( (x - x0)**2 + y0**2 - r2)
                         part.setX(x)
                         part.setY(y)
                     
