@@ -30,7 +30,7 @@ class RobotModel:
         sleep(0.041)
         print(arlo.go_diff(64, 70, 0, 1))
 
-        sleep(0.0074 * degree + ((degree**2)*0.000001))
+        sleep(0.0074 * degree + ((degree**2)*0.00001))
         # send a stop command
         print(arlo.stop())
             
