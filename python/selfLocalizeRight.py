@@ -186,9 +186,20 @@ try:
             part.setY(part.getY() + velocity*np.sin(part.getTheta()))
             part.setTheta(part.getTheta() + angular_velocity)
             
+        sigma_d = 6
         # XXX: You do this
+        # calc d^(i) from equation 2
+        def dist_part_landm(lx, ly, x, y):
+            d = np.sqrt((lx-x)**2 + (ly-y**2))
+            return d
 
-
+        # equation 2
+        def p_dist_M (dm,lx,ly, x, y):
+            result = (1/(np.sqrt(2*(np.pi)*(sigma_d**2))))*np.exp(-(((dm-(dist_part_landm(lx,ly,x,y)))**2)/2*(sigma_d**2)))
+            return result 
+        
+        
+        
         # Fetch next frame
         colour = cam.get_next_frame()
         
@@ -199,12 +210,30 @@ try:
             for i in range(len(objectIDs)):
                 print("Object ID = ", objectIDs[i], ", Distance = ", dists[i], ", angle = ", angles[i])
                 # XXX: Do something for each detected object - remember, the same ID may appear several times
+                
+                # Compute particle weights
+                # XXX: You do this
+                    
+                Xtbar = []
+                for part in particles: 
+                    Xtbar.append(p_dist_M(dists[i],landmarks[objectIDs[i]][0],landmarks[objectIDs[i]][1],part.getX(),part.getY())) 
+            
+                # normalizing Xtbar
+                Xtbar_norm = []
+                for i in range(len(Xtbar)):
+                    Xtbar_norm.append(Xtbar[i]/sum(Xtbar))
+                
+                # resampling
+                # Resampling
+                # XXX: You do this
+                new_particles = np.random.choice(particles, size=len(particles), replace=True, p=Xtbar_norm)
+                particles = new_particles
 
-            # Compute particle weights
-            # XXX: You do this
 
-            # Resampling
-            # XXX: You do this
+            
+
+
+            
 
             # Draw detected objects
             cam.draw_aruco_objects(colour)
@@ -213,7 +242,7 @@ try:
             for p in particles:
                 p.setWeight(1.0/num_particles)
 
-        particle.add_uncertainty(particles,3, 0.1)
+        particle.add_uncertainty(particles,0.1, 0.1)
         est_pose = particle.estimate_pose(particles) # The estimate of the robots current pose
 
         if showGUI:
