@@ -34,6 +34,26 @@ class Particle(object):
     def setWeight(self, val):
         self.weight = val
 
+    def getExpectedMeasurements(self, landmarks):
+        expected_measurements = []
+        for landmark_id, landmark_position in landmarks.items():
+            # Calculate the expected distance and angle to each landmark
+            delta_x = landmark_position[0] - self.x
+            delta_y = landmark_position[1] - self.y
+
+            # Calculate distance using Euclidean distance
+            expected_distance = np.sqrt(delta_x**2 + delta_y**2)
+
+            # Calculate angle (bearing) to the landmark
+            expected_angle = np.arctan2(delta_y, delta_x) - self.theta
+
+            # Normalize the angle to the range [-pi, pi]
+            expected_angle = (expected_angle + np.pi) % (2 * np.pi) - np.pi
+
+            # Append the measurements for the current landmark
+            expected_measurements.append((landmark_id, expected_distance, expected_angle))
+
+        return expected_measurements
 
 def estimate_pose(particles_list):
     """Estimate the pose from particles by computing the average position and orientation over all particles. 
@@ -86,23 +106,3 @@ def add_uncertainty_von_mises(particles_list, sigma, theta_kappa):
         particle.y += rn.randn(0.0, sigma)
         particle.theta = np.mod(rn.rand_von_mises(particle.theta, theta_kappa), 2.0 * np.pi) - np.pi
 
-def getExpectedMeasurements(self, landmarks):
-        expected_measurements = []
-        for landmark_id, landmark_position in landmarks.items():
-            # Calculate the expected distance and angle to each landmark
-            delta_x = landmark_position[0] - self.x
-            delta_y = landmark_position[1] - self.y
-
-            # Calculate distance using Euclidean distance
-            expected_distance = np.sqrt(delta_x**2 + delta_y**2)
-
-            # Calculate angle (bearing) to the landmark
-            expected_angle = np.arctan2(delta_y, delta_x) - self.theta
-
-            # Normalize the angle to the range [-pi, pi]
-            expected_angle = (expected_angle + np.pi) % (2 * np.pi) - np.pi
-
-            # Append the measurements for the current landmark
-            expected_measurements.append((landmark_id, expected_distance, expected_angle))
-
-        return expected_measurements
