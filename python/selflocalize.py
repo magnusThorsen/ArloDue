@@ -233,10 +233,10 @@ try:
 
             # Compute particle weights
             # XXX: You do this
-            for i in range(len(particles)):
+            """ for i in range(len(particles)):
                 particle = particles[i]
                 expected_measurement = particle.getExpectedMeasurement()  # Compute expected measurement based on particle's pose
-                actual_measurement = (objectIDs[i], dists[i], angles[i])  # The detected object's measurements
+                actual_measurement = (objectIDs[i], dists[i], angles[i]) """  # The detected object's measurements
 
 
             # Resampling
