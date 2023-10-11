@@ -231,9 +231,6 @@ try:
                 # Resampling
                 # XXX: You do this
                 new_particles = np.random.choice(particles, size=len(particles), replace=True, p=Xtbar_norm)
-                for new_part in new_particles:
-                    if not (np.isnan(new_part)):
-                        new_particles.append(new_part)
                 particles = new_particles
 
 
