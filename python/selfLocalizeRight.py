@@ -187,8 +187,8 @@ try:
             part.setY(part.getY() + velocity*np.sin(part.getTheta()))
             part.setTheta(part.getTheta() + angular_velocity)
             
-        sigma_d = 0.1 # cm
-        sigma_theta = 0.1 # radians
+        sigma_d = 0.01 # cm
+        sigma_theta = 0.001 # radians
         
         
 
@@ -235,40 +235,40 @@ try:
             for i in range(len(objectIDs)):
                 print("Object ID = ", objectIDs[i], ", Distance = ", dists[i], ", angle = ", angles[i])
                 # XXX: Do something for each detected object - remember, the same ID may appear several times
-                
-                # Compute particle weights
-                # XXX: You do this
-                    
-                Xtbar = []
-                for part in particles: 
-                    weightDist = p_dist_M(dists[i],landmarks[objectIDs[i]][0],landmarks[objectIDs[i]][1],part.getX(),part.getY())
-                    weightAngle = p_meas_M(angles[i],landmarks[objectIDs[i]][0],landmarks[objectIDs[i]][1],part)
-                    
-                    Xtbar.append(weightDist*weightAngle) 
+                if objectIDs[i] in landmarks: 
+                    # Compute particle weights
+                    # XXX: You do this
+                        
+                    Xtbar = []
+                    for part in particles: 
+                        weightDist = p_dist_M(dists[i],landmarks[objectIDs[i]][0],landmarks[objectIDs[i]][1],part.getX(),part.getY())
+                        weightAngle = p_meas_M(angles[i],landmarks[objectIDs[i]][0],landmarks[objectIDs[i]][1],part)
+                        
+                        Xtbar.append(weightDist*weightAngle) 
 
-                # normalizing Xtbar
-                Xtbar_norm = []
-                for i in range(len(Xtbar)):
-                    Xtbar_norm.append(Xtbar[i]/sum(Xtbar))
-
-                
-                # resampling
-                # Resampling
-                # XXX: You do this
-                new_particles = np.random.choice(particles, size=len(particles), replace=True, p=Xtbar_norm)
-
-
-                new2_part = []
-                for part in new_particles: 
-                    new2_part.append(particle.Particle(part.getX(),part.getY(),part.getTheta(),1.0/num_particles))
-                
-                #exchange 30 % of the particles with new particles
-                for i in range(int(0.1*len(particles))):
-                    new2_part[i] = particle.Particle(600.0*np.random.ranf() - 100.0, 600.0*np.random.ranf() - 250.0, np.mod(2.0*np.pi*np.random.ranf(), 2.0*np.pi), 1.0/num_particles)
-                    
+                    # normalizing Xtbar
+                    Xtbar_norm = []
+                    for i in range(len(Xtbar)):
+                        Xtbar_norm.append(Xtbar[i]/sum(Xtbar))
 
                     
-                particles = new2_part
+                    # resampling
+                    # Resampling
+                    # XXX: You do this
+                    new_particles = np.random.choice(particles, size=len(particles), replace=True, p=Xtbar_norm)
+
+
+                    new2_part = []
+                    for part in new_particles: 
+                        new2_part.append(particle.Particle(part.getX(),part.getY(),part.getTheta(),1.0/num_particles))
+                    
+                    #exchange 30 % of the particles with new particles
+                    for i in range(int(0.1*len(particles))):
+                        new2_part[i] = particle.Particle(600.0*np.random.ranf() - 100.0, 600.0*np.random.ranf() - 250.0, np.mod(2.0*np.pi*np.random.ranf(), 2.0*np.pi), 1.0/num_particles)
+                        
+
+                        
+                    particles = new2_part
 
 
             
