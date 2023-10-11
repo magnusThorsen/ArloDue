@@ -208,7 +208,7 @@ try:
             # List detected objects
             for i in range(len(objectIDs)):
                 print("Object ID = ", objectIDs[i], ", Distance = ", dists[i], ", angle = ", angles[i])
-                if objectIDs[i] == 9:
+                """ if objectIDs[i] == 9:
                     #(x−x0)2+(y−y0)2=r2
                     x0 = 300
                     y0 = 0
@@ -222,7 +222,7 @@ try:
                         y =  (y0 - np.sqrt(r2 - x**2 + 2*x* x0- x0**2)) * np.random.choice([-1,1]) # (r^2 - x^2 + 2ax - a^2 - b^2) / (2b) + b
 
                         part.setX(x)
-                        part.setY(y)
+                        part.setY(y) """
 
                 if objectIDs[i] == 1:
                     #(x−x0)2+(y−y0)2=r2
