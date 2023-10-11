@@ -209,38 +209,28 @@ try:
             for i in range(len(objectIDs)):
                 print("Object ID = ", objectIDs[i], ", Distance = ", dists[i], ", angle = ", angles[i])
                 if objectIDs[i] == 9:
-                    #(x−x0)2+(y−y0)2=r2
                     x0 = 300
                     y0 = 0
                     r2 = dists[i]**2
-                    # set the particles x and y to the intersection of the circle and the line
                     for part in particles:
-                        # isolate y in the equation of the line #(x−x0)2+(y−y0)2=r2
-                        # a random number between 300- dist and 300 + dist
-                        # Magnus bud: y = (r2-2*(x-x0)/2)+y0   jeg er mega dejlig 3====D
+                        # Magnus bud:jeg er mega dejlig 3====D
                         x = np.random.randint(300 - (dists[i]-1), 300 + (dists[i]-1))
-                        y =  (y0 - np.sqrt(r2 - x**2 + 2*x* x0- x0**2)) * np.random.choice([-1,1]) # (r^2 - x^2 + 2ax - a^2 - b^2) / (2b) + b
-
+                        y =  (y0 - np.sqrt(r2 - x**2 + 2*x* x0- x0**2)) * np.random.choice([-1,1])
                         part.setX(x)
                         part.setY(y)
-
-                if objectIDs[i] == 1:
-                    #(x−x0)2+(y−y0)2=r2
+                        part.setTheta(np.pi)
+                        
+                elif objectIDs[i] == 1:
                     x0 = 0
                     y0 = 0
                     r2 = dists[i]**2
-                    # set the particles x and y to the intersection of the circle and the line
                     for part in particles:
-                        # isolate y in the equation of the line #(x−x0)2+(y−y0)2=r2
-                        # a random number between 300- dist and 300 + dist
-                        # Magnus bud: y = (r2-2*(x-x0)/2)+y0   jeg er mega dejlig 3====D
+                        # Magnus bud jeg er mega dejlig 3====D
                         x = np.random.randint(-(dists[i]-1),(dists[i]-1))
-                        y =  (y0 - np.sqrt(r2 - x**2 + 2*x* x0- x0**2)) * np.random.choice([-1,1]) # (r^2 - x^2 + 2ax - a^2 - b^2) / (2b) + b
-
+                        y =  (y0 - np.sqrt(r2 - x**2 + 2*x* x0- x0**2)) * np.random.choice([-1,1])
                         part.setX(x)
                         part.setY(y)
                     
-                
                 
                 # XXX: Do something for each detected object - remember, the same ID may appear several times
                 
@@ -249,10 +239,37 @@ try:
 
             # Compute particle weights
             # XXX: You do this
+            """ def getExpectedMeasurements(self, objectIDs, dists, angles):
+                    expected_measurements = []
+                    for i in range(len(objectIDs):
+                        object_id = objectIDs[i]
+                        actual_distance = dists[i]
+                        actual_angle = angles[i]
+
+                        # Assuming you have a mapping from object ID to landmark position
+                        if object_id in landmarks:
+                            landmark_position = landmarks[object_id]
+                            delta_x = landmark_position[0] - self.x
+                            delta_y = landmark_position[1] - self.y
+
+                            # Calculate distance using Euclidean distance
+                            expected_distance = np.sqrt(delta_x**2 + delta_y**2)
+
+                            # Calculate angle (bearing) to the landmark
+                            expected_angle = np.arctan2(delta_y, delta_x) - self.theta
+
+                            # Normalize the angle to the range [-pi, pi]
+                            expected_angle = (expected_angle + np.pi) % (2 * np.pi) - np.pi
+
+                            # Append the measurements for the current landmark
+                            expected_measurements.append((object_id, expected_distance, expected_angle))
+
+                    return expected_measurements"""
+            
             """ for i in range(len(particles)):
-                particle = particles[i]
-                expected_measurement = particle.getExpectedMeasurement()  # Compute expected measurement based on particle's pose
-                actual_measurement = (objectIDs[i], dists[i], angles[i]) """  # The detected object's measurements
+                    particle = particles[i]
+                    expected_measurement = particle.getExpectedMeasurement()  # Compute expected measurement based on particle's pose
+                    actual_measurement = (objectIDs[i], dists[i], angles[i]) """  # The detected object's measurements
 
 
             # Resampling
@@ -266,7 +283,7 @@ try:
             for p in particles:
                 p.setWeight(1.0/num_particles)
 
-        particle.add_uncertainty(particles,10, 10)
+        particle.add_uncertainty(particles,5, 5)
         est_pose = particle.estimate_pose(particles) # The estimate of the robots current pose
 
         if showGUI:
