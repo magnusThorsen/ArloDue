@@ -223,8 +223,8 @@ try:
                         part.setY(y)
                         
                         # calculate the angle between the vector ((x,y) - (x0,y0)) and (5,0) in radians
-                        v1 = np.array(x0-x,y0-y)
-                        v2 = np.array(5,0)
+                        v1 = np.array([x0-x,y0-y])
+                        v2 = np.array([1,1])
                         angle = np.arccos(np.dot(v1,v2) / (np.linalg.norm(v1) * np.linalg.norm(v2)))   
                         part.setTheta(angle)            
 
