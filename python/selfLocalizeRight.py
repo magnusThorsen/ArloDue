@@ -187,7 +187,7 @@ try:
             part.setY(part.getY() + velocity*np.sin(part.getTheta()))
             part.setTheta(part.getTheta() + angular_velocity)
             
-        sigma_d = 10 # cm
+        sigma_d = 0.01 # cm
         # XXX: You do this
         # calc d^(i) from equation 2
         def dist_part_landm(lx, ly, x, y):
