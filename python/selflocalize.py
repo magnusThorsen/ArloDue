@@ -57,7 +57,10 @@ landmark_colors = [CRED, CGREEN] # Colors used when drawing the landmarks
 
 
 
-
+def gaussian_likelihood(x, mean, sigma):
+    # Compute the likelihood of x given a Gaussian distribution with mean and sigma
+    exponent = -0.5 * ((x - mean) / sigma) ** 2
+    return (1.0 / (sigma * np.sqrt(2 * np.pi))) * np.exp(exponent)
 
 def jet(x):
     """Colour map for drawing particles. This function determines the colour of 
@@ -218,14 +221,16 @@ try:
                         y =  (y0 - np.sqrt(r2 - x**2 + 2*x* x0- x0**2)) * np.random.choice([-1,1])
                         part.setX(x)
                         part.setY(y)
-                        part.setTheta(0.5 * np.pi)
+                        
+                        # calculate the angle between the vector ((x,y) - (x0,y0)) and (5,0) in radians
+                        part.setTheta(np.arccos((x-x0)/dists[i]))
+
                         
                 elif objectIDs[i] == 1:
                     x0 = 0
                     y0 = 0
                     r2 = dists[i]**2
                     for part in particles:
-                        # Magnus bud jeg er mega dejlig 3====D
                         x = np.random.randint(-(dists[i]-1),(dists[i]-1))
                         y =  (y0 - np.sqrt(r2 - x**2 + 2*x* x0- x0**2)) * np.random.choice([-1,1])
                         part.setX(x)
@@ -239,38 +244,29 @@ try:
 
             # Compute particle weights
             # XXX: You do this
-            """ def getExpectedMeasurements(self, objectIDs, dists, angles):
-                    expected_measurements = []
-                    for i in range(len(objectIDs):
-                        object_id = objectIDs[i]
-                        actual_distance = dists[i]
-                        actual_angle = angles[i]
-
-                        # Assuming you have a mapping from object ID to landmark position
-                        if object_id in landmarks:
-                            landmark_position = landmarks[object_id]
-                            delta_x = landmark_position[0] - self.x
-                            delta_y = landmark_position[1] - self.y
-
-                            # Calculate distance using Euclidean distance
-                            expected_distance = np.sqrt(delta_x**2 + delta_y**2)
-
-                            # Calculate angle (bearing) to the landmark
-                            expected_angle = np.arctan2(delta_y, delta_x) - self.theta
-
-                            # Normalize the angle to the range [-pi, pi]
-                            expected_angle = (expected_angle + np.pi) % (2 * np.pi) - np.pi
-
-                            # Append the measurements for the current landmark
-                            expected_measurements.append((object_id, expected_distance, expected_angle))
-
-                    return expected_measurements"""
             
-            """ for i in range(len(particles)):
-                    particle = particles[i]
-                    expected_measurement = particle.getExpectedMeasurement()  # Compute expected measurement based on particle's pose
-                    actual_measurement = (objectIDs[i], dists[i], angles[i]) """  # The detected object's measurements
+        
+            
+            for i in range(len(particles)):
+                particle = particles[i]
+                expected_measurement = particle.getExpectedMeasurement(landmarks)  # Compute expected measurement based on particle's pose
+                actual_measurement = (objectIDs[i], dists[i], angles[i])  # The detected object's measurements
 
+                # Calculate the likelihood of distance and angle using Gaussian distributions
+            distance_likelihood = gaussian_likelihood(actual_measurement[1], expected_measurements[1], distance_sigma)
+            angle_likelihood = gaussian_likelihood(actual_measurement[2], expected_measurements[2], angle_sigma)
+
+            # Calculate the weight as the product of likelihoods
+            particle_weight = distance_likelihood * angle_likelihood
+
+            # Update the particle's weight
+            particle.setWeight(particle_weight)
+
+        # Normalize particle weights to form a probability distribution
+        total_weight = sum(particle.getWeight() for particle in particles)
+        for i in range(len(particles)):
+            particle = particles[i]
+            particle.setWeight(particle.getWeight() / total_weight)
 
             # Resampling
             # XXX: You do this
