@@ -208,7 +208,7 @@ try:
             # List detected objects
             for i in range(len(objectIDs)):
                 print("Object ID = ", objectIDs[i], ", Distance = ", dists[i], ", angle = ", angles[i])
-                if objectIDs[i] == 1 or objectIDs[i] == 9:
+                if objectIDs[i] == 9:
                     #(x−x0)2+(y−y0)2=r2
                     x0 = 300
                     y0 = 0
