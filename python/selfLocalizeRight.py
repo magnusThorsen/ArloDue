@@ -181,6 +181,11 @@ try:
         
         # Use motor controls to update particles
         # XXX: Make the robot drive
+        for part in particles: 
+            part.setX(part.getX() + velocity*np.cos(part.getTheta()))
+            part.setY(part.getY() + velocity*np.sin(part.getTheta()))
+            part.setTheta(part.getTheta() + angular_velocity)
+            
         # XXX: You do this
 
 
@@ -208,7 +213,7 @@ try:
             for p in particles:
                 p.setWeight(1.0/num_particles)
 
-        particle.add_uncertainty(particles,5, 0.1)
+        particle.add_uncertainty(particles,3, 0.1)
         est_pose = particle.estimate_pose(particles) # The estimate of the robots current pose
 
         if showGUI:
