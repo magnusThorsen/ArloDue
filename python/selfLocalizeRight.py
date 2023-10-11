@@ -187,8 +187,8 @@ try:
             part.setY(part.getY() + velocity*np.sin(part.getTheta()))
             part.setTheta(part.getTheta() + angular_velocity)
             
-        sigma_d = 0.01 # cm
-        sigma_theta = 0.001 # radians
+        sigma_d = 20 # cm
+        sigma_theta = 0.01 # radians
         
         
 
@@ -250,7 +250,7 @@ try:
                 for i in range(len(imp_landmarks)):
                     weightDist = weightDist*p_dist_M(dists[i],landmarks[imp_landmarks[i]][0],landmarks[imp_landmarks[i]][1],part.getX(),part.getY())
                     weightAngle = weightAngle*p_meas_M(angles[i],landmarks[imp_landmarks[i]][0],landmarks[imp_landmarks[i]][1],part)
-                
+                part.setWeight(weightDist*weightAngle)
                 Xtbar.append(weightDist*weightAngle) 
 
             # normalizing Xtbar
