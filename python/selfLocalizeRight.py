@@ -187,8 +187,8 @@ try:
             part.setY(part.getY() + velocity*np.sin(part.getTheta()))
             part.setTheta(part.getTheta() + angular_velocity)
             
-        sigma_d = 0.01 # cm
-        sigma_theta = 0.01 # radians
+        sigma_d = 0.1 # cm
+        sigma_theta = 0.1 # radians
         
         
 
@@ -242,9 +242,9 @@ try:
                 Xtbar = []
                 for part in particles: 
                     weightDist = p_dist_M(dists[i],landmarks[objectIDs[i]][0],landmarks[objectIDs[i]][1],part.getX(),part.getY())
-                    weightangle = p_meas_M(angles[i],landmarks[objectIDs[i]][0],landmarks[objectIDs[i]][1],part)
+                    weightAngle = p_meas_M(angles[i],landmarks[objectIDs[i]][0],landmarks[objectIDs[i]][1],part)
                     
-                    Xtbar.append(weightDist*weightangle) 
+                    Xtbar.append(weightDist*weightAngle) 
 
                 # normalizing Xtbar
                 Xtbar_norm = []
