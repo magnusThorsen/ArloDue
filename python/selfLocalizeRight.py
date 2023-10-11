@@ -230,8 +230,9 @@ try:
                 # resampling
                 # Resampling
                 # XXX: You do this
-                #new_particles = np.random.choice(particles, size=len(particles), replace=True, p=Xtbar_norm)
-                #particles = new_particles
+                new_particles = np.random.choice(particles, size=len(particles), replace=True, p=Xtbar_norm)
+                if not (np.isnan(new_particles)):
+                    particles = new_particles
 
 
             
