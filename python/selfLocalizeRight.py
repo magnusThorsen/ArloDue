@@ -236,7 +236,7 @@ try:
                     new2_part.append(particle.Particle(part.getX(),part.getY(),part.getTheta(),1.0/num_particles))
                 
                 #exchange 30 % of the particles with new particles
-                for i in range(int(0.3*len(particles))):
+                for i in range(int(0.1*len(particles))):
                     new2_part[i] = particle.Particle(600.0*np.random.ranf() - 100.0, 600.0*np.random.ranf() - 250.0, np.mod(2.0*np.pi*np.random.ranf(), 2.0*np.pi), 1.0/num_particles)
                     
 
