@@ -218,7 +218,7 @@ try:
                         y =  (y0 - np.sqrt(r2 - x**2 + 2*x* x0- x0**2)) * np.random.choice([-1,1])
                         part.setX(x)
                         part.setY(y)
-                        part.setTheta(0)
+                        part.setTheta(0.5 * np.pi)
                         
                 elif objectIDs[i] == 1:
                     x0 = 0
