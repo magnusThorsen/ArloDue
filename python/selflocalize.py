@@ -218,7 +218,7 @@ try:
                         # isolate y in the equation of the line #(x−x0)2+(y−y0)2=r2
                         # a random number between 300- dist and 300 + dist
                         # Magnus bud: y = (r2-2*(x-x0)/2)+y0   jeg er mega dejlig 3====D
-                        x = np.random.randint(300 - (dists[i]-1), 300 + (dists[i]-1))
+                        x = np.random.randint(300 - (dists[i]), 300 + (dists[i]))
                         y =  (y0 - np.sqrt(r2 - x**2 + 2*x* x0- x0**2)) * np.random.choice([-1,1]) # (r^2 - x^2 + 2ax - a^2 - b^2) / (2b) + b
 
                         part.setX(x)
@@ -233,6 +233,11 @@ try:
 
             # Compute particle weights
             # XXX: You do this
+            for i in range(len(particles)):
+                particle = particles[i]
+                expected_measurement = particle.getExpectedMeasurement()  # Compute expected measurement based on particle's pose
+                actual_measurement = (objectIDs[i], dists[i], angles[i])  # The detected object's measurements
+
 
             # Resampling
             # XXX: You do this
