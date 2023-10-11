@@ -134,7 +134,7 @@ try:
 
 
     # Initialize particles
-    num_particles = 1000
+    num_particles = 10
     particles = initialize_particles(num_particles)
 
     est_pose = particle.estimate_pose(particles) # The estimate of the robots current pose
@@ -218,17 +218,20 @@ try:
                 Xtbar = []
                 for part in particles: 
                     Xtbar.append(p_dist_M(dists[i],landmarks[objectIDs[i]][0],landmarks[objectIDs[i]][1],part.getX(),part.getY())) 
-            
+                print(Xtbar)
+
                 # normalizing Xtbar
                 Xtbar_norm = []
                 for i in range(len(Xtbar)):
                     Xtbar_norm.append(Xtbar[i]/sum(Xtbar))
+
+                print(Xtbar_norm)
                 
                 # resampling
                 # Resampling
                 # XXX: You do this
-                new_particles = np.random.choice(particles, size=len(particles), replace=True, p=Xtbar_norm)
-                particles = new_particles
+                #new_particles = np.random.choice(particles, size=len(particles), replace=True, p=Xtbar_norm)
+                #particles = new_particles
 
 
             
