@@ -229,10 +229,20 @@ try:
                 # Resampling
                 # XXX: You do this
                 new_particles = np.random.choice(particles, size=len(particles), replace=True, p=Xtbar_norm)
-                new2_part = []
-                for part in new_particles: 
-                    new2_part.append(particle.Particle(part.getX(),part.getY(),part.getTheta(),1.0/num_particles))
-                particles = new2_part
+                # remove the lowest weight particles 10 % 
+                # sort the particles after weight
+                new_particles = sorted(new_particles, key=lambda particle: particle.getWeight())
+                new2_particles = new_particles[0:int(len(new_particles)*0.9)]
+
+
+                new3_part = []
+                for part in new2_particles: 
+                    new3_part.append(particle.Particle(part.getX(),part.getY(),part.getTheta(),1.0/num_particles*0.9))
+                # add 10 % particles with random position and orientation to new2_part
+                for i in range(int(len(new_particles)*0.1)):
+                    new3_part.append(particle.Particle(600.0*np.random.ranf() - 100.0, 600.0*np.random.ranf() - 250.0, np.mod(2.0*np.pi*np.random.ranf(), 2.0*np.pi), 1.0/num_particles))
+                    
+                particles = new3_part
 
 
             
