@@ -48,7 +48,7 @@ CBLACK = (0, 0, 0)
 
 # Landmarks.
 # The robot knows the position of 2 landmarks. Their coordinates are in the unit centimeters [cm].
-landmarkIDs = [1, 5]
+landmarkIDs = [1, 9]
 landmarks = {
     1: (0.0, 0.0),  # Coordinates for landmark 1
     5: (300.0, 0.0)  # Coordinates for landmark 2
@@ -208,7 +208,7 @@ try:
             # List detected objects
             for i in range(len(objectIDs)):
                 print("Object ID = ", objectIDs[i], ", Distance = ", dists[i], ", angle = ", angles[i])
-                if objectIDs[i] == 1:
+                if objectIDs[i] == 1 or objectIDs[i] == 9:
                     #(x−x0)2+(y−y0)2=r2
                     x0 = 300
                     y0 = 0
@@ -218,7 +218,7 @@ try:
                         # isolate y in the equation of the line #(x−x0)2+(y−y0)2=r2
                         # a random number between 300- dist and 300 + dist
                         # Magnus bud: y = (r2-2*(x-x0)/2)+y0   jeg er mega dejlig 3====D
-                        x = np.random.randint(300 - (dists[i]), 300 + (dists[i]))
+                        x = np.random.randint(300 - (dists[i]-1), 300 + (dists[i]-1))
                         y =  (y0 - np.sqrt(r2 - x**2 + 2*x* x0- x0**2)) * np.random.choice([-1,1]) # (r^2 - x^2 + 2ax - a^2 - b^2) / (2b) + b
 
                         part.setX(x)
