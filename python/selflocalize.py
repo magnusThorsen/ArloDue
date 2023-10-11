@@ -245,7 +245,9 @@ try:
             # Compute particle weights
             # XXX: You do this
             
-        
+            # Define the standard deviations for your measurement noise
+            distance_sigma = 1.0  # Adjust this based on your sensor noise
+            angle_sigma = 0.1    # Adjust this based on your sensor noise
             
             for i in range(len(particles)):
                 particle = particles[i]
@@ -253,20 +255,20 @@ try:
                 actual_measurement = (objectIDs[i], dists[i], angles[i])  # The detected object's measurements
 
                 # Calculate the likelihood of distance and angle using Gaussian distributions
-            distance_likelihood = gaussian_likelihood(actual_measurement[1], expected_measurements[1], distance_sigma)
-            angle_likelihood = gaussian_likelihood(actual_measurement[2], expected_measurements[2], angle_sigma)
+                distance_likelihood = gaussian_likelihood(actual_measurement[1], expected_measurement[1], distance_sigma)
+                angle_likelihood = gaussian_likelihood(actual_measurement[2], expected_measurement[2], angle_sigma)
 
-            # Calculate the weight as the product of likelihoods
-            particle_weight = distance_likelihood * angle_likelihood
+                # Calculate the weight as the product of likelihoods
+                particle_weight = distance_likelihood * angle_likelihood
 
-            # Update the particle's weight
-            particle.setWeight(particle_weight)
+                # Update the particle's weight
+                particle.setWeight(particle_weight)
 
-        # Normalize particle weights to form a probability distribution
-        total_weight = sum(particle.getWeight() for particle in particles)
-        for i in range(len(particles)):
-            particle = particles[i]
-            particle.setWeight(particle.getWeight() / total_weight)
+            # Normalize particle weights to form a probability distribution
+            total_weight = sum(particle.getWeight() for particle in particles)
+            for i in range(len(particles)):
+                particle = particles[i]
+                particle.setWeight(particle.getWeight() / total_weight)
 
             # Resampling
             # XXX: You do this
