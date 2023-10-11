@@ -219,9 +219,8 @@ try:
                         # a random number between 300- dist and 300 + dist
                         # Magnus bud: y = (r2-2*(x-x0)/2)+y0   jeg er mega dejlig 3====D
                         x = np.random.randint(300 - (dists[i]-1), 300 + (dists[i]-1))
-                        #y =  y0 - np.sqrt(r2 - x**2 + 2*x* x0- x0**2) * np.random.choose      # (r^2 - x^2 + 2ax - a^2 - b^2) / (2b) + b
+                        y =  (y0 - np.sqrt(r2 - x**2 + 2*x* x0- x0**2)) * np.random.choice([-1,1]) # (r^2 - x^2 + 2ax - a^2 - b^2) / (2b) + b
 
-                        y = y0 + np.sqrt(r2 -(x-x0)**2)
                         part.setX(x)
                         part.setY(y)
                     
