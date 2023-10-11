@@ -218,14 +218,14 @@ try:
                 Xtbar = []
                 for part in particles: 
                     Xtbar.append(p_dist_M(dists[i],landmarks[objectIDs[i]][0],landmarks[objectIDs[i]][1],part.getX(),part.getY())) 
-                print(Xtbar)
+                print("Xtbar", Xtbar)
 
                 # normalizing Xtbar
                 Xtbar_norm = []
                 for i in range(len(Xtbar)):
                     Xtbar_norm.append(Xtbar[i]/sum(Xtbar))
 
-                print(Xtbar_norm)
+                print("Xtbar_norm", Xtbar_norm)
                 
                 # resampling
                 # Resampling
