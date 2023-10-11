@@ -223,6 +223,22 @@ try:
 
                         part.setX(x)
                         part.setY(y)
+
+                if objectIDs[i] == 1:
+                    #(x−x0)2+(y−y0)2=r2
+                    x0 = 300
+                    y0 = 0
+                    r2 = dists[i]**2
+                    # set the particles x and y to the intersection of the circle and the line
+                    for part in particles:
+                        # isolate y in the equation of the line #(x−x0)2+(y−y0)2=r2
+                        # a random number between 300- dist and 300 + dist
+                        # Magnus bud: y = (r2-2*(x-x0)/2)+y0   jeg er mega dejlig 3====D
+                        x = np.random.randint(-(dists[i]-1),(dists[i]-1))
+                        y =  (y0 - np.sqrt(r2 - x**2 + 2*x* x0- x0**2)) * np.random.choice([-1,1]) # (r^2 - x^2 + 2ax - a^2 - b^2) / (2b) + b
+
+                        part.setX(x)
+                        part.setY(y)
                     
                 
                 
