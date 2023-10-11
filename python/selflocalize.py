@@ -251,14 +251,14 @@ try:
             
             for i in range(len(particles)):
                 particle = particles[i]
-                expected_measurement = particle.getExpectedMeasurement(landmarks)  # Compute expected measurement based on particle's pose
+                expected_measurement = particle.getExpectedMeasurements(landmarks)  # Compute expected measurement based on particle's pose
                 actual_measurement = (objectIDs[i], dists[i], angles[i])  # The detected object's measurements
 
                 # Calculate the likelihood of distance and angle using Gaussian distributions
                 distance_likelihood = gaussian_likelihood(actual_measurement[1], expected_measurement[1], distance_sigma)
                 angle_likelihood = gaussian_likelihood(actual_measurement[2], expected_measurement[2], angle_sigma)
 
-                # Calculate the weight as the product of likelihoods
+                # Calculate the weight as the product of likelihood
                 particle_weight = distance_likelihood * angle_likelihood
 
                 # Update the particle's weight
