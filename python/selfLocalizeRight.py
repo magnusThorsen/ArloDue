@@ -223,8 +223,12 @@ try:
             result = (1/(np.sqrt(2*(np.pi)*(sigma_theta**2))))*np.exp(-(((tm-(phi_i(lx,ly,part)))**2)/2*(sigma_theta**2)))
             return result 
 
-
-        
+        # Equation 5
+        def prob_product(landmarks):
+            result = 1
+            for landmark in landmarks:
+                result = dist_part_landm(landmark) * result
+            return result 
         # Fetch next frame
         colour = cam.get_next_frame()
         
@@ -232,43 +236,45 @@ try:
         objectIDs, dists, angles = cam.detect_aruco_objects(colour)
         if not isinstance(objectIDs, type(None)):
             # List detected objects
+            imp_landmarks = []
             for i in range(len(objectIDs)):
                 print("Object ID = ", objectIDs[i], ", Distance = ", dists[i], ", angle = ", angles[i])
-                # XXX: Do something for each detected object - remember, the same ID may appear several times
-                if objectIDs[i] in landmarks: 
-                    # Compute particle weights
-                    # XXX: You do this
-                        
-                    Xtbar = []
-                    for part in particles: 
-                        weightDist = p_dist_M(dists[i],landmarks[objectIDs[i]][0],landmarks[objectIDs[i]][1],part.getX(),part.getY())
-                        weightAngle = p_meas_M(angles[i],landmarks[objectIDs[i]][0],landmarks[objectIDs[i]][1],part)
-                        
-                        Xtbar.append(weightDist*weightAngle) 
+                if objectIDs[i] in landmarkIDs:
+                    imp_landmarks.append(objectIDs[i])
+            # XXX: Do something for each detected object - remember, the same ID may appear several times
+            
+            Xtbar = []
+            for part in particles: 
+                weightDist = 1
+                weightAngle = 1
+                for i in range(len(imp_landmarks)):
+                    weightDist = weightDist*p_dist_M(dists[i],landmarks[imp_landmarks[i]][0],landmarks[imp_landmarks[i]][1],part.getX(),part.getY())
+                    weightAngle = weightAngle*p_meas_M(angles[i],landmarks[imp_landmarks[i]][0],landmarks[imp_landmarks[i]][1],part)
+                
+                Xtbar.append(weightDist*weightAngle) 
 
-                    # normalizing Xtbar
-                    Xtbar_norm = []
-                    for i in range(len(Xtbar)):
-                        Xtbar_norm.append(Xtbar[i]/sum(Xtbar))
+            # normalizing Xtbar
+            Xtbar_norm = []
+            for i in range(len(Xtbar)):
+                Xtbar_norm.append(Xtbar[i]/sum(Xtbar))
 
-                    
-                    # resampling
-                    # Resampling
-                    # XXX: You do this
-                    new_particles = np.random.choice(particles, size=len(particles), replace=True, p=Xtbar_norm)
+            # resampling
+            # Resampling
+            # XXX: You do this
+            new_particles = np.random.choice(particles, size=len(particles), replace=True, p=Xtbar_norm)
 
 
-                    new2_part = []
-                    for part in new_particles: 
-                        new2_part.append(particle.Particle(part.getX(),part.getY(),part.getTheta(),1.0/num_particles))
-                    
-                    #exchange 30 % of the particles with new particles
-                    for i in range(int(0.1*len(particles))):
-                        new2_part[i] = particle.Particle(600.0*np.random.ranf() - 100.0, 600.0*np.random.ranf() - 250.0, np.mod(2.0*np.pi*np.random.ranf(), 2.0*np.pi), 1.0/num_particles)
-                        
+            new2_part = []
+            for part in new_particles: 
+                new2_part.append(particle.Particle(part.getX(),part.getY(),part.getTheta(),1.0/num_particles))
+            
+            #exchange 30 % of the particles with new particles
+            for i in range(int(0.1*len(particles))):
+                new2_part[i] = particle.Particle(600.0*np.random.ranf() - 100.0, 600.0*np.random.ranf() - 250.0, np.mod(2.0*np.pi*np.random.ranf(), 2.0*np.pi), 1.0/num_particles)
+                
 
-                        
-                    particles = new2_part
+                
+            particles = new2_part
 
 
             
