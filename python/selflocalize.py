@@ -226,7 +226,7 @@ try:
 
                 if objectIDs[i] == 1:
                     #(x−x0)2+(y−y0)2=r2
-                    x0 = 300
+                    x0 = 0
                     y0 = 0
                     r2 = dists[i]**2
                     # set the particles x and y to the intersection of the circle and the line
