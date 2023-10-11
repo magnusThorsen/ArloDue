@@ -188,18 +188,42 @@ try:
             part.setTheta(part.getTheta() + angular_velocity)
             
         sigma_d = 0.01 # cm
+        sigma_theta = 0.01 # radians
+        
+        
+
         # XXX: You do this
         # calc d^(i) from equation 2
         def dist_part_landm(lx, ly, x, y):
             d = np.sqrt((lx - x)**2 + ((ly - y)**2))
             return d
 
+        def e_l (lx, ly, x, y):
+            result =  np.array([(lx - x) /dist_part_landm(lx,ly,x,y), (ly - y) /dist_part_landm(lx,ly,x,y)])
+            return result
+        
+        
         # equation 2
         def p_dist_M (dm,lx,ly, x, y):
             result = (1/(np.sqrt(2*(np.pi)*(sigma_d**2))))*np.exp(-(((dm-(dist_part_landm(lx,ly,x,y)))**2)/2*(sigma_d**2)))
             return result 
-        
-        
+    
+        # Equation 4
+        def phi_i (lx, ly, part):
+            x = part.getX()
+            y = part.getY()
+            theta = part.getTheta()
+            e_theta_i = np.array([np.cos(theta),np.sin(theta)])
+            e_theta_i_hat = np.array([-np.sin(theta),np.cos(theta)])
+            result = np.sign(np.dot(e_theta_i_hat,e_l(lx, ly, x, y)))*np.arccos(np.dot(e_theta_i,e_l(lx, ly, x, y)))
+            return result 
+            
+        # equation 3 
+        def p_meas_M (tm,lx,ly, part):
+            result = (1/(np.sqrt(2*(np.pi)*(sigma_theta**2))))*np.exp(-(((tm-(phi_i(lx,ly,part)))**2)/2*(sigma_theta**2)))
+            return result 
+
+
         
         # Fetch next frame
         colour = cam.get_next_frame()
@@ -217,7 +241,10 @@ try:
                     
                 Xtbar = []
                 for part in particles: 
-                    Xtbar.append(p_dist_M(dists[i],landmarks[objectIDs[i]][0],landmarks[objectIDs[i]][1],part.getX(),part.getY())) 
+                    weightDist = p_dist_M(dists[i],landmarks[objectIDs[i]][0],landmarks[objectIDs[i]][1],part.getX(),part.getY())
+                    weightangle = p_meas_M(angles[i],landmarks[objectIDs[i]][0],landmarks[objectIDs[i]][1],part)
+                    
+                    Xtbar.append(weightDist*weightangle) 
 
                 # normalizing Xtbar
                 Xtbar_norm = []
