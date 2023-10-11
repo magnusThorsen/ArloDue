@@ -191,7 +191,7 @@ try:
         # XXX: You do this
         # calc d^(i) from equation 2
         def dist_part_landm(lx, ly, x, y):
-            d = np.sqrt((lx-x)**2 + (ly-y**2))
+            d = np.sqrt((lx - x)**2 + ((ly - y)**2))
             return d
 
         # equation 2
@@ -231,8 +231,10 @@ try:
                 # Resampling
                 # XXX: You do this
                 new_particles = np.random.choice(particles, size=len(particles), replace=True, p=Xtbar_norm)
-                if not (np.isnan(new_particles)):
-                    particles = new_particles
+                for new_part in new_particles:
+                    if not (np.isnan(new_part)):
+                        new_particles.append(new_part)
+                particles = new_particles
 
 
             
