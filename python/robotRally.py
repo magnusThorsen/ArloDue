@@ -10,7 +10,6 @@ np.set_printoptions(threshold=sys.maxsize)
 
 # Create a robot object and initialize
 onRobot = True # Whether or not we are running on the Arlo robot
-arlo = robot.Robot()
 
 try:
     import picamera2
@@ -36,9 +35,11 @@ if isRunningOnArlo():
 try:
     import robot
     onRobot = True
+    arlo = robot.Robot()
 except ImportError:
     print("selflocalize.py: robot module not present - forcing not running on Arlo!")
     onRobot = False
+
 
 
 
