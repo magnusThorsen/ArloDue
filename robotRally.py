@@ -11,6 +11,7 @@ np.set_printoptions(threshold=sys.maxsize)
 # Create a robot object and initialize
 onRobot = True # Whether or not we are running on the Arlo robot
 needNewLocation = False
+goalReached = False
 try:
     import picamera2
     print("Camera.py: Using picamera2 module")
@@ -145,8 +146,8 @@ def turnDetect(landmarkID):
         # print go diff 
         if counter == 17:
             print(arlo.stop())
-            needNewLocation = True
-            return needNewLocation
+            noLocationFound = True
+            return noLocationFound
         if not searchAndshow(landmarkID): 
             turnLeft(20)
             sleep(0.9)
@@ -154,12 +155,21 @@ def turnDetect(landmarkID):
             print("This is the counter: ", counter)
         else: 
             print(arlo.stop())
-            return needNewLocation
+            noLocationFound = False
+            return noLocationFound
         
 
 def main():
-    # for loop running 18 times
-    turnLeft(360)
+    while not goalReached:
+        for i in landmarkIDs:
+            if turnDetect(landmarkIDs[i]):
+                print("Found the landmark")
+                goalReached = True
+                break
+            else: 
+                print("Didn't find the landmark")
+                goalReached = False
+                continue
         
             
 
