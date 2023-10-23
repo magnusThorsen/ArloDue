@@ -29,18 +29,18 @@ def isRunningOnArlo():
 
 if isRunningOnArlo():
     # XXX: You need to change this path to point to where your robot.py file is located
-    sys.path.append("../../../../Arlo/python")
+    sys.path.append("../../../../../Arlo/python")
 
 
 try:
     import robot
     onRobot = True
-    arlo = robot.Robot()
 except ImportError:
     print("selflocalize.py: robot module not present - forcing not running on Arlo!")
     onRobot = False
 
 
+arlo = robot.Robot()
 
 
 xSize = 640
