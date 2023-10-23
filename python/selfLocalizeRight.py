@@ -6,6 +6,7 @@ import random
 import time
 from timeit import default_timer as timer
 import sys
+import math
 
 
 # Flags
@@ -47,10 +48,10 @@ CBLACK = (0, 0, 0)
 
 # Landmarks.
 # The robot knows the position of 2 landmarks. Their coordinates are in the unit centimeters [cm].
-landmarkIDs = [1, 9]
+landmarkIDs = [1, 7]
 landmarks = {
     1: (0.0, 0.0),  # Coordinates for landmark 1
-    9: (300.0, 0.0)  # Coordinates for landmark 2
+    7: (300.0, 0.0)  # Coordinates for landmark 2
 }
 landmark_colors = [CRED, CGREEN] # Colors used when drawing the landmarks
 
@@ -134,7 +135,7 @@ try:
 
 
     # Initialize particles
-    num_particles = 1000
+    num_particles = 10
     particles = initialize_particles(num_particles)
 
     est_pose = particle.estimate_pose(particles) # The estimate of the robots current pose
@@ -195,7 +196,7 @@ try:
         # XXX: You do this
         # calc d^(i) from equation 2
         def dist_part_landm(lx, ly, x, y):
-            d = np.sqrt((lx - x)**2 + ((ly - y)**2))
+            d = np.sqrt(((lx - x)**2) + ((ly - y)**2))
             return d
 
         def e_l (lx, ly, x, y):
@@ -204,8 +205,8 @@ try:
         
         
         # equation 2
-        def p_dist_M (dm,lx,ly, x, y):
-            result = (1/(np.sqrt(2*(np.pi)*(sigma_d**2))))*np.exp(-(((dm-(dist_part_landm(lx,ly,x,y)))**2)/2*(sigma_d**2)))
+        def p_dist_M (dm,lx,ly,part):
+            result = (1/(np.sqrt(2*(np.pi)*(sigma_d**2))))*math.exp(-(((dm-(dist_part_landm(lx,ly,part.getX(),part.getY())))**2)/2*(sigma_d**2)))
             return result 
     
         # Equation 4
@@ -213,14 +214,14 @@ try:
             x = part.getX()
             y = part.getY()
             theta = part.getTheta()
-            e_theta_i = np.array([np.cos(theta),np.sin(theta)])
+            e_theta_i = -1*(np.array([np.cos(theta),np.sin(theta)])) # Her er der ganget med -1, som der ikke burde være i de givne formler, men det virker for os
             e_theta_i_hat = np.array([-np.sin(theta),np.cos(theta)])
             result = np.sign(np.dot(e_theta_i_hat,e_l(lx, ly, x, y)))*np.arccos(np.dot(e_theta_i,e_l(lx, ly, x, y)))
             return result 
             
         # equation 3 
         def p_meas_M (tm,lx,ly, part):
-            result = (1/(np.sqrt(2*(np.pi)*(sigma_theta**2))))*np.exp(-(((tm-(phi_i(lx,ly,part)))**2)/2*(sigma_theta**2)))
+            result = (1/(np.sqrt(2*(np.pi)*(sigma_theta**2))))*math.exp(-(((tm-(phi_i(lx,ly,part)))**2)/2*(sigma_theta**2)))
             return result 
 
         # Equation 5
@@ -236,47 +237,23 @@ try:
         objectIDs, dists, angles = cam.detect_aruco_objects(colour)
         if not isinstance(objectIDs, type(None)):
             # List detected objects
-            imp_landmarks = []
+            imp_landmarks_index = []
             for i in range(len(objectIDs)):
                 print("Object ID = ", objectIDs[i], ", Distance = ", dists[i], ", angle = ", angles[i])
                 if objectIDs[i] in landmarkIDs:
-                    imp_landmarks.append(objectIDs[i])
+                    if len(imp_landmarks_index) == 0:
+                        imp_landmarks_index.append(i)
+                    for j in imp_landmarks_index:
+                        if objectIDs[i] != objectIDs[imp_landmarks_index[j]]:
+                            imp_landmarks_index.append(i)
+                        
             # XXX: Do something for each detected object - remember, the same ID may appear several times
             
-            Xtbar = []
-            for part in particles: 
-                weightDist = 1
-                weightAngle = 1
-                for i in range(len(imp_landmarks)):
-                    weightDist = weightDist*p_dist_M(dists[i],landmarks[imp_landmarks[i]][0],landmarks[imp_landmarks[i]][1],part.getX(),part.getY())
-                    weightAngle = weightAngle*p_meas_M(angles[i],landmarks[imp_landmarks[i]][0],landmarks[imp_landmarks[i]][1],part)
-                part.setWeight(weightDist*weightAngle)
-                Xtbar.append(weightDist*weightAngle) 
-
-            # normalizing Xtbar
-            Xtbar_norm = []
-            for i in range(len(Xtbar)):
-                Xtbar_norm.append(Xtbar[i]/sum(Xtbar))
-
-            # resampling
-            # Resampling
-            # XXX: You do this
-            new_particles = np.random.choice(particles, size=len(particles), replace=True, p=Xtbar_norm)
+            print("Important landmarks: ", imp_landmarks_index)
 
 
-            new2_part = []
-            for part in new_particles: 
-                new2_part.append(particle.Particle(part.getX(),part.getY(),part.getTheta(),1.0/num_particles))
-            
-            #exchange 30 % of the particles with new particles
-            for i in range(int(0.1*len(particles))):
-                new2_part[i] = particle.Particle(600.0*np.random.ranf() - 100.0, 600.0*np.random.ranf() - 250.0, np.mod(2.0*np.pi*np.random.ranf(), 2.0*np.pi), 1.0/num_particles)
-                
 
-                
-            particles = new2_part
-
-
+        
             
 
 
@@ -311,3 +288,61 @@ finally:
 
     # Clean-up capture thread
     cam.terminateCaptureThread()
+
+
+
+
+
+
+
+
+
+
+"""
+            Xtbar = []
+            for part in particles: 
+                weightDist = 1
+                weightAngle = 1
+                for i in range(len(imp_landmarks)):
+                    weightDist = weightDist*p_dist_M(dists[i],landmarks[imp_landmarks[i]][0],landmarks[imp_landmarks[i]][1],part)
+                    weightAngle = weightAngle*p_meas_M(angles[i],landmarks[imp_landmarks[i]][0],landmarks[imp_landmarks[i]][1],part)
+                    print("wieghtdist", weightDist)
+                    print("weightangle", weightAngle)
+                part.setWeight(weightDist*weightAngle)
+                Xtbar.append(weightDist*weightAngle)
+
+
+            # set all NaN values to 0
+            if np.isnan(Xtbar).any() or np.isinf(Xtbar).any():
+                Xtbar = np.nan_to_num(Xtbar)
+
+            # normalizing Xtbar
+            Xtbar_norm = []
+            sum_Xtbar = sum(Xtbar)  #DENNE HER GIVER 0
+            #print(sum_Xtbar)
+            for i in range(len(Xtbar)):
+                Xtbar_norm.append(Xtbar[i]/sum_Xtbar)
+
+            # resampling
+            # Resampling
+            # XXX: You do this
+            # set all NaN values to 0
+            if np.isnan(Xtbar_norm).any() or np.isinf(Xtbar_norm).any():
+                Xtbar_norm = np.nan_to_num(Xtbar_norm) 
+                
+            new_particles = np.random.choice(particles, size=len(particles), replace=True, p=Xtbar_norm)
+
+
+            new2_part = []
+            for part in new_particles: 
+                new2_part.append(particle.Particle(part.getX(),part.getY(),part.getTheta(),1.0/num_particles))
+            
+            #exchange 30 % of the particles with new particles
+            for i in range(int(0.1*len(particles))):
+                new2_part[i] = particle.Particle(600.0*np.random.ranf() - 100.0, 600.0*np.random.ranf() - 250.0, np.mod(2.0*np.pi*np.random.ranf(), 2.0*np.pi), 1.0/num_particles)
+                
+
+                
+            particles = new2_part
+
+"""
