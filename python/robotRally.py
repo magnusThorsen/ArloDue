@@ -156,6 +156,7 @@ def main():
     for i in landmarkIDs:
         turnDetect(landmarkIDs[i])
             
-        
+
+main()
 
 
