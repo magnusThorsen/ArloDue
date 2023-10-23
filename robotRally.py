@@ -155,7 +155,7 @@ def turnDetect(landmarkID):
         
 
 def main():
-    turnDetect(landmarkIDs[1])
+    turnDetect(1)
             
 
 main()
