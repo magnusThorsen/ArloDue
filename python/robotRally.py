@@ -9,6 +9,7 @@ import numpy as np # Import Numpy library
 np.set_printoptions(threshold=sys.maxsize)
 
 # Create a robot object and initialize
+onRobot = True # Whether or not we are running on the Arlo robot
 
 try:
     import picamera2
