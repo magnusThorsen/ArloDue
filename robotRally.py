@@ -162,9 +162,9 @@ def main():
     goalReached = False
     
     while not goalReached:
-        for i in landmarkIDs:
-            print(i)
-            if turnDetect(landmarkIDs[i]):
+        for landmark in landmarkIDs:
+            print(landmark)
+            if turnDetect(landmark):
                 print("Found the landmark")
                 goalReached = True
                 break
