@@ -153,9 +153,7 @@ def turnDetect(landmarkID):
         
 
 def main():
-    for i in landmarkIDs:
-        print(i)
-        turnDetect(landmarkIDs[i])
+    turnDetect(landmarkIDs[1])
             
 
 main()
