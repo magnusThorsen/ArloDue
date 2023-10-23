@@ -145,8 +145,8 @@ def turnDetect(landmarkID):
         # print go diff 
         if counter == 17:
             print(arlo.stop())
-            LocationFound = False
-            return LocationFound
+            landmarkFound = False
+            return landmarkFound
         if not searchAndshow(landmarkID): 
             turnLeft(20)
             sleep(0.9)
@@ -154,25 +154,26 @@ def turnDetect(landmarkID):
             print("This is the counter: ", counter)
         else: 
             print(arlo.stop())
-            LocationFound = True
-            return LocationFound
-        
+            landmarkFound = True
+            return landmarkFound
+
+def reposition():
+    return True       
 
 def main():
-    goalReached = False
-    
-    while not goalReached:
-        for landmark in landmarkIDs:
+    for landmark in landmarkIDs:
+        goalReached = False
+        while not goalReached:
             print(landmark)
             if turnDetect(landmark):
                 print("Found the landmark")
-                goalReached = True
+                # Self localize and create a path to the landmark
                 break
             else: 
                 print("Didn't find the landmark")
-                goalReached = False
+                reposition()
                 continue
-        
+            
             
 
 main()
