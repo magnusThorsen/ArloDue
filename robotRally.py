@@ -145,7 +145,7 @@ def turnDetect(landmarkID):
         # print go diff 
         if not searchAndshow(landmarkID) or counter != 17: 
             turnLeft(20)
-            sleep(0.3)
+            sleep(0.9)
             counter += 1
         else: 
             print(arlo.stop())
@@ -154,6 +154,7 @@ def turnDetect(landmarkID):
 
 def main():
     for i in landmarkIDs:
+        print(i)
         turnDetect(landmarkIDs[i])
             
 
