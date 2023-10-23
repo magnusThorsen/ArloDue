@@ -140,7 +140,6 @@ def searchAndshow(ImpID):
 
 
 def turnDetect(landmarkID):
-    LocationFound = false
     counter = 0
     while cv2.waitKey(4) == -1: # Wait for a key pressed event
         # print go diff 
