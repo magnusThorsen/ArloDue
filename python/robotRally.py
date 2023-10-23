@@ -10,8 +10,6 @@ np.set_printoptions(threshold=sys.maxsize)
 
 # Create a robot object and initialize
 
-arlo = robot.Robot()
-
 try:
     import picamera2
     print("Camera.py: Using picamera2 module")
@@ -39,6 +37,9 @@ try:
 except ImportError:
     print("selflocalize.py: robot module not present - forcing not running on Arlo!")
     onRobot = False
+
+arlo = robot.Robot()
+
 xSize = 640
 ySize = 480
 #focal = 350
