@@ -5,7 +5,6 @@ import sys
 import cv2 # Import the OpenCV library
 import cv2.aruco as aruco
 import numpy as np # Import Numpy library
-import detectLandmark3 as detectLandmark
 
 np.set_printoptions(threshold=sys.maxsize)
 
