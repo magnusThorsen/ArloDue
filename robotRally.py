@@ -11,7 +11,6 @@ np.set_printoptions(threshold=sys.maxsize)
 # Create a robot object and initialize
 onRobot = True # Whether or not we are running on the Arlo robot
 needNewLocation = False
-goalReached = False
 try:
     import picamera2
     print("Camera.py: Using picamera2 module")
@@ -160,6 +159,8 @@ def turnDetect(landmarkID):
         
 
 def main():
+    goalReached = False
+
     while not goalReached:
         for i in landmarkIDs:
             if turnDetect(landmarkIDs[i]):
