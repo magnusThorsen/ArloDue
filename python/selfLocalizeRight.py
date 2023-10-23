@@ -135,7 +135,7 @@ try:
 
 
     # Initialize particles
-    num_particles = 10
+    num_particles = 1000
     particles = initialize_particles(num_particles)
 
     est_pose = particle.estimate_pose(particles) # The estimate of the robots current pose
@@ -189,7 +189,7 @@ try:
             part.setTheta(part.getTheta() + angular_velocity)
             
         sigma_d = 20 # cm
-        sigma_theta = 0.01 # radians
+        sigma_theta = 0.1 # radians
         
         
 
@@ -206,7 +206,7 @@ try:
         
         # equation 2
         def p_dist_M (dm,lx,ly,part):
-            result = (1/(np.sqrt(2*(np.pi)*(sigma_d**2))))*math.exp(-(((dm-(dist_part_landm(lx,ly,part.getX(),part.getY())))**2)/2*(sigma_d**2)))
+            result = (1/(np.sqrt(2*(np.pi)*(sigma_d**2))))*math.exp(-(((dm-(dist_part_landm(lx,ly,part.getX(),part.getY())))**2)/(2*sigma_d**2)))
             return result 
     
         # Equation 4
@@ -214,14 +214,14 @@ try:
             x = part.getX()
             y = part.getY()
             theta = part.getTheta()
-            e_theta_i = -1*(np.array([np.cos(theta),np.sin(theta)])) # Her er der ganget med -1, som der ikke burde være i de givne formler, men det virker for os
+            e_theta_i = (np.array([np.cos(theta),np.sin(theta)])) 
             e_theta_i_hat = np.array([-np.sin(theta),np.cos(theta)])
             result = np.sign(np.dot(e_theta_i_hat,e_l(lx, ly, x, y)))*np.arccos(np.dot(e_theta_i,e_l(lx, ly, x, y)))
             return result 
             
         # equation 3 
         def p_meas_M (tm,lx,ly, part):
-            result = (1/(np.sqrt(2*(np.pi)*(sigma_theta**2))))*math.exp(-(((tm-(phi_i(lx,ly,part)))**2)/2*(sigma_theta**2)))
+            result = (1/(np.sqrt(2*(np.pi)*(sigma_theta**2))))*math.exp(-(((tm-(phi_i(lx,ly,part)))**2)/(2*sigma_theta**2)))
             return result 
 
         # Equation 5
@@ -235,27 +235,58 @@ try:
         
         # Detect objects
         objectIDs, dists, angles = cam.detect_aruco_objects(colour)
+        
+        particle.add_uncertainty(particles,2.5, 0.05)
         if not isinstance(objectIDs, type(None)):
             # List detected objects
+            imp_landmarks = []
             imp_landmarks_index = []
+            
             for i in range(len(objectIDs)):
                 print("Object ID = ", objectIDs[i], ", Distance = ", dists[i], ", angle = ", angles[i])
-                if objectIDs[i] in landmarkIDs:
-                    if len(imp_landmarks_index) == 0:
-                        imp_landmarks_index.append(i)
-                    for j in imp_landmarks_index:
-                        if objectIDs[i] != objectIDs[imp_landmarks_index[j]]:
-                            imp_landmarks_index.append(i)
-                        
-            # XXX: Do something for each detected object - remember, the same ID may appear several times
-            
+                if objectIDs[i] in landmarkIDs and not objectIDs[i] in imp_landmarks:
+                    imp_landmarks_index.append(i)
+                    imp_landmarks.append(objectIDs[i])
+
             print("Important landmarks: ", imp_landmarks_index)
 
+            Xtbar = []
+            for part in particles: 
+                for indx in imp_landmarks_index: 
+                    weightDist = p_dist_M(dists[indx],landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
+                    weightAngle = p_meas_M(angles[indx],landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
+                    part.setWeight(weightAngle*weightDist)
+                Xtbar.append(weightDist*weightAngle)
 
+            # Normalize        
+            Xtbar_norm = []
+            sum_Xtbar = sum(Xtbar)
+            #print(sum_Xtbar)
+            for i in range(len(Xtbar)):
+                if sum_Xtbar == 0:
+                    break
+                Xtbar_norm.append(Xtbar[i]/sum_Xtbar)
 
-        
+            # Resampling
+            new_particles = np.random.choice(particles, size=len(particles), replace=True, p=Xtbar_norm)
+
+            #particles = new_particles
             
-
+            new2_part = []
+            for part in new_particles: 
+                new2_part.append(particle.Particle(part.getX(),part.getY(),part.getTheta(),part.getWeight()))
+            
+            #remove 1% of the particles and add new random particles
+           
+            num_elements_to_update = int(len(particles) * 0.01)
+            indices_to_update = random.sample(range(len(particles)), num_elements_to_update)
+            
+            new_rand_particles = [particle.Particle(600.0*np.random.ranf() - 100.0, 600.0*np.random.ranf() - 250.0, np.mod(2.0*np.pi*np.random.ranf(), 2.0*np.pi), 1.0/num_particles) for _ in range(num_elements_to_update)]
+            
+            for i, index in enumerate(indices_to_update):
+                new2_part[index] = new_rand_particles[i]
+            
+            particles = new2_part
 
             
 
@@ -266,14 +297,14 @@ try:
             for p in particles:
                 p.setWeight(1.0/num_particles)
 
-        particle.add_uncertainty(particles,0.1, 0.1)
+        
         est_pose = particle.estimate_pose(particles) # The estimate of the robots current pose
 
         if showGUI:
             # Draw map
             draw_world(est_pose, particles, world)
     
-            # Show frame
+            # Show 10
             cv2.imshow(WIN_RF1, colour)
 
             # Show world
@@ -299,6 +330,19 @@ finally:
 
 
 """
+
+
+
+
+            print("Important landmarks: ", imp_landmarks_index)
+
+            Xtbar = []
+            for part in particles: 
+                for indx in imp_landmarks_index: 
+                    weightDist = p_dist_M(dists[indx],landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
+                    part.setWeight(weightDist)
+                    Xtbar.append(weightDist)
+            print("Xtbar", Xtbar) 
             Xtbar = []
             for part in particles: 
                 weightDist = 1
@@ -318,7 +362,7 @@ finally:
 
             # normalizing Xtbar
             Xtbar_norm = []
-            sum_Xtbar = sum(Xtbar)  #DENNE HER GIVER 0
+            sum_Xtbar = sum(Xtbar)
             #print(sum_Xtbar)
             for i in range(len(Xtbar)):
                 Xtbar_norm.append(Xtbar[i]/sum_Xtbar)

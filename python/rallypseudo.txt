@@ -1,0 +1,23 @@
+
+
+
+find l1 og kør derhen
+
+
+
+
+
+
+
+
+spind rundt til den finder landmark 2
+korreger så den peger mod landmark 2
+kør frem til den er tæt på landmark 2
+
+spind rundt til den finder landmark 3
+finder den ikke landmark 3 skal den køre til siden og spinde rundt til den finder landmark 3 osv.
+
+
+
+
+
