@@ -140,13 +140,14 @@ def searchAndshow(ImpID):
 
 
 def turnDetect(landmarkID):
+    LocationFound = false
     counter = 0
     while cv2.waitKey(4) == -1: # Wait for a key pressed event
         # print go diff 
         if counter == 17:
             print(arlo.stop())
-            noLocationFound = True
-            return noLocationFound
+            LocationFound = False
+            return LocationFound
         if not searchAndshow(landmarkID): 
             turnLeft(20)
             sleep(0.9)
@@ -154,8 +155,8 @@ def turnDetect(landmarkID):
             print("This is the counter: ", counter)
         else: 
             print(arlo.stop())
-            noLocationFound = False
-            return noLocationFound
+            LocationFound = True
+            return LocationFound
         
 
 def main():
@@ -163,6 +164,7 @@ def main():
     
     while not goalReached:
         for i in landmarkIDs:
+            print(i)
             if turnDetect(landmarkIDs[i]):
                 print("Found the landmark")
                 goalReached = True
