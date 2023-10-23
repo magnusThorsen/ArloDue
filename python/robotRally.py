@@ -1,7 +1,6 @@
 import time
 from time import sleep
 from pprint import *
-import robot
 import sys
 import cv2 # Import the OpenCV library
 import cv2.aruco as aruco
