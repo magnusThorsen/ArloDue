@@ -160,7 +160,7 @@ def turnDetect(landmarkID):
 
 def main():
     goalReached = False
-
+    
     while not goalReached:
         for i in landmarkIDs:
             if turnDetect(landmarkIDs[i]):
