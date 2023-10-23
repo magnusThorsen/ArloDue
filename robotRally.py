@@ -149,6 +149,7 @@ def turnDetect(landmarkID):
             turnLeft(20)
             sleep(0.9)
             counter += 1
+            print("This is the counter: ", counter)
         else: 
             print(arlo.stop())
 
