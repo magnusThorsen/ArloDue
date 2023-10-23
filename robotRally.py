@@ -159,8 +159,7 @@ def turnDetect(landmarkID):
 
 def main():
     # for loop running 18 times
-    for i in range(18):
-        turnLeft(20)
+    turnLeft(360)
         
             
 
