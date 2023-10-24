@@ -264,7 +264,7 @@ def main():
             detected, distance = turnDetectLandmark(landmark)
             print(landmark)
             if detected:
-                print("Main: Found the landmark")
+                print("Main: Found the landmark: " + landmark)
                 # Find the distance of the landmark
                 print("Main: Distance: ", distance)
                 # Drive to the landmark
