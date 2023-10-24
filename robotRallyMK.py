@@ -249,9 +249,9 @@ def turnDetectObstacle():
 def reposition(visitedObstacles):
     detected, distance, id = turnDetectObstacle()
     print("reposition: Detected in reposition: ", id)
-    print("repositionVisited obs tacles: ", visitedObstacles)
+    print("repositionVisited obstacles: ", visitedObstacles)
     if detected and id not in visitedObstacles and id != 0:
-        print("dreposition: riving at ",id )
+        print("tdreposition: driving at ",id )
         #TURN TO OBSTACLE
         drive(distance)
     return id      
@@ -265,9 +265,9 @@ def main():
             detected, distance = turnDetectLandmark(landmark)
             print(landmark)
             if detected:
-                print("FMain: ound the landmark")
+                print("Main: Found the landmark")
                 # Find the distance of the landmark
-                print("DMain: istance: ", distance)
+                print("Main: Distance: ", distance)
                 # Drive to the landmark
                 # Turn to landmark
                 # SENSORES
@@ -276,7 +276,7 @@ def main():
                 # Self localize and create a path to the landmark
                 break
             else: 
-                print("DMain: idn't find the landmark")
+                print("Main: didn't find the landmark")
                 obstacleID = reposition(visitedObstacles)
                 visitedObstacles.append(obstacleID)
                 print("Main: Visited obstacles: ", visitedObstacles)
