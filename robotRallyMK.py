@@ -177,7 +177,7 @@ def turnDetectLandmark(landmarkID):
         if counter == 17:
             print(arlo.stop())
             landmarkFound = False
-            return landmarkFound
+            return landmarkFound, 0.0
         if not detected: 
             turnLeft(20)
             sleep(0.9)
@@ -234,7 +234,7 @@ def turnDetectObstacle():
         if counter == 17:
             print(arlo.stop())
             obstacleFound = False
-            return obstacleFound
+            return obstacleFound, 0.0, 0
         if not detected: 
             turnLeft(20)
             sleep(0.9)
