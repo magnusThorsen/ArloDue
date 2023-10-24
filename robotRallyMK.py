@@ -100,7 +100,7 @@ def drive(distance):
 
     # Calculate time based on distance and wheel speeds
     #average_speed = (left_speed + right_speed) / 2
-    time = distance / 16.75
+    time = distance / 16.75 / 14.086079
     print("time",time)
     print("distance",distance)
 
@@ -173,7 +173,7 @@ def turnDetectLandmark(landmarkID):
     counter = 0
     while cv2.waitKey(4) == -1: # Wait for a key pressed event
         # print go diff 
-        detected, distance = searchAndShowLandmark(landmarkID)[0]
+        detected, distance = searchAndShowLandmark(landmarkID)
         if counter == 17:
             print(arlo.stop())
             landmarkFound = False
@@ -249,13 +249,13 @@ def reposition(visitedObstacles):
     detected, distance, id = turnDetectObstacle()
     if detected and id not in visitedObstacles:
         #TURN TO OBSTACLE
-        drive(distance/14.086079)
+        drive(distance)
     return id      
 
 
 def main():
-    visitedObstacles = []
     for landmark in landmarkIDs:
+        visitedObstacles = []
         landmarkReached = False
         while not landmarkReached:
             detected, distance = turnDetectLandmark(landmark)
@@ -267,7 +267,7 @@ def main():
                 # Drive to the landmark
                 # Turn to landmark
                 # SENSORES
-                drive(distance/14.086079)
+                drive(distance)
                 landmarkReached = True
                 # Self localize and create a path to the landmark
                 break
