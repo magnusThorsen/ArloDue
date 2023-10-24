@@ -86,6 +86,33 @@ landmarks = {
 }
 landmark_colors = [CRED, CGREEN, CBLUE, CYELLOW] # Colors used when drawing the landmarks
 
+def betterGoDiff(leftSpeed, rightSpeed, directionL, directionR, sleeptime):
+   print(arlo.go_diff(leftSpeed/2, rightSpeed/2, directionL, directionR))
+   sleep(0.1)
+   print(arlo.go_diff(leftSpeed, rightSpeed, directionL, directionR))
+   sleep(float(sleeptime) - 0.1)
+
+
+
+def drive(distance):
+    left_speed = 31
+    right_speed = 37
+
+    # Calculate time based on distance and wheel speeds
+    #average_speed = (left_speed + right_speed) / 2
+    time = distance / 16.75
+    print("time",time)
+    print("distance",distance)
+
+    # Move the robot
+    betterGoDiff(left_speed, right_speed, 1, 1, time)
+
+    # Send a stop command
+    print(arlo.stop())
+
+    # Wait a bit before the next command
+    sleep(0.5)
+
 def turnLeft(degree):
    sleep(0.041)
    print(arlo.go_diff(64, 68, 0, 1))
@@ -97,7 +124,7 @@ def turnLeft(degree):
    # Wait a bit before next command
    sleep(0.2)
 
-def searchAndshow(ImpID): 
+def searchAndShowLandmark(ImpID): 
     detected = False
     # Load the image
     image = cam.capture_array("main")  # Load your image here
@@ -129,19 +156,20 @@ def searchAndshow(ImpID):
 
             print(f"Detected Marker ID: {marker_id}")
             print(f"Distance to Marker {marker_id}: {distance} units")
-        if marker_id == ImpID:
-            detected = True
-
+            if marker_id == ImpID:
+                detected = True
+                return detected, distance
     # Display the image with detected markers
     cv2.imshow("Detected Markers", image)
-    return detected
+    return detected, 0.0
 
 
 def selfLocalize():
     
     return True
 
-def turnDetect(landmarkID):
+
+def turnDetectLandmark(landmarkID):
     counter = 0
     while cv2.waitKey(4) == -1: # Wait for a key pressed event
         # print go diff 
@@ -149,7 +177,7 @@ def turnDetect(landmarkID):
             print(arlo.stop())
             landmarkFound = False
             return landmarkFound
-        if not searchAndshow(landmarkID): 
+        if not searchAndShowLandmark(landmarkID)[0]: 
             turnLeft(20)
             sleep(0.9)
             counter += 1
@@ -159,24 +187,96 @@ def turnDetect(landmarkID):
             landmarkFound = True
             return landmarkFound
 
-def reposition():
+def searchAndShowObstacle():
+    detected = False
+    # Load the image
+    image = cam.capture_array("main")  # Load your image here
 
-    return True       
+    # Define the dictionary
+    dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
+
+    # Detect markers in the image
+    corners, ids, rejected = cv2.aruco.detectMarkers(image, dictionary)
+
+    cameraMatrix = np.array([[focal, 0, xSize/2],
+                            [0, focal, ySize/2],
+                            [0, 0, 1]])
+    
+    # Draw the detected markers on the image
+    if len(corners) > 0:
+        cv2.aruco.drawDetectedMarkers(image, corners, ids)
+        
+        # Estimate pose for each detected marker
+        rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(corners, 200, cameraMatrix, None)
+
+        # Iterate through the detected markers and print their IDs and pose information
+        for id in range(len(ids)):
+            marker_id = ids[id][0]
+            translation_vector = tvecs
+
+            # Calculate the Euclidean distance (norm) from the camera to the marker
+            distance = np.linalg.norm(translation_vector)
+
+            print(f"Detected Marker ID: {marker_id}")
+            print(f"Distance to Marker {marker_id}: {distance} units")
+
+            if id not in landmarkIDs:
+                detected = True
+                return detected, distance, id
+    return detected, 0.0, 0
+
+def turnDetectObstacle():
+    counter = 0
+    while cv2.waitKey(4) == -1: # Wait for a key pressed event
+        # print go diff 
+        detected, distance, id = searchAndShowObstacle()
+        if counter == 17:
+            print(arlo.stop())
+            obstacleFound = False
+            return obstacleFound
+        if not detected: 
+            turnLeft(20)
+            sleep(0.9)
+            counter += 1
+            print("This is the counter: ", counter)
+        else: 
+            print(arlo.stop())
+            obstacleFound = True
+            return obstacleFound, distance, id
+
+def reposition():
+    detected, distance, id = turnDetectObstacle()
+    if detected:
+        drive(distance)
+    return id      
+
+
+def pathPlanGO():
+    return True
 
 def main():
+    robotPosition = (0,0)
+    visitedObstacles = []
     for landmark in landmarkIDs:
-        goalReached = False
-        while not goalReached:
+        landmarkReached = False
+        while not landmarkReached:
+            robotPosition = selfLocalize()
+            
             print(landmark)
-            if turnDetect(landmark):
+            if turnDetectLandmark(landmark):
                 print("Found the landmark")
-                
+                # Find the distance of the landmark
+                distance = searchAndShowLandmark(landmark)[1]
+                print("Distance: ", distance)
+                # Drive to the landmark
+                drive(distance)
+                landmarkReached = True
                 # Self localize and create a path to the landmark
                 break
             else: 
                 print("Didn't find the landmark")
-                reposition()
-                continue
+                obstacleID = reposition()
+                visitedObstacles.append(obstacleID)
             
             
 
