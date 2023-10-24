@@ -222,9 +222,9 @@ def searchAndShowObstacle():
             print(f"sasObstacle: Detected Marker ID: {marker_id}")
             print(f"sasObstacle: Distance to Marker {marker_id}: {distance} units")
 
-            if id not in landmarkIDs:
+            if marker_id not in landmarkIDs:
                 detected = True
-                return detected, distance, id
+                return detected, distance, marker_id
     return detected, 0.0, 0
 
 def turnDetectObstacle():
@@ -249,7 +249,7 @@ def reposition(visitedObstacles):
     print("reposition: Detected in reposition: ", id)
     print("reposition: Visited obstacles: ", visitedObstacles)
     if detected and id not in visitedObstacles and id != 0:
-        print("tdreposition: driving at ",id )
+        print("reposition: driving at ",id )
         #TURN TO OBSTACLE
         visitedObstacles.append(id)
         drive(distance)
@@ -278,8 +278,7 @@ def main():
                 print("Main: didn't find the landmark")
                 visitedObstacles = reposition(visitedObstacles)
                 print("Main: Visited obstacles: ", visitedObstacles)
-            
-            
+
 
 main()
 
