@@ -250,10 +250,10 @@ def reposition(visitedObstacles):
     detected, distance, id = turnDetectObstacle()
     print("Detected in reposition: ", id)
     print("Visited obstacles: ", visitedObstacles)
-    if detected and id not in visitedObstacles:
+    if detected and id not in visitedObstacles and id != 0:
+        print("driving at ",id )
         #TURN TO OBSTACLE
         drive(distance)
-        print("Visited obstacles: ", visitedObstacles)
     return id      
 
 
