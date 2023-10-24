@@ -272,6 +272,7 @@ def main():
                 # Drive to the landmark
                 # Turn to landmark
                 # SENSORES
+                arlo.turnRobo((0,-1), (0,0), (1,1))
                 drive(distance)
                 landmarkReached = True
                 # Self localize and create a path to the landmark
@@ -280,6 +281,8 @@ def main():
                 print("Main: didn't find the landmark")
                 visitedObstacles = reposition(visitedObstacles)
                 print("Main: Visited obstacles: ", visitedObstacles)
+    print("Succesfully completed the course! Time: 00:15 minutes")
+        
 
 
 main()
