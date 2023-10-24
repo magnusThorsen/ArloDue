@@ -39,8 +39,8 @@ except ImportError:
     print("selflocalize.py: robot module not present - forcing not running on Arlo!")
     onRobot = False
 
-
-arlo = robot.Robot()
+import robot_models
+arlo = robot_models.RobotModel(1)
 
 
 xSize = 640
