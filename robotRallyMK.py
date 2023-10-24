@@ -96,7 +96,7 @@ def betterGoDiff(leftSpeed, rightSpeed, directionL, directionR, sleeptime):
 
 def drive(distance):
     left_speed = 31
-    right_speed = 35
+    right_speed = 37
 
     # Calculate time based on distance and wheel speeds
     #average_speed = (left_speed + right_speed) / 2
@@ -174,6 +174,7 @@ def turnDetectLandmark(landmarkID):
     counter = 0
     while cv2.waitKey(4) == -1: # Wait for a key pressed event
         # print go diff 
+        print("Finding landmark: ", landmarkID")
         detected, distance = searchAndShowLandmark(landmarkID)
         if counter == 17:
             print(arlo.stop())
