@@ -248,9 +248,12 @@ def turnDetectObstacle():
 
 def reposition(visitedObstacles):
     detected, distance, id = turnDetectObstacle()
+    print("Detected in reposition: ", id)
+    print("Visited obstacles: ", visitedObstacles)
     if detected and id not in visitedObstacles:
         #TURN TO OBSTACLE
         drive(distance)
+        print("Visited obstacles: ", visitedObstacles)
     return id      
 
 
@@ -276,6 +279,7 @@ def main():
                 print("Didn't find the landmark")
                 obstacleID = reposition(visitedObstacles)
                 visitedObstacles.append(obstacleID)
+                print("Visited obstacles: ", visitedObstacles)
             
             
 
