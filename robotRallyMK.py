@@ -174,7 +174,7 @@ def turnDetectLandmark(landmarkID):
     counter = 0
     while cv2.waitKey(4) == -1: # Wait for a key pressed event
         # print go diff 
-        print("Finding landmark: ", landmarkID")
+        print("tdLandmark: Finding landmark: ", landmarkID)
         detected, distance = searchAndShowLandmark(landmarkID)
         if counter == 17:
             print(arlo.stop())
