@@ -102,8 +102,8 @@ def drive(distance):
     #average_speed = (left_speed + right_speed) / 2
     shortdist = (distance / 14.086079) -20
     time = shortdist / 16.75 
-    print("time",time)
-    print("distance",distance)
+    print("drive: time",time)
+    print("drive: distance",distance)
 
     # Move the robot
     betterGoDiff(left_speed, right_speed, 1, 1, time)
@@ -155,13 +155,13 @@ def searchAndShowLandmark(ImpID):
             # Calculate the Euclidean distance (norm) from the camera to the marker
             distance = np.linalg.norm(translation_vector)
 
-            print(f"Detected Marker ID: {marker_id}")
-            print(f"Distance to Marker {marker_id}: {distance} units")
+            print(f"sasLandmark: Detected Marker ID: {marker_id}")
+            print(f"sasLandmark: Distance to Marker {marker_id}: {distance} units")
             if marker_id == ImpID:
                 detected = True
                 return detected, distance
     # Display the image with detected markers
-    cv2.imshow("Detected Markers", image)
+    cv2.imshow("sasLandmark: Detected Markers", image)
     return detected, 0.0
 
 
@@ -183,7 +183,7 @@ def turnDetectLandmark(landmarkID):
             turnLeft(20)
             sleep(0.9)
             counter += 1
-            print("This is the counter: ", counter)
+            print("tdLandmark: This is the counter: ", counter)
         else: 
             print(arlo.stop())
             landmarkFound = True
@@ -219,8 +219,8 @@ def searchAndShowObstacle():
             # Calculate the Euclidean distance (norm) from the camera to the marker
             distance = np.linalg.norm(translation_vector)
 
-            print(f"Detected Marker ID: {marker_id}")
-            print(f"Distance to Marker {marker_id}: {distance} units")
+            print(f"sasObstacle: Detected Marker ID: {marker_id}")
+            print(f"sasObstacle: Distance to Marker {marker_id}: {distance} units")
 
             if id not in landmarkIDs:
                 detected = True
@@ -240,7 +240,7 @@ def turnDetectObstacle():
             turnLeft(20)
             sleep(0.9)
             counter += 1
-            print("This is the counter: ", counter)
+            print("tdObstacle: This is the counter: ", counter)
         else: 
             print(arlo.stop())
             obstacleFound = True
@@ -248,10 +248,10 @@ def turnDetectObstacle():
 
 def reposition(visitedObstacles):
     detected, distance, id = turnDetectObstacle()
-    print("Detected in reposition: ", id)
-    print("Visited obstacles: ", visitedObstacles)
+    print("reposition: Detected in reposition: ", id)
+    print("repositionVisited obs tacles: ", visitedObstacles)
     if detected and id not in visitedObstacles and id != 0:
-        print("driving at ",id )
+        print("dreposition: riving at ",id )
         #TURN TO OBSTACLE
         drive(distance)
     return id      
@@ -265,9 +265,9 @@ def main():
             detected, distance = turnDetectLandmark(landmark)
             print(landmark)
             if detected:
-                print("Found the landmark")
+                print("FMain: ound the landmark")
                 # Find the distance of the landmark
-                print("Distance: ", distance)
+                print("DMain: istance: ", distance)
                 # Drive to the landmark
                 # Turn to landmark
                 # SENSORES
@@ -276,10 +276,10 @@ def main():
                 # Self localize and create a path to the landmark
                 break
             else: 
-                print("Didn't find the landmark")
+                print("DMain: idn't find the landmark")
                 obstacleID = reposition(visitedObstacles)
                 visitedObstacles.append(obstacleID)
-                print("Visited obstacles: ", visitedObstacles)
+                print("Main: Visited obstacles: ", visitedObstacles)
             
             
 
