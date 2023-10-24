@@ -39,8 +39,8 @@ except ImportError:
     print("selflocalize.py: robot module not present - forcing not running on Arlo!")
     onRobot = False
 
-import robot_models
-arlo = robot_models.RobotModel(1)
+
+arlo = robot.Robot()
 
 
 xSize = 640
@@ -272,7 +272,7 @@ def main():
                 # Drive to the landmark
                 # Turn to landmark
                 # SENSORES
-                arlo.turnRobo((0,-1), (0,0), (1,1))
+                #arlo.turnRobo((0,-1), (0,0), (11) Fiks det her næste gang
                 drive(distance)
                 landmarkReached = True
                 # Self localize and create a path to the landmark
