@@ -77,7 +77,7 @@ CBLACK = (0, 0, 0)
 
 # Landmarks.
 # The robot knows the position of 2 landmarks. Their coordinates are in the unit centimeters [cm].
-landmarkIDs = [1, 2, 3, 4, 1]
+landmarkIDs = [1, 2, 4, 1] # 3 er fjernet
 landmarks = {
     1: (0.0, 0.0),  # Coordinates for landmark 1
     2: (0.0, 300.0),  # Coordinates for landmark 2
@@ -96,7 +96,7 @@ def betterGoDiff(leftSpeed, rightSpeed, directionL, directionR, sleeptime):
 
 def drive(distance):
     left_speed = 31
-    right_speed = 37
+    right_speed = 35
 
     # Calculate time based on distance and wheel speeds
     #average_speed = (left_speed + right_speed) / 2
@@ -173,11 +173,12 @@ def turnDetectLandmark(landmarkID):
     counter = 0
     while cv2.waitKey(4) == -1: # Wait for a key pressed event
         # print go diff 
+        detected, distance = searchAndShowLandmark(landmarkID)[0]
         if counter == 17:
             print(arlo.stop())
             landmarkFound = False
             return landmarkFound
-        if not searchAndShowLandmark(landmarkID)[0]: 
+        if not detected: 
             turnLeft(20)
             sleep(0.9)
             counter += 1
@@ -185,7 +186,7 @@ def turnDetectLandmark(landmarkID):
         else: 
             print(arlo.stop())
             landmarkFound = True
-            return landmarkFound
+            return landmarkFound, distance
 
 def searchAndShowObstacle():
     detected = False
@@ -244,38 +245,35 @@ def turnDetectObstacle():
             obstacleFound = True
             return obstacleFound, distance, id
 
-def reposition():
+def reposition(visitedObstacles):
     detected, distance, id = turnDetectObstacle()
-    if detected:
-        drive(distance)
+    if detected and id not in visitedObstacles:
+        #TURN TO OBSTACLE
+        drive(distance/14.086079)
     return id      
 
 
-def pathPlanGO():
-    return True
-
 def main():
-    robotPosition = (0,0)
     visitedObstacles = []
     for landmark in landmarkIDs:
         landmarkReached = False
         while not landmarkReached:
-            robotPosition = selfLocalize()
-            
+            detected, distance = turnDetectLandmark(landmark)
             print(landmark)
-            if turnDetectLandmark(landmark):
+            if detected:
                 print("Found the landmark")
                 # Find the distance of the landmark
-                distance = searchAndShowLandmark(landmark)[1]
                 print("Distance: ", distance)
                 # Drive to the landmark
-                drive(distance)
+                # Turn to landmark
+                # SENSORES
+                drive(distance/14.086079)
                 landmarkReached = True
                 # Self localize and create a path to the landmark
                 break
             else: 
                 print("Didn't find the landmark")
-                obstacleID = reposition()
+                obstacleID = reposition(visitedObstacles)
                 visitedObstacles.append(obstacleID)
             
             
