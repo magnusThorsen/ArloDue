@@ -234,8 +234,7 @@ def turnDetectObstacle():
         detected, distance, id = searchAndShowObstacle()
         if counter == 17:
             print(arlo.stop())
-            obstacleFound = False
-            return obstacleFound, 0.0, 0
+            return detected, 0.0, 0
         if not detected: 
             turnLeft(20)
             sleep(0.9)
@@ -243,18 +242,18 @@ def turnDetectObstacle():
             print("tdObstacle: This is the counter: ", counter)
         else: 
             print(arlo.stop())
-            obstacleFound = True
-            return obstacleFound, distance, id
+            return detected, distance, id
 
 def reposition(visitedObstacles):
     detected, distance, id = turnDetectObstacle()
     print("reposition: Detected in reposition: ", id)
-    print("repositionVisited obstacles: ", visitedObstacles)
+    print("reposition: Visited obstacles: ", visitedObstacles)
     if detected and id not in visitedObstacles and id != 0:
         print("tdreposition: driving at ",id )
         #TURN TO OBSTACLE
+        visitedObstacles.append(id)
         drive(distance)
-    return id      
+    return visitedObstacles      
 
 
 def main():
@@ -277,8 +276,7 @@ def main():
                 break
             else: 
                 print("Main: didn't find the landmark")
-                obstacleID = reposition(visitedObstacles)
-                visitedObstacles.append(obstacleID)
+                visitedObstacles = reposition(visitedObstacles)
                 print("Main: Visited obstacles: ", visitedObstacles)
             
             
