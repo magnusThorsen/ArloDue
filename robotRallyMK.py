@@ -301,7 +301,7 @@ def main():
                 # SENSORES
                 turnRobo(angleCalc(tvecs))
                 print("tvecs", tvecs)
-                if distance < 100:
+                if distance < 150:
                     drive(distance)
                     landmarkReached = True
                     break

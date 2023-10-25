@@ -111,7 +111,7 @@ def angleCalc(tvec):
     return beta[0][0]
 
 
-def drive(distance):
+""" def drive(distance):
     isDriving = True
     sensor(isDriving)
     left_speed = 31
@@ -131,7 +131,7 @@ def drive(distance):
     print(arlo.stop())
 
     # Wait a bit before the next command
-    sleep(0.5)
+    sleep(0.5) """
 
 
 def driveWithTime(distance):
@@ -139,10 +139,39 @@ def driveWithTime(distance):
     time = shortdist / 16.75 
     start_time = time.time()
     end_time = start_time+time
-
-
+    left_speed = 31
+    right_speed = 37.5
+    counter = 0
     while time.time() < end_time:
-        print(arlo.go_diff(leftSpeed, rightSpeed, directionL, directionR))
+        frontSensor = arlo.read_front_ping_sensor()
+        rightSensor = arlo.read_right_ping_sensor()
+        leftSensor = arlo.read_left_ping_sensor()   
+        if frontSensor < 250 or rightSensor < 200 or leftSensor < 200:
+            print(arlo.stop())
+            sleep(0.2)
+            if rightSensor < 300:
+                turnLeft(90)
+                sleep(0.2)
+                counter += 1
+            elif leftSensor < 300:
+                turnRight(90)
+                sleep(0.2)
+                counter += 1
+            elif frontSensor < 250:
+                if leftSensor <= rightSensor:
+                    turnRight(90)
+                    sleep(0.2)
+                    counter += 1
+                else:
+                    turnLeft(90)
+                    sleep(0.2)
+                    counter += 1
+        else: 
+            print(arlo.go_diff(left_speed, right_speed, 1, 1))
+            if counter > 0:
+                time = end_time
+
+
 
 def turnLeft(degree):
     sleep(0.041)
@@ -166,7 +195,7 @@ def turnRight(degree):
     # Wait a bit before next command
     sleep(0.5)
 
-def sensor(isDriving):
+""" def sensor(isDriving):
     while (isDriving): # or some other form of loop
         frontSensor = arlo.read_front_ping_sensor()
         print(frontSensor)
@@ -190,7 +219,7 @@ def sensor(isDriving):
                     turnLeft(90)
                     sleep(0.2)
         else: 
-            print(arlo.go_diff(64, 68, 1, 1))
+            print(arlo.go_diff(64, 68, 1, 1)) """
 
 def searchAndShowLandmark(ImpID): 
     detected = False
