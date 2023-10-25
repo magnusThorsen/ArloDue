@@ -113,7 +113,7 @@ def draw_world(est_pose, particles, world):
 
 def initialize_particles(num_particles):
     particles = []
-    for i in range(num_particles):
+    for p in range(num_particles):
         # Random starting points. 
         p = particle.Particle(600.0*np.random.ranf() - 100.0, 600.0*np.random.ranf() - 250.0, np.mod(2.0*np.pi*np.random.ranf(), 2.0*np.pi), 1.0/num_particles)
         particles.append(p)
