@@ -190,7 +190,7 @@ def searchAndShowLandmark(ImpID):
             print(f"sasLandmark: Distance to Marker {marker_id}: {distance} units")
             if marker_id == ImpID:
                 detected = True
-                return detected, distance
+                return detected, distance, translation_vector
     # Display the image with detected markers
     cv2.imshow("sasLandmark: Detected Markers", image)
     return detected, 0.0
@@ -206,7 +206,7 @@ def turnDetectLandmark(landmarkID):
     while cv2.waitKey(4) == -1: # Wait for a key pressed event
         # print go diff 
         print("tdLandmark: Finding landmark: ", landmarkID)
-        detected, distance = searchAndShowLandmark(landmarkID)
+        detected, distance, t_vec = searchAndShowLandmark(landmarkID)
         if counter == 17:
             print(arlo.stop())
             landmarkFound = False
@@ -219,7 +219,7 @@ def turnDetectLandmark(landmarkID):
         else: 
             print(arlo.stop())
             landmarkFound = True
-            return landmarkFound, distance
+            return landmarkFound, distance, t_vec
 
 def searchAndShowObstacle():
     detected = False
@@ -294,7 +294,7 @@ def main():
         visitedObstacles = []
         landmarkReached = False
         while not landmarkReached:
-            detected, distance = turnDetectLandmark(landmark)
+            detected, distance, tvecs = turnDetectLandmark(landmark)
             print(landmark)
             if detected:
                 print("Main: Found the landmark: " ,landmark)
@@ -304,6 +304,7 @@ def main():
                 # Turn to landmark
                 # SENSORES
                 turnRobo((0,-1), (0,0), (1,1))
+                print("tvecs", tvecs)
                 drive(distance)
                 landmarkReached = True
                 # Self localize and create a path to the landmark
