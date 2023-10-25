@@ -142,7 +142,7 @@ def driveWithTime(distance):
     print("driveWithTime: time",timeDrive)
     print("driveWithTime: distance",distance)
     start_time = time.time()
-    end_time = start_time + time
+    end_time = start_time + timeDrive
     left_speed = 31
     right_speed = 37.5
     while time.time() < end_time:
