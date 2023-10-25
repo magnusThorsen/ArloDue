@@ -92,26 +92,21 @@ def betterGoDiff(leftSpeed, rightSpeed, directionL, directionR, sleeptime):
    print(arlo.go_diff(leftSpeed, rightSpeed, directionL, directionR))
    sleep(float(sleeptime) - 0.1)
 
-def turnRobo(p11, p22, p33):
-    p1 = p11[0], p11[1]
-    p2 = p22[0], p22[1]
-    p3 = p33[0], p33[1]
-    
-    v1 = np.subtract(p2,p1)
-    v2 = np.subtract(p3,p2)
-
-    # calculate the angle between the two vectors using cos-1 [ (a. b) / (|a| |b|) ]
-    angle = np.degrees(np.arccos(np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))))
-    # print angle in degrees
-
+def turnRobo(angle):
+   
     print("Angle: ", angle)
     # turn the robot accordingly
-    if np.cross(v1, v2) > 0:
+    if angle > 0:
         turnLeft(angle)
-    elif np.cross(v1, v2) < 0:
-        turnRight(angle)
+    elif angle < 0:
+        turnRight(-angle)
     else:
         print("No turn needed")
+
+
+def angleCalc(tvec):
+    beta = np.arccos((tvec/np.norm(tvec))*(0,0,1))
+    return beta
 
 
 def drive(distance):
@@ -303,7 +298,7 @@ def main():
                 # Drive to the landmark
                 # Turn to landmark
                 # SENSORES
-                turnRobo((0,-1), (0,0), (tvecs[0],tvecs[1]))
+                turnRobo(angleCalc(tvecs))
                 print("tvecs", tvecs)
                 drive(distance)
                 landmarkReached = True
