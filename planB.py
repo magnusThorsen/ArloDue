@@ -153,7 +153,7 @@ def driveWithTime(distance):
             succeded = False
             print(arlo.stop())
             sleep(0.2)
-            end_time = time.time() + 3
+            end_time = time.time() + 5
             print("driveWithTime: turned")
             if rightSensor < 300:
                 turnLeft(90)
@@ -351,7 +351,7 @@ def reposition(visitedObstacles):
         print("reposition: driving at ",id )
         #TURN TO OBSTACLE
         visitedObstacles.append(id)
-        driveWithTime(120)
+        driveWithTime(distance/2)
     else: reposition(visitedObstacles)
     return visitedObstacles      
 
