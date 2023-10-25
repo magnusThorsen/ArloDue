@@ -274,7 +274,7 @@ def turnDetectLandmark(landmarkID):
         # print go diff 
         print("tdLandmark: Finding landmark: ", landmarkID)
         detected, distance, t_vec = searchAndShowLandmark(landmarkID)
-        if counter == 17:
+        if counter == 19:
             print(arlo.stop())
             landmarkFound = False
             return landmarkFound, 0.0, None
@@ -331,7 +331,7 @@ def turnDetectObstacle():
     while cv2.waitKey(4) == -1: # Wait for a key pressed event
         # print go diff 
         detected, distance, id = searchAndShowObstacle()
-        if counter == 17:
+        if counter == 19:
             print(arlo.stop())
             return detected, 0.0, 0
         if not detected: 
@@ -377,7 +377,7 @@ def main():
                     if driveWithTime(distance):
                         landmarkReached = True
                 else: 
-                    driveWithTime(75)
+                    driveWithTime(100)
 
                 # Self localize and create a path to the landmark
             else: 
