@@ -360,6 +360,7 @@ def main():
     for landmark in landmarkIDs:
         visitedObstacles = []
         landmarkReached = False
+        numtries = 0
         while not landmarkReached:
             detected, distance, tvecs = turnDetectLandmark(landmark)
             print(landmark)
@@ -378,12 +379,18 @@ def main():
                         landmarkReached = True
                 else: 
                     driveWithTime(100)
-                    turnRight(35)
+                    turnRight(25)
 
                 # Self localize and create a path to the landmark
             else: 
                 print("Main: didn't find the landmark")
                 visitedObstacles = reposition(visitedObstacles)
+                numtries += 1
+                if numtries > 3: 
+                    turnRight(90)
+                    driveWithTime(4)
+                    numtries = 0
+                    visitedObstacles = []
                 print("Main: Visited obstacles: ", visitedObstacles)
     print("Succesfully completed the course! Time: 00:15 minutes")
         
