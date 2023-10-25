@@ -107,9 +107,9 @@ def turnRobo(p11, p22, p33):
     print("Angle: ", angle)
     # turn the robot accordingly
     if np.cross(v1, v2) > 0:
-        arlo.turnLeft(angle)
+        turnLeft(angle)
     elif np.cross(v1, v2) < 0:
-        arlo.turnRight(angle)
+        turnRight(angle)
     else:
         print("No turn needed")
 
