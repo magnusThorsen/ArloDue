@@ -94,7 +94,7 @@ def betterGoDiff(leftSpeed, rightSpeed, directionL, directionR, sleeptime):
 
 def turnRobo(angle):
     # convert angle to degrees:
-    angle = angle * 180 / np.pi
+    angle = -angle * 180 / np.pi
     print("Angle: ", angle)
     # turn the robot accordingly
     if angle > 0:
