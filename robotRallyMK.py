@@ -303,7 +303,7 @@ def main():
                 # Drive to the landmark
                 # Turn to landmark
                 # SENSORES
-                arlo.turnRobo((0,-1), (0,0), (1,1))
+                turnRobo((0,-1), (0,0), (1,1))
                 drive(distance)
                 landmarkReached = True
                 # Self localize and create a path to the landmark
