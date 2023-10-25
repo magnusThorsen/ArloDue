@@ -306,7 +306,7 @@ def main():
                     landmarkReached = True
                     break
                 else: 
-                    drive(50)
+                    drive(100)
                 # Self localize and create a path to the landmark
             else: 
                 print("Main: didn't find the landmark")
