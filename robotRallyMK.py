@@ -145,7 +145,7 @@ def turnLeft(degree):
    # Wait a bit before next command
    sleep(0.2)
 
-def turnRight(self, degree):
+def turnRight(degree):
     sleep(0.041)
     print(arlo.go_diff(64, 70, 1, 0))
 
