@@ -301,13 +301,12 @@ def main():
                 # SENSORES
                 turnRobo(angleCalc(tvecs))
                 print("tvecs", tvecs)
-                drive(distance)
-                """ if distance < 150:
+                if distance < 150:
                     drive(distance)
                     landmarkReached = True
                     break
                 else: 
-                    drive(100) """
+                    drive(100)
                 # Self localize and create a path to the landmark
             else: 
                 print("Main: didn't find the landmark")
