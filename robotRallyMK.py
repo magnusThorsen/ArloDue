@@ -113,11 +113,11 @@ def angleCalc(tvec):
 
 def drive(distance):
     left_speed = 31
-    right_speed = 37
+    right_speed = 37.5
 
     # Calculate time based on distance and wheel speeds
     #average_speed = (left_speed + right_speed) / 2
-    shortdist = (distance / 14.086079) -20
+    shortdist = distance - 20
     time = shortdist / 16.75 
     print("drive: time",time)
     print("drive: distance",distance)
@@ -216,7 +216,7 @@ def turnDetectLandmark(landmarkID):
         else: 
             print(arlo.stop())
             landmarkFound = True
-            return landmarkFound, distance, t_vec
+            return landmarkFound, (distance / 14.086079), t_vec
 
 def searchAndShowObstacle():
     detected = False
@@ -271,7 +271,7 @@ def turnDetectObstacle():
             print("tdObstacle: This is the counter: ", counter)
         else: 
             print(arlo.stop())
-            return detected, distance, id
+            return detected, (distance / 14.086079), id
 
 def reposition(visitedObstacles):
     detected, distance, id = turnDetectObstacle()
@@ -302,10 +302,13 @@ def main():
                 # SENSORES
                 turnRobo(angleCalc(tvecs))
                 print("tvecs", tvecs)
-                drive(distance)
-                landmarkReached = True
+                if distance < 100:
+                    drive(distance)
+                    landmarkReached = True
+                    break
+                else: 
+                    drive(100)
                 # Self localize and create a path to the landmark
-                break
             else: 
                 print("Main: didn't find the landmark")
                 visitedObstacles = reposition(visitedObstacles)
