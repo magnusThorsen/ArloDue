@@ -137,7 +137,7 @@ def angleCalc(tvec):
 def driveWithTime(distance):
     shortdist = distance - 20
     timeDrive = shortdist / 16.75
-    #timeInt = int(time)
+    succeded = True
     print(time.time())
     print("driveWithTime: time",timeDrive)
     print("driveWithTime: distance",distance)
@@ -150,6 +150,7 @@ def driveWithTime(distance):
         rightSensor = arlo.read_right_ping_sensor()
         leftSensor = arlo.read_left_ping_sensor()   
         if frontSensor < 250 or rightSensor < 200 or leftSensor < 200:
+            succeded = False
             print(arlo.stop())
             sleep(0.2)
             end_time = time.time() + 5
@@ -169,6 +170,7 @@ def driveWithTime(distance):
                     sleep(0.2)
         else: 
             print(arlo.go_diff(left_speed, right_speed, 1, 1))
+    return succeded
             
 
 
@@ -371,8 +373,8 @@ def main():
                 turnRobo(angleCalc(tvecs))
                 print("tvecs", tvecs)
                 
-                driveWithTime(distance)
-                landmarkReached = True
+                if driveWithTime(distance):
+                    landmarkReached = True
                 
                 # Self localize and create a path to the landmark
             else: 
