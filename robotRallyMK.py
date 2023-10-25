@@ -42,8 +42,8 @@ except ImportError:
 
 arlo = robot.Robot()
 
-xSize = 1280
-ySize = 720
+xSize = 640
+ySize = 480
 #focal = 350
 focal = 1335.517241
 
