@@ -111,11 +111,11 @@ def angleCalc(tvec):
 
 def drive(distance):
     left_speed = 31
-    right_speed = 37.5
+    right_speed = 37
 
     # Calculate time based on distance and wheel speeds
     #average_speed = (left_speed + right_speed) / 2
-    shortdist = distance - 15
+    shortdist = distance - 20
     time = shortdist / 16.75 
     print("drive: time",time)
     print("drive: distance",distance)
