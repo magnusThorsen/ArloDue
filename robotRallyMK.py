@@ -42,6 +42,7 @@ except ImportError:
 
 arlo = robot.Robot()
 
+isDriving = False
 
 xSize = 640
 ySize = 480
@@ -63,7 +64,6 @@ cam.start(show_preview=False)
 pprint(cam.camera_configuration()) # Print the camera configuration in use
 
 time.sleep(1)  # wait for camera to setup
-
 
 # Some color constants in BGR format
 CRED = (0, 0, 255)
@@ -112,6 +112,7 @@ def angleCalc(tvec):
 
 
 def drive(distance):
+    isDriving = True
     left_speed = 31
     right_speed = 37.5
 
@@ -152,6 +153,33 @@ def turnRight(degree):
         
     # Wait a bit before next command
     sleep(0.5)
+
+def sensor():
+    isDriving = True
+    while (isDriving): # or some other form of loop
+        frontSensor = arlo.read_front_ping_sensor()
+        print(frontSensor)
+        backSensor = arlo.read_back_ping_sensor()
+        rightSensor = arlo.read_right_ping_sensor()
+        leftSensor = arlo.read_left_ping_sensor()   
+        if frontSensor < 250 or rightSensor < 200 or leftSensor < 200:
+            print(arlo.stop())
+            sleep(0.2)
+            if rightSensor < 300:
+                turnLeft(90)
+                sleep(0.2)
+            elif leftSensor < 300:
+                turnRight(90)
+                sleep(0.2)
+            elif frontSensor < 250:
+                if leftSensor <= rightSensor:
+                    turnRight(90)
+                    sleep(0.2)
+                else:
+                    turnLeft(90)
+                    sleep(0.2)
+        else: 
+            print(arlo.go_diff(64, 68, 1, 1))
 
 def searchAndShowLandmark(ImpID): 
     detected = False
