@@ -351,7 +351,7 @@ def reposition(visitedObstacles):
         print("reposition: driving at ",id )
         #TURN TO OBSTACLE
         visitedObstacles.append(id)
-        driveWithTime(distance)
+        driveWithTime(120)
     else: reposition(visitedObstacles)
     return visitedObstacles      
 
