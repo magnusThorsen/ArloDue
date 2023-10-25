@@ -105,7 +105,7 @@ def turnRobo(angle):
 
 
 def angleCalc(tvec):
-    beta = np.arccos((tvec/np.norm(tvec))*(0,0,1))
+    beta = np.arccos((tvec/np.linalg.norm(tvec))*(0,0,1))
     return beta
 
 
