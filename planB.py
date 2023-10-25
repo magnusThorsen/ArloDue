@@ -135,7 +135,7 @@ def angleCalc(tvec):
 
 
 def driveWithTime(distance):
-    shortdist = distance - 25
+    shortdist = distance - 30
     timeDrive = shortdist / 16.75
     succeded = True
     print(time.time())
