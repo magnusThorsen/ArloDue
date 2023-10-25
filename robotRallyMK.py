@@ -193,7 +193,7 @@ def searchAndShowLandmark(ImpID):
                 return detected, distance, translation_vector
     # Display the image with detected markers
     cv2.imshow("sasLandmark: Detected Markers", image)
-    return detected, 0.0
+    return detected, 0.0, None
 
 
 def selfLocalize():
