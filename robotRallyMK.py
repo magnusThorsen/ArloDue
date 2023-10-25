@@ -107,7 +107,7 @@ def turnRobo(angle):
 def angleCalc(tvec):
     beta = np.arccos(np.dot( (tvec/np.linalg.norm(tvec)) , (0,0,1)))
     print("beta", beta)
-    return beta
+    return beta[0][0]
 
 
 def drive(distance):
