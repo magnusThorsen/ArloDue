@@ -137,11 +137,12 @@ def angleCalc(tvec):
 def driveWithTime(distance):
     shortdist = distance - 20
     time = shortdist / 16.75 
+    print("driveWithTime: time",time)
+    print("driveWithTime: distance",distance)
     start_time = time.time()
     end_time = start_time+time
     left_speed = 31
     right_speed = 37.5
-    counter = 0
     while time.time() < end_time:
         frontSensor = arlo.read_front_ping_sensor()
         rightSensor = arlo.read_right_ping_sensor()
@@ -149,27 +150,24 @@ def driveWithTime(distance):
         if frontSensor < 250 or rightSensor < 200 or leftSensor < 200:
             print(arlo.stop())
             sleep(0.2)
+            end_time = time.time() + 5
+            print("driveWithTime: turned")
             if rightSensor < 300:
                 turnLeft(90)
                 sleep(0.2)
-                counter += 1
             elif leftSensor < 300:
                 turnRight(90)
                 sleep(0.2)
-                counter += 1
             elif frontSensor < 250:
                 if leftSensor <= rightSensor:
                     turnRight(90)
                     sleep(0.2)
-                    counter += 1
                 else:
                     turnLeft(90)
                     sleep(0.2)
-                    counter += 1
         else: 
             print(arlo.go_diff(left_speed, right_speed, 1, 1))
-            if counter > 0:
-                time = end_time
+            
 
 
 
@@ -349,7 +347,7 @@ def reposition(visitedObstacles):
         print("reposition: driving at ",id )
         #TURN TO OBSTACLE
         visitedObstacles.append(id)
-        drive(distance)
+        driveWithTime(distance)
     else: reposition(visitedObstacles)
     return visitedObstacles      
 
@@ -371,11 +369,11 @@ def main():
                 turnRobo(angleCalc(tvecs))
                 print("tvecs", tvecs)
                 if distance < 100:
-                    drive(distance)
+                    driveWithTime(distance)
                     landmarkReached = True
                     break
                 else: 
-                    drive(100)
+                    driveWithTime(100)
                 # Self localize and create a path to the landmark
             else: 
                 print("Main: didn't find the landmark")
