@@ -92,6 +92,26 @@ def betterGoDiff(leftSpeed, rightSpeed, directionL, directionR, sleeptime):
    print(arlo.go_diff(leftSpeed, rightSpeed, directionL, directionR))
    sleep(float(sleeptime) - 0.1)
 
+def turnRobo(p11, p22, p33):
+    p1 = p11[0], p11[1]
+    p2 = p22[0], p22[1]
+    p3 = p33[0], p33[1]
+    
+    v1 = np.subtract(p2,p1)
+    v2 = np.subtract(p3,p2)
+
+    # calculate the angle between the two vectors using cos-1 [ (a. b) / (|a| |b|) ]
+    angle = np.degrees(np.arccos(np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))))
+    # print angle in degrees
+
+    print("Angle: ", angle)
+    # turn the robot accordingly
+    if np.cross(v1, v2) > 0:
+        arlo.turnLeft(angle)
+    elif np.cross(v1, v2) < 0:
+        arlo.turnRight(angle)
+    else:
+        print("No turn needed")
 
 
 def drive(distance):
@@ -124,6 +144,17 @@ def turnLeft(degree):
     
    # Wait a bit before next command
    sleep(0.2)
+
+def turnRight(self, degree):
+    sleep(0.041)
+    print(arlo.go_diff(64, 70, 1, 0))
+
+    sleep(0.0074 * degree + ((degree**2)*0.000001))
+    # send a stop command
+    print(arlo.stop())
+        
+    # Wait a bit before next command
+    sleep(0.5)
 
 def searchAndShowLandmark(ImpID): 
     detected = False
@@ -272,7 +303,7 @@ def main():
                 # Drive to the landmark
                 # Turn to landmark
                 # SENSORES
-                #arlo.turnRobo((0,-1), (0,0), (11) Fiks det her næste gang
+                arlo.turnRobo((0,-1), (0,0), (1,1))
                 drive(distance)
                 landmarkReached = True
                 # Self localize and create a path to the landmark
