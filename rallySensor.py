@@ -373,9 +373,12 @@ def main():
                 turnRobo(angleCalc(tvecs))
                 print("tvecs", tvecs)
                 
-                if driveWithTime(distance):
-                    landmarkReached = True
-                
+                if distance < 150:
+                    if driveWithTime(distance):
+                        landmarkReached = True
+                else: 
+                    driveWithTime(75)
+
                 # Self localize and create a path to the landmark
             else: 
                 print("Main: didn't find the landmark")
