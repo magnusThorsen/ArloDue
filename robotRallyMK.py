@@ -113,6 +113,7 @@ def angleCalc(tvec):
 
 def drive(distance):
     isDriving = True
+    sensor(isDriving)
     left_speed = 31
     right_speed = 37.5
 
@@ -154,8 +155,7 @@ def turnRight(degree):
     # Wait a bit before next command
     sleep(0.5)
 
-def sensor():
-    isDriving = True
+def sensor(isDriving):
     while (isDriving): # or some other form of loop
         frontSensor = arlo.read_front_ping_sensor()
         print(frontSensor)
