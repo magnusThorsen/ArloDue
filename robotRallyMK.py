@@ -115,7 +115,7 @@ def drive(distance):
 
     # Calculate time based on distance and wheel speeds
     #average_speed = (left_speed + right_speed) / 2
-    shortdist = distance - 20
+    shortdist = distance - 15
     time = shortdist / 16.75 
     print("drive: time",time)
     print("drive: distance",distance)
@@ -306,7 +306,7 @@ def main():
                     landmarkReached = True
                     break
                 else: 
-                    drive(100)
+                    drive(50)
                 # Self localize and create a path to the landmark
             else: 
                 print("Main: didn't find the landmark")
