@@ -1,4 +1,5 @@
 import time
+sys.path.append("../../../../Arlo/python")
 from time import sleep
 from pprint import *
 import sys
