@@ -1,5 +1,5 @@
 import cv2
-import particle
+import python.particle
 import camera
 import numpy as np
 import random
