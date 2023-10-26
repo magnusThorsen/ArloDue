@@ -233,7 +233,8 @@ def prob_product(landmarks):
     return result 
 
 def turnParticleRight(degree):
-    /(0.0074 * degree + ((degree**2)*0.000001))
+    angularVelocity = (degree*(np.pi/180))/(0.0074 * degree + ((degree**2)*0.000001))
+    return angularVelocity
 
 def main():
     # Main program #
