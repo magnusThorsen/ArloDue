@@ -230,46 +230,38 @@ def updateParticle(particles):
 
 
 def detect_aruco_objects(img):
-    arucoDict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
-    arucoMarkerLength = 0.15
-    intrinsic_matrix = np.asarray([1687.0, 0., imageSize[0] / 2.0, 0., 1687.0, imageSize[1] / 2.0, 0., 0., 1.], dtype = np.float64)
-    distortion_coeffs = np.asarray([0., 0., 2.0546093607192093e-02, -3.5538453075048249e-03, 0.], dtype = np.float64)
-    """Detect objects in the form of a binary ArUco code and return object IDs, distances (in cm) and
-    angles (in radians) to detected ArUco codes. The angle is computed as the signed angle between
-    translation vector to detected object projected onto the x-z plabe and the z-axis (pointing out
-    of the camera). This corresponds to that the angle is measuring location along the horizontal x-axis.
+    # Detect markers in the image
+    corners, ids, rejected = cv2.aruco.detectMarkers(img, dictionary)
 
-    If no object is detected, the returned variables are set to None."""
-    aruco_corners, ids, rejectedImgPoints = cv2.aruco.detectMarkers(img, arucoDict)
-    rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(aruco_corners, 200, intrinsic_matrix, None)
+    # Draw the detected markers on the image
+    if len(corners) > 0:
+        cv2.aruco.drawDetectedMarkers(img, corners, ids)
+        
+        # Estimate pose for each detected marker
+        rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(corners, 200, cameraMatrix, None)
 
+        # Iterate through the detected markers and print their IDs and pose information
+        for i in range(len(ids)):
+            marker_id = ids[i][0]
+            translation_vector = tvecs
 
-    if not isinstance(ids, type(None)):
-        dists = np.linalg.norm(tvecs, axis=len(tvecs.shape) - 1) * 100
-        # Make sure we always return properly shaped arrays
-        dists = dists.reshape((dists.shape[0],))
-        ids = ids.reshape((ids.shape[0],))
+            # Calculate the Euclidean distance (norm) from the camera to the marker
+            distance = np.linalg.norm(translation_vector)
 
-        # Compute angles
-        angles = np.zeros(dists.shape, dtype=dists.dtype)
-        for i in range(dists.shape[0]):
-            tobj = tvecs[i] * 100 / dists[i]
-            zaxis = np.zeros(tobj.shape, dtype=tobj.dtype)
-            zaxis[0,-1] = 1
-            xaxis = np.zeros(tobj.shape, dtype=tobj.dtype)
-            xaxis[0,0] = 1
+            print(f"Detected Marker ID: {marker_id}")
+            print(f"Distance to Marker {marker_id}: {distance} units")
 
-            # We want the horizontal angle so project tobjt onto the x-z plane
-            tobj_xz = tobj
-            tobj_xz[0,1] = 0
-            # Should the sign be clockwise or counter-clockwise (left or right)?
-            # In this version it is positive to the left as seen from the camera.
-            direction = -1*np.sign(tobj_xz[0,0])  # The same as np.sign(np.dot(tobj, xaxis.T))
-            angles[i] = direction * np.arccos(np.dot(tobj_xz, zaxis.T))
-    else:
-        dists = None
-        ids = None
-        angles = None
+            # Draw coordinate axes on the image
+            aruco.drawAxis(img, cameraMatrix, None, rvecs[i], tvecs[i], 100)
+
+            # Draw a bounding box around the detected marker
+            aruco.drawDetectedMarkers(img, corners, ids, (0, 255, 0))
+
+            # Draw the marker ID on the image
+            cv2.putText(img, f"ID: {marker_id}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 2, cv2.LINE_AA)
+
+        # Display the
+    
     return ids, dists, angles
 
 
