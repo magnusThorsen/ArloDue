@@ -228,21 +228,59 @@ def updateParticle(particles):
         part.setTheta(part.getTheta() + angular_velocity)
 
 
+def detect_aruco_objects(img):
+    arucoDict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
+    arucoMarkerLength = 0.15
+    intrinsic_matrix = np.asarray([1687.0, 0., imageSize[0] / 2.0, 0., 1687.0, imageSize[1] / 2.0, 0., 0., 1.], dtype = np.float64)
+    distortion_coeffs = np.asarray([0., 0., 2.0546093607192093e-02, -3.5538453075048249e-03, 0.], dtype = np.float64)
+    """Detect objects in the form of a binary ArUco code and return object IDs, distances (in cm) and
+    angles (in radians) to detected ArUco codes. The angle is computed as the signed angle between
+    translation vector to detected object projected onto the x-z plabe and the z-axis (pointing out
+    of the camera). This corresponds to that the angle is measuring location along the horizontal x-axis.
+
+    If no object is detected, the returned variables are set to None."""
+    aruco_corners, ids, rejectedImgPoints = cv2.aruco.detectMarkers(img, arucoDict)
+    rvecs, tvecs, _objPoints = cv2.aruco.estimatePoseSingleMarkers(aruco_corners, arucoMarkerLength, intrinsic_matrix, distortion_coeffs)
+
+
+    if not isinstance(ids, type(None)):
+        dists = np.linalg.norm(tvecs, axis=len(tvecs.shape) - 1) * 100
+        # Make sure we always return properly shaped arrays
+        dists = dists.reshape((dists.shape[0],))
+        ids = ids.reshape((ids.shape[0],))
+
+        # Compute angles
+        angles = np.zeros(dists.shape, dtype=dists.dtype)
+        for i in range(dists.shape[0]):
+            tobj = tvecs[i] * 100 / dists[i]
+            zaxis = np.zeros(tobj.shape, dtype=tobj.dtype)
+            zaxis[0,-1] = 1
+            xaxis = np.zeros(tobj.shape, dtype=tobj.dtype)
+            xaxis[0,0] = 1
+
+            # We want the horizontal angle so project tobjt onto the x-z plane
+            tobj_xz = tobj
+            tobj_xz[0,1] = 0
+            # Should the sign be clockwise or counter-clockwise (left or right)?
+            # In this version it is positive to the left as seen from the camera.
+            direction = -1*np.sign(tobj_xz[0,0])  # The same as np.sign(np.dot(tobj, xaxis.T))
+            angles[i] = direction * np.arccos(np.dot(tobj_xz, zaxis.T))
+    else:
+        dists = None
+        ids = None
+        angles = None
+    return ids, dists, angles
+
 
 
 def selfLocalize(particle, world, WIN_RF1, WIN_World): 
     # Fetch next frame
-    print("Opening and initializing camera")
-    if camera.isRunningOnArlo():
-        cam = camera.Camera(0, 'arlo', useCaptureThread = True)
-    else:
-        cam = camera.Camera(0, 'macbookpro', useCaptureThread = True)
     colour = cam.get_next_frame()
 
     num_particles = len(particles)
     
     # Detect objects
-    objectIDs, dists, angles = cam.detect_aruco_objects(colour)
+    objectIDs, dists, angles = detect_aruco_objects(colour)
     
     particle.add_uncertainty(particles,3.5, 0.1)
     if not isinstance(objectIDs, type(None)): #If the robot can see a landmark then the following
