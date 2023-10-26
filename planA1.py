@@ -1,6 +1,4 @@
 import time
-import sys
-sys.path.append("../../../../Arlo/python")
 from time import sleep
 from pprint import *
 import sys
@@ -8,7 +6,7 @@ import random
 import cv2 # Import the OpenCV library
 import cv2.aruco as aruco
 import numpy as np # Import Numpy library
-import selfLocalizeRightA1 as SL
+import python.selfLocalizeRightA1 as SL
 #import particle from subfolder 
 import python.particle as particle
 
