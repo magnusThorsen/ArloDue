@@ -260,7 +260,7 @@ try:
                 part.setWeight(weightAngle*weightDist)
                 Xtbar.append(weightDist*weightAngle)
 
-            # Normalize        
+            # Normalize
             Xtbar_norm = []
             sum_Xtbar = sum(Xtbar)
             #print(sum_Xtbar)
@@ -271,19 +271,19 @@ try:
 
             # Resampling
             new_particles = np.random.choice(particles, size=len(particles), replace=True, p=Xtbar_norm)
-
-            #particles = new_particles
             
             new2_part = []
             for part in new_particles: 
                 new2_part.append(particle.Particle(part.getX(),part.getY(),part.getTheta(),part.getWeight()))
             
-            #remove 1% of the particles and add new random particles
+            #remove 5% of the particles and add new random particles
            
-            num_elements_to_update = int(len(particles) * 0.01)
+            num_elements_to_update = int(len(particles) * 0.05)
             indices_to_update = random.sample(range(len(particles)), num_elements_to_update)
             
+            # Create new random particles
             new_rand_particles = [particle.Particle(600.0*np.random.ranf() - 100.0, 600.0*np.random.ranf() - 250.0, np.mod(2.0*np.pi*np.random.ranf(), 2.0*np.pi), 1.0/num_particles) for _ in range(num_elements_to_update)]
+            
             
             for i, index in enumerate(indices_to_update):
                 new2_part[index] = new_rand_particles[i]
@@ -321,74 +321,3 @@ finally:
 
     # Clean-up capture thread
     cam.terminateCaptureThread()
-
-
-
-
-
-
-
-
-
-
-"""
-
-
-
-
-            print("Important landmarks: ", imp_landmarks_index)
-
-            Xtbar = []
-            for part in particles: 
-                for indx in imp_landmarks_index: 
-                    weightDist = p_dist_M(dists[indx],landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
-                    part.setWeight(weightDist)
-                    Xtbar.append(weightDist)
-            print("Xtbar", Xtbar) 
-            Xtbar = []
-            for part in particles: 
-                weightDist = 1
-                weightAngle = 1
-                for i in range(len(imp_landmarks)):
-                    weightDist = weightDist*p_dist_M(dists[i],landmarks[imp_landmarks[i]][0],landmarks[imp_landmarks[i]][1],part)
-                    weightAngle = weightAngle*p_meas_M(angles[i],landmarks[imp_landmarks[i]][0],landmarks[imp_landmarks[i]][1],part)
-                    print("wieghtdist", weightDist)
-                    print("weightangle", weightAngle)
-                part.setWeight(weightDist*weightAngle)
-                Xtbar.append(weightDist*weightAngle)
-
-
-            # set all NaN values to 0
-            if np.isnan(Xtbar).any() or np.isinf(Xtbar).any():
-                Xtbar = np.nan_to_num(Xtbar)
-
-            # normalizing Xtbar
-            Xtbar_norm = []
-            sum_Xtbar = sum(Xtbar)
-            #print(sum_Xtbar)
-            for i in range(len(Xtbar)):
-                Xtbar_norm.append(Xtbar[i]/sum_Xtbar)
-
-            # resampling
-            # Resampling
-            # XXX: You do this
-            # set all NaN values to 0
-            if np.isnan(Xtbar_norm).any() or np.isinf(Xtbar_norm).any():
-                Xtbar_norm = np.nan_to_num(Xtbar_norm) 
-                
-            new_particles = np.random.choice(particles, size=len(particles), replace=True, p=Xtbar_norm)
-
-
-            new2_part = []
-            for part in new_particles: 
-                new2_part.append(particle.Particle(part.getX(),part.getY(),part.getTheta(),1.0/num_particles))
-            
-            #exchange 30 % of the particles with new particles
-            for i in range(int(0.1*len(particles))):
-                new2_part[i] = particle.Particle(600.0*np.random.ranf() - 100.0, 600.0*np.random.ranf() - 250.0, np.mod(2.0*np.pi*np.random.ranf(), 2.0*np.pi), 1.0/num_particles)
-                
-
-                
-            particles = new2_part
-
-"""
