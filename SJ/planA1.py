@@ -275,7 +275,7 @@ def detect_aruco_objects(img):
 
 def selfLocalize(particle, world, WIN_RF1, WIN_World): 
     # Fetch next frame
-    colour = cam.get_next_frame()
+    colour = cam.capture_array("main")
 
     num_particles = len(particles)
     
