@@ -390,3 +390,4 @@ def main():
         # Clean-up capture thread
         cam.terminateCaptureThread()
 
+main()
