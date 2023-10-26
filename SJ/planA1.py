@@ -430,7 +430,7 @@ def main():
 
     # Draw map
     SL.draw_world(est_pose, particles, world)
-
+    selfLocalize(particles, world, WIN_RF1, WIN_World)
     for landmark in landmarkIDs:
         visitedObstacles = []
         landmarkReached = False
