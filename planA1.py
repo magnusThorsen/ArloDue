@@ -7,6 +7,8 @@ import cv2 # Import the OpenCV library
 import cv2.aruco as aruco
 import numpy as np # Import Numpy library
 import selfLocalizeRightA1 as SL
+#import particle from subfolder 
+import python.particle as particle
 
 np.set_printoptions(threshold=sys.maxsize)
 
