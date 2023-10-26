@@ -241,7 +241,7 @@ def detect_aruco_objects(img):
 
     If no object is detected, the returned variables are set to None."""
     aruco_corners, ids, rejectedImgPoints = cv2.aruco.detectMarkers(img, arucoDict)
-    rvecs, tvecs, _objPoints = cv2.aruco.estimatePoseSingleMarkers(aruco_corners, arucoMarkerLength, intrinsic_matrix, distortion_coeffs)
+    rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(aruco_corners, 200, intrinsic_matrix, None)
 
 
     if not isinstance(ids, type(None)):
