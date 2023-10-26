@@ -8,6 +8,7 @@ import cv2.aruco as aruco
 import numpy as np # Import Numpy library
 import selfLocalizeRightA1 as SL
 import camera
+import particle
 
 np.set_printoptions(threshold=sys.maxsize)
 
@@ -273,11 +274,11 @@ def detect_aruco_objects(img):
 
 
 
-def selfLocalize(particle, world, WIN_RF1, WIN_World): 
+def selfLocalize(particles, world, WIN_RF1, WIN_World): 
     # Fetch next frame
     colour = cam.capture_array("main")
 
-    num_particles = len(particle)
+    num_particles = len(particles)
     
     # Detect objects
     objectIDs, dists, angles = detect_aruco_objects(colour)
