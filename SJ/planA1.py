@@ -326,7 +326,7 @@ def selfLocalize(particles, world, WIN_RF1, WIN_World):
         
 
         # Draw detected objects
-        cam.draw_aruco_objects(colour)
+        #cam.draw_aruco_objects(colour)
     else:
         # No observation - reset weights to uniform distribution
         for p in particles:
