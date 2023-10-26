@@ -357,9 +357,10 @@ def selfLocalize(particles, world, WIN_RF1, WIN_World):
         cv2.imshow(WIN_World, world)
 
 
-def turnDetectLandmark(landmarkID):
+def turnDetectLandmark(landmarkID, particles, world, WIN_RF1, WIN_World):
     counter = 0
     while cv2.waitKey(4) == -1: # Wait for a key pressed event
+        selfLocalize(particles, world, WIN_RF1, WIN_World)
         # print go diff 
         print("tdLandmark: Finding landmark: ", landmarkID)
         detected, distance, t_vec = searchAndShowLandmark(landmarkID)
@@ -469,13 +470,13 @@ def main():
 
     # Draw map
     SL.draw_world(est_pose, particles, world)
-    selfLocalize(particles, world, WIN_RF1, WIN_World)
+    
     for landmark in landmarkIDs:
         visitedObstacles = []
         landmarkReached = False
         numtries = 0
         while not landmarkReached:
-            detected, distance, tvecs = turnDetectLandmark(landmark)
+            detected, distance, tvecs = turnDetectLandmark(landmark, particles, world, WIN_RF1, WIN_World)
             print(landmark)
             if detected:
                 print("Main: Found the landmark: " ,landmark)
