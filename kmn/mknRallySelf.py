@@ -38,6 +38,9 @@ except ImportError:
 
 arlo = robot.Robot()
 
+# Driving parameters
+velocity = 0.0 # cm/sec
+angular_velocity = 0.0 # radians/sec
 
 # Some color constants in BGR format
 CRED = (0, 0, 255)
@@ -123,7 +126,18 @@ def initialize_particles(num_particles):
 
     return particles
 
+def turnParticle(degree):
+    angularVelocity = (degree*(np.pi/180))/(0.0074 * degree + ((degree**2)*0.000001))
+    return angularVelocity
+
+def moveParticleForward(distance):
+    shortdist = distance - 25
+    timeDrive = shortdist / 16.75
+    velocity = distance/timeDrive
+    return velocity
+
 def driveWithTime(distance):
+    velocity = velocity + moveParticleForward(distance)
     shortdist = distance - 25
     timeDrive = shortdist / 16.75
     succeded = True
@@ -160,33 +174,36 @@ def driveWithTime(distance):
         else: 
             print(arlo.go_diff(left_speed, right_speed, 1, 1))
     print(arlo.stop())
+    velocity = 0.0
     return succeded
 
 def turnLeft(degree):
+    angular_velocity = angular_velocity + turnParticle(degree)
     sleep(0.041)
     print(arlo.go_diff(64, 68, 0, 1))
 
     sleep(0.0074 * degree + ((degree**2)*0.000001))
-    
-    timeTurn = 0.0074 * degree + ((degree**2)*0.000001)
 
     # send a stop command
     print(arlo.stop())
+    angular_velocity = 0.0
         
     # Wait a bit before next command
     sleep(0.2)
 
 
 def turnRight(degree):
+    angular_velocity = angular_velocity - turnParticle(degree)
     sleep(0.041)
     print(arlo.go_diff(64, 70, 1, 0))
 
     sleep(0.0074 * degree + ((degree**2)*0.000001))
     # send a stop command
     print(arlo.stop())
+    angular_velocity = 0.0
         
     # Wait a bit before next command
-    sleep(0.5)
+    sleep(0.2)
 
 def updateParticles():
     return True
@@ -232,11 +249,9 @@ def prob_product(landmarks):
         result = dist_part_landm(landmark) * result
     return result 
 
-def turnParticleRight(degree):
-    angularVelocity = (degree*(np.pi/180))/(0.0074 * degree + ((degree**2)*0.000001))
-    return angularVelocity
 
-def main():
+
+def selfLocalize():
     # Main program #
     try:
         if showGUI:
@@ -256,9 +271,7 @@ def main():
 
         est_pose = particle.estimate_pose(particles) # The estimate of the robots current pose
 
-        # Driving parameters
-        velocity = 0.0 # cm/sec
-        angular_velocity = 0.0 # radians/sec
+        
 
         # Initialize the robot (XXX: You do this)
 
@@ -277,29 +290,26 @@ def main():
         while True:
 
             # Move the robot according to user input (only for testing)
+            
             action = cv2.waitKey(10)
             if action == ord('q'): # Quit
                 break
         
             if isRunningOnArlo():
                 if action == ord('w'): # Forward
-                    velocity += 4.0
                     print("started driveWithTime")
                     driveWithTime(70)
                     print("ended driveWithTime")
-                    velocity = 0.0
                 elif action == ord('x'): # Backwards
-                    velocity -= 4.0
+                    velocity -= 0.0
                 elif action == ord('s'): # Stop
                     print(arlo.stop())
                     velocity = 0.0
                     angular_velocity = 0.0
                 elif action == ord('a'): # Left
-                    angular_velocity += 0.2
                     turnLeft(90)
                 elif action == ord('d'): # Right
                     turnRight(90)
-                    angular_velocity -= 0.2
 
              
             # Use motor controls to update particles
@@ -402,4 +412,4 @@ def main():
         # Clean-up capture thread
         cam.terminateCaptureThread()
 
-main()
+selfLocalize()
