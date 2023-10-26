@@ -237,25 +237,27 @@ try:
         objectIDs, dists, angles = cam.detect_aruco_objects(colour)
         
         particle.add_uncertainty(particles,3.5, 0.1)
-        if not isinstance(objectIDs, type(None)):
+        if not isinstance(objectIDs, type(None)): #If the robot can see a landmark then the following
             # List detected objects
-            imp_landmarks = []
-            imp_landmarks_index = []
+            imp_landmarks = [] #landmark id
+            imp_landmarks_index = [] #landmark index in a list
             
             for i in range(len(objectIDs)):
                 print("Object ID = ", objectIDs[i], ", Distance = ", dists[i], ", angle = ", angles[i])
-                if objectIDs[i] in landmarkIDs and not objectIDs[i] in imp_landmarks:
+                if objectIDs[i] in landmarkIDs and not objectIDs[i] in imp_landmarks: #makes sure it only adds a landmark on
                     imp_landmarks_index.append(i)
                     imp_landmarks.append(objectIDs[i])
 
-            print("Important landmarks: ", imp_landmarks_index)
+            
 
             Xtbar = []
             for part in particles: 
+                weightDist = 1
+                weightAngle = 1
                 for indx in imp_landmarks_index: 
-                    weightDist = p_dist_M(dists[indx],landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
-                    weightAngle = p_meas_M(angles[indx],landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
-                    part.setWeight(weightAngle*weightDist)
+                    weightDist = weightDist * p_dist_M(dists[indx],landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
+                    weightAngle = weightAngle * p_meas_M(angles[indx],landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
+                part.setWeight(weightAngle*weightDist)
                 Xtbar.append(weightDist*weightAngle)
 
             # Normalize        
