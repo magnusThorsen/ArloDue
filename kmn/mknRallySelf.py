@@ -159,6 +159,7 @@ def driveWithTime(distance):
                     sleep(0.2)
         else: 
             print(arlo.go_diff(left_speed, right_speed, 1, 1))
+    print(arlo.stop())
     return succeded
 
 def turnLeft(degree):
