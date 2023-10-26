@@ -188,8 +188,8 @@ try:
             part.setY(part.getY() + velocity*np.sin(part.getTheta()))
             part.setTheta(part.getTheta() + angular_velocity)
             
-        sigma_d = 20 # cm
-        sigma_theta = 0.1 # radians
+        sigma_d = 25 # cm
+        sigma_theta = 0.2 # radians
         
         
 
