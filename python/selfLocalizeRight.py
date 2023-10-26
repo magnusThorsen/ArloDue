@@ -236,7 +236,7 @@ try:
         # Detect objects
         objectIDs, dists, angles = cam.detect_aruco_objects(colour)
         
-        particle.add_uncertainty(particles,2.5, 0.05)
+        particle.add_uncertainty(particles,3.5, 0.1)
         if not isinstance(objectIDs, type(None)):
             # List detected objects
             imp_landmarks = []
