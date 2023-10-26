@@ -156,7 +156,7 @@ def initialize_particles(num_particles):
 
     return particles
 
-
+""" 
 # Main program #
 try:
     if showGUI:
@@ -312,3 +312,4 @@ finally:
 
     # Clean-up capture thread
     cam.terminateCaptureThread()
+ """
