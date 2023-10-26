@@ -1,5 +1,5 @@
 import numpy as np
-import random_numbers as rn
+import python.random_numbers as rn
 
 
 class Particle(object):
