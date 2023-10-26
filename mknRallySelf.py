@@ -1,8 +1,7 @@
 import sys
 sys.path.append("../../../../Arlo/python")
 import cv2
-from python import particle
-from python import camera
+from python import *
 import numpy as np
 import random
 import time
