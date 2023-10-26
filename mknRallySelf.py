@@ -1,7 +1,8 @@
 import sys
 sys.path.append("../../../../Arlo/python")
 import cv2
-from python import *
+import python.particle as particle
+import python.camera as camera
 import numpy as np
 import random
 import time
@@ -672,6 +673,7 @@ def turnDetectObstacle():
             return detected, 0.0, 0
         if not detected: 
             turnLeft(20)
+
             sleep(0.9)
             counter += 1
             print("tdObstacle: This is the counter: ", counter)
