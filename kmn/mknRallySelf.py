@@ -167,6 +167,9 @@ def turnLeft(degree):
     print(arlo.go_diff(64, 68, 0, 1))
 
     sleep(0.0074 * degree + ((degree**2)*0.000001))
+    
+    timeTurn = 0.0074 * degree + ((degree**2)*0.000001)
+
     # send a stop command
     print(arlo.stop())
         
@@ -228,6 +231,9 @@ def prob_product(landmarks):
     for landmark in landmarks:
         result = dist_part_landm(landmark) * result
     return result 
+
+def turnParticleRight(degree):
+    /(0.0074 * degree + ((degree**2)*0.000001))
 
 def main():
     # Main program #
