@@ -276,7 +276,10 @@ def main():
             if isRunningOnArlo():
                 if action == ord('w'): # Forward
                     velocity += 4.0
+                    print("started driveWithTime")
                     driveWithTime(70)
+                    print("ended driveWithTime")
+                    velocity = 0.0
                 elif action == ord('x'): # Backwards
                     velocity -= 4.0
                 elif action == ord('s'): # Stop
