@@ -277,7 +277,7 @@ def selfLocalize(particle, world, WIN_RF1, WIN_World):
     # Fetch next frame
     colour = cam.capture_array("main")
 
-    num_particles = len(particles)
+    num_particles = len(particle)
     
     # Detect objects
     objectIDs, dists, angles = detect_aruco_objects(colour)
