@@ -3,7 +3,7 @@ import numpy as np
 import time
 import sys
 import threading
-import python.framebuffer
+import framebuffer
 from pkg_resources import parse_version
 
 
@@ -279,7 +279,7 @@ class Camera(object):
         # Initialize worker thread and framebuffer
         if self.useCaptureThread:
             print("Using capture thread")
-            self.framebuffer = python.framebuffer.FrameBuffer((self.imageSize[1], self.imageSize[0], 3))
+            self.framebuffer = framebuffer.FrameBuffer((self.imageSize[1], self.imageSize[0], 3))
             self.capturethread = CaptureThread(self.cam, self.framebuffer)
             self.capturethread.start()
             time.sleep(0.75)
