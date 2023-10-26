@@ -274,63 +274,20 @@ def main():
                 break
         
             if isRunningOnArlo():
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
-                print("yo")
                 if action == ord('w'): # Forward
                     velocity += 4.0
                     driveWithTime(70)
                 elif action == ord('x'): # Backwards
                     velocity -= 4.0
                 elif action == ord('s'): # Stop
+                    print(arlo.stop())
                     velocity = 0.0
                     angular_velocity = 0.0
                 elif action == ord('a'): # Left
                     angular_velocity += 0.2
+                    turnLeft(90)
                 elif action == ord('d'): # Right
+                    turnRight(90)
                     angular_velocity -= 0.2
 
              
