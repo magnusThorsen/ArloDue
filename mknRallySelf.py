@@ -2,6 +2,7 @@ import sys
 sys.path.append("../../../../Arlo/python")
 import cv2
 import python.particle as particle
+import python.random_numbers as rn
 import python.camera as camera
 import numpy as np
 import random
