@@ -376,6 +376,7 @@ class Camera(object):
             dists = None
             ids = None
             angles = None
+        print("look here",ids,dists,angles)
         return ids, dists, angles
 
 
