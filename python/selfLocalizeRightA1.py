@@ -1,5 +1,5 @@
 import cv2
-import particle
+import pythonparticle
 import camera
 import numpy as np
 import random
@@ -48,15 +48,51 @@ CBLACK = (0, 0, 0)
 
 # Landmarks.
 # The robot knows the position of 2 landmarks. Their coordinates are in the unit centimeters [cm].
-landmarkIDs = [1, 7]
+landmarkIDs = [1,2,3,4]
 landmarks = {
     1: (0.0, 0.0),  # Coordinates for landmark 1
-    7: (100.0, 0.0)  # Coordinates for landmark 2
+    2: (0.0, 300.0),  # Coordinates for landmark 2
+    3: (400.0, 0.0),  # Coordinates for landmark 3
+    4: (400.0, 300.0)  # Coordinates for landmark 4
 }
-landmark_colors = [CRED, CGREEN] # Colors used when drawing the landmarks
+landmark_colors = [CRED, CGREEN, CBLUE, CYELLOW] # Colors used when drawing the landmarks
 
 
+def dist_part_landm(lx, ly, x, y):
+            d = np.sqrt(((lx - x)**2) + ((ly - y)**2))
+            return d
 
+def e_l (lx, ly, x, y):
+    result =  np.array([(lx - x) /dist_part_landm(lx,ly,x,y), (ly - y) /dist_part_landm(lx,ly,x,y)])
+    return result
+
+        
+# equation 2
+def p_dist_M (dm,lx,ly,part):
+    result = (1/(np.sqrt(2*(np.pi)*(sigma_d**2))))*math.exp(-(((dm-(dist_part_landm(lx,ly,part.getX(),part.getY())))**2)/(2*sigma_d**2)))
+    return result 
+
+# Equation 4
+def phi_i (lx, ly, part):
+    x = part.getX()
+    y = part.getY()
+    theta = part.getTheta()
+    e_theta_i = (np.array([np.cos(theta),np.sin(theta)])) 
+    e_theta_i_hat = np.array([-np.sin(theta),np.cos(theta)])
+    result = np.sign(np.dot(e_theta_i_hat,e_l(lx, ly, x, y)))*np.arccos(np.dot(e_theta_i,e_l(lx, ly, x, y)))
+    return result 
+    
+# equation 3 
+def p_meas_M (tm,lx,ly, part):
+    result = (1/(np.sqrt(2*(np.pi)*(sigma_theta**2))))*math.exp(-(((tm-(phi_i(lx,ly,part)))**2)/(2*sigma_theta**2)))
+    return result 
+
+# Equation 5
+def prob_product(landmarks):
+    result = 1
+    for landmark in landmarks:
+        result = dist_part_landm(landmark) * result
+    return result 
 
 
 def jet(x):
@@ -177,9 +213,6 @@ try:
                 angular_velocity += 0.2
             elif action == ord('d'): # Right
                 angular_velocity -= 0.2
-
-
-
         
         # Use motor controls to update particles
         # XXX: Make the robot drive
@@ -191,45 +224,6 @@ try:
         sigma_d = 25 # cm
         sigma_theta = 0.2 # radians
         
-        
-
-        # XXX: You do this
-        # calc d^(i) from equation 2
-        def dist_part_landm(lx, ly, x, y):
-            d = np.sqrt(((lx - x)**2) + ((ly - y)**2))
-            return d
-
-        def e_l (lx, ly, x, y):
-            result =  np.array([(lx - x) /dist_part_landm(lx,ly,x,y), (ly - y) /dist_part_landm(lx,ly,x,y)])
-            return result
-        
-        
-        # equation 2
-        def p_dist_M (dm,lx,ly,part):
-            result = (1/(np.sqrt(2*(np.pi)*(sigma_d**2))))*math.exp(-(((dm-(dist_part_landm(lx,ly,part.getX(),part.getY())))**2)/(2*sigma_d**2)))
-            return result 
-    
-        # Equation 4
-        def phi_i (lx, ly, part):
-            x = part.getX()
-            y = part.getY()
-            theta = part.getTheta()
-            e_theta_i = (np.array([np.cos(theta),np.sin(theta)])) 
-            e_theta_i_hat = np.array([-np.sin(theta),np.cos(theta)])
-            result = np.sign(np.dot(e_theta_i_hat,e_l(lx, ly, x, y)))*np.arccos(np.dot(e_theta_i,e_l(lx, ly, x, y)))
-            return result 
-            
-        # equation 3 
-        def p_meas_M (tm,lx,ly, part):
-            result = (1/(np.sqrt(2*(np.pi)*(sigma_theta**2))))*math.exp(-(((tm-(phi_i(lx,ly,part)))**2)/(2*sigma_theta**2)))
-            return result 
-
-        # Equation 5
-        def prob_product(landmarks):
-            result = 1
-            for landmark in landmarks:
-                result = dist_part_landm(landmark) * result
-            return result 
         # Fetch next frame
         colour = cam.get_next_frame()
         
@@ -247,8 +241,6 @@ try:
                 if objectIDs[i] in landmarkIDs and not objectIDs[i] in imp_landmarks: #makes sure it only adds a landmark on
                     imp_landmarks_index.append(i)
                     imp_landmarks.append(objectIDs[i])
-
-            
 
             Xtbar = []
             for part in particles: 
@@ -283,7 +275,6 @@ try:
             
             # Create new random particles
             new_rand_particles = [particle.Particle(600.0*np.random.ranf() - 100.0, 600.0*np.random.ranf() - 250.0, np.mod(2.0*np.pi*np.random.ranf(), 2.0*np.pi), 1.0/num_particles) for _ in range(num_elements_to_update)]
-            
             
             for i, index in enumerate(indices_to_update):
                 new2_part[index] = new_rand_particles[i]
