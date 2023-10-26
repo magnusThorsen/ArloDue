@@ -7,6 +7,7 @@ import cv2 # Import the OpenCV library
 import cv2.aruco as aruco
 import numpy as np # Import Numpy library
 import selfLocalizeRightA1 as SL
+import camera
 
 np.set_printoptions(threshold=sys.maxsize)
 
@@ -19,6 +20,7 @@ velocity = 0.0 # cm/sec
 angular_velocity = 0.0 # radians/sec
 sigma_d = 25 # cm
 sigma_theta = 0.2 # radians
+cam2 = camera.Camera(0, 'arlo', useCaptureThread = True)
 
 try:
     import picamera2
@@ -231,12 +233,12 @@ def updateParticle(particles):
 
 def selfLocalize(particle, world, WIN_RF1, WIN_World): 
     # Fetch next frame
-    colour = cam.get_next_frame()
+    colour = cam2.get_next_frame()
 
     num_particles = len(particles)
     
     # Detect objects
-    objectIDs, dists, angles = cam.detect_aruco_objects(colour)
+    objectIDs, dists, angles = cam2.detect_aruco_objects(colour)
     
     particle.add_uncertainty(particles,3.5, 0.1)
     if not isinstance(objectIDs, type(None)): #If the robot can see a landmark then the following
@@ -292,7 +294,7 @@ def selfLocalize(particle, world, WIN_RF1, WIN_World):
         
 
         # Draw detected objects
-        cam.draw_aruco_objects(colour)
+        cam2.draw_aruco_objects(colour)
     else:
         # No observation - reset weights to uniform distribution
         for p in particles:
