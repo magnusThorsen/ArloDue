@@ -10,7 +10,6 @@ import random
 import time
 from time import sleep
 from timeit import default_timer as timer
-import sys
 import math
 
 
@@ -28,7 +27,7 @@ def isRunningOnArlo():
 
 if isRunningOnArlo():
     # XXX: You need to change this path to point to where your robot.py file is located
-    sys.path.append("../../../../Arlo")
+    sys.path.append("../../../../Arlo/python")
 
 
 try:
