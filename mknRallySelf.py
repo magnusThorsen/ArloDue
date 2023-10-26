@@ -16,7 +16,7 @@ import math
 
 # Flags
 showGUI = True  # Whether or not to open GUI windows
-onRobot = False # Whether or not we are running on the Arlo robot
+onRobot = True # Whether or not we are running on the Arlo robot
 
 
 def isRunningOnArlo():
@@ -28,7 +28,7 @@ def isRunningOnArlo():
 
 if isRunningOnArlo():
     # XXX: You need to change this path to point to where your robot.py file is located
-    sys.path.append("../../../../Arlo/python")
+    sys.path.append("../../../../Arlo")
 
 
 try:
