@@ -7,6 +7,7 @@ import cv2 # Import the OpenCV library
 import cv2.aruco as aruco
 import numpy as np # Import Numpy library
 import selfLocalizeRightA1 as SL
+import camera
 
 np.set_printoptions(threshold=sys.maxsize)
 
@@ -231,6 +232,11 @@ def updateParticle(particles):
 
 def selfLocalize(particle, world, WIN_RF1, WIN_World): 
     # Fetch next frame
+    print("Opening and initializing camera")
+    if camera.isRunningOnArlo():
+        cam = camera.Camera(0, 'arlo', useCaptureThread = True)
+    else:
+        cam = camera.Camera(0, 'macbookpro', useCaptureThread = True)
     colour = cam.get_next_frame()
 
     num_particles = len(particles)
@@ -312,10 +318,9 @@ def selfLocalize(particle, world, WIN_RF1, WIN_World):
         cv2.imshow(WIN_World, world)
 
 
-def turnDetectLandmark(landmarkID, particle, world, WIN_RF1, WIN_World):
+def turnDetectLandmark(landmarkID):
     counter = 0
     while cv2.waitKey(4) == -1: # Wait for a key pressed event
-        selfLocalize(particle, world, WIN_RF1, WIN_World)
         # print go diff 
         print("tdLandmark: Finding landmark: ", landmarkID)
         detected, distance, t_vec = searchAndShowLandmark(landmarkID)
@@ -425,13 +430,13 @@ def main():
 
     # Draw map
     SL.draw_world(est_pose, particles, world)
-
+    selfLocalize(particles, world, WIN_RF1, WIN_World)
     for landmark in landmarkIDs:
         visitedObstacles = []
         landmarkReached = False
         numtries = 0
         while not landmarkReached:
-            detected, distance, tvecs = turnDetectLandmark(landmark, particles, world, WIN_RF1, WIN_World)
+            detected, distance, tvecs = turnDetectLandmark(landmark)
             print(landmark)
             if detected:
                 print("Main: Found the landmark: " ,landmark)
