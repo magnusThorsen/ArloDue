@@ -1,10 +1,9 @@
 import sys
-sys.path.append("../../../../Arlo/python")
 import cv2
 import cv2.aruco as aruco
-import python.particle as particle
-import python.random_numbers as rn
-import python.camera as camera
+import particle as particle
+import random_numbers as rn
+import camera as camera
 import numpy as np
 import random
 import time
@@ -274,7 +273,7 @@ def main():
             if action == ord('q'): # Quit
                 break
         
-            if not isRunningOnArlo():
+            if isRunningOnArlo():
                 print("yo")
                 print("yo")
                 print("yo")
