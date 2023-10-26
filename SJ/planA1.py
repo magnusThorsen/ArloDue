@@ -7,6 +7,7 @@ import cv2 # Import the OpenCV library
 import cv2.aruco as aruco
 import numpy as np # Import Numpy library
 import selfLocalizeRightA1 as SL
+import camera
 
 np.set_printoptions(threshold=sys.maxsize)
 
@@ -231,6 +232,11 @@ def updateParticle(particles):
 
 def selfLocalize(particle, world, WIN_RF1, WIN_World): 
     # Fetch next frame
+    print("Opening and initializing camera")
+    if camera.isRunningOnArlo():
+        cam = camera.Camera(0, 'arlo', useCaptureThread = True)
+    else:
+        cam = camera.Camera(0, 'macbookpro', useCaptureThread = True)
     colour = cam.get_next_frame()
 
     num_particles = len(particles)
