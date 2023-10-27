@@ -137,7 +137,7 @@ def moveParticleForward(distance):
     velocity = distance/timeDrive
     return velocity
 
-def driveWithTime(distance):
+def driveWithTime(distance, particles):
     global velocity
     shortdist = distance - 25
     timeDrive = shortdist / 16.75
@@ -160,32 +160,33 @@ def driveWithTime(distance):
             end_time = time.time() + 5
             print("driveWithTime: turned")
             if rightSensor < 300:
-                turnLeft(90)
+                turnLeft(90, particles)
                 sleep(0.2)
             elif leftSensor < 300:
-                turnRight(90)
+                turnRight(90, particles)
                 sleep(0.2)
             elif frontSensor < 250:
                 if leftSensor <= rightSensor:
-                    turnRight(90)
+                    turnRight(90, particles)
                     sleep(0.2)
                 else:
-                    turnLeft(90)
+                    turnLeft(90,particles)
                     sleep(0.2)
-        else: 
+        else:
             velocity = velocity + moveParticleForward(distance)
+            updateParticles(particles)
             print(arlo.go_diff(left_speed, right_speed, 1, 1))
     print(arlo.stop())
     velocity = 0.0
     return succeded
 
-def turnLeft(degree):
+def turnLeft(degree, particles):
     global angular_velocity
     turnTime = time.time()
     endtime = turnTime + (0.0074 * degree + ((degree**2)*0.000001))
-    while time.time() < endtime:
+    while time.time() < endtime:       
         angular_velocity = angular_velocity + turnParticle(degree)
-        
+        updateParticles(particles) 
         print(arlo.go_diff(64, 68, 0, 1))
 
     # send a stop command
@@ -196,12 +197,13 @@ def turnLeft(degree):
     sleep(0.2)
 
 
-def turnRight(degree):
+def turnRight(degree, particles):
     global angular_velocity
     turnTime = time.time()
     endtime = turnTime + (0.0074 * degree + ((degree**2)*0.000001))
     while time.time() < endtime:
         angular_velocity = angular_velocity + turnParticle(degree)
+        updateParticles(particles)
         print(arlo.go_diff(64, 70, 1, 0))
 
     # send a stop command
@@ -255,7 +257,13 @@ def prob_product(landmarks):
         result = dist_part_landm(landmark) * result
     return result 
 
-
+def updateParticles(particles):
+    # Use motor controls to update particles
+    # XXX: Make the robot drive
+    for part in particles: 
+        part.setX(part.getX() + velocity*np.cos(part.getTheta()))
+        part.setY(part.getY() + velocity*np.sin(part.getTheta()))
+        part.setTheta(part.getTheta() + angular_velocity) 
 
 def selfLocalize():
     # Main program #
@@ -306,7 +314,7 @@ def selfLocalize():
             if isRunningOnArlo():
                 if action == ord('w'): # Forward
                     print("started driveWithTime")
-                    driveWithTime(70)
+                    driveWithTime(70, particles)
                     print("ended driveWithTime")
                 elif action == ord('x'): # Backwards
                     velocity -= 0.0
@@ -315,19 +323,12 @@ def selfLocalize():
                     velocity = 0.0
                     angular_velocity = 0.0
                 elif action == ord('a'): # Left
-                    turnLeft(90)
+                    turnLeft(90, particles)
                 elif action == ord('d'): # Right
-                    turnRight(90)
-
-             
-            # Use motor controls to update particles
-            # XXX: Make the robot drive
-            for part in particles: 
-                part.setX(part.getX() + velocity*np.cos(part.getTheta()))
-                part.setY(part.getY() + velocity*np.sin(part.getTheta()))
-                part.setTheta(part.getTheta() + angular_velocity) 
+                    turnRight(90, particles)
                 
-            
+            updateParticles(particles)
+
             # Fetch next frame
             colour = cam.get_next_frame()
             
