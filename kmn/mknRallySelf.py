@@ -42,6 +42,7 @@ arlo = robot.Robot()
 velocity = 0.0 # cm/sec
 angular_velocity = 0.0 # radians/sec
 
+
 # Some color constants in BGR format
 CRED = (0, 0, 255)
 CGREEN = (0, 255, 0)
@@ -137,6 +138,7 @@ def moveParticleForward(distance):
     return velocity
 
 def driveWithTime(distance):
+    global velocity
     velocity = velocity + moveParticleForward(distance)
     shortdist = distance - 25
     timeDrive = shortdist / 16.75
@@ -178,6 +180,7 @@ def driveWithTime(distance):
     return succeded
 
 def turnLeft(degree):
+    global angular_velocity
     angular_velocity = angular_velocity + turnParticle(degree)
     sleep(0.041)
     print(arlo.go_diff(64, 68, 0, 1))
@@ -193,6 +196,7 @@ def turnLeft(degree):
 
 
 def turnRight(degree):
+    global angular_velocity
     angular_velocity = angular_velocity - turnParticle(degree)
     sleep(0.041)
     print(arlo.go_diff(64, 70, 1, 0))
