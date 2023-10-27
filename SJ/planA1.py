@@ -492,6 +492,7 @@ def main():
     SL.draw_world(est_pose, particles, world)
     
     for landmark in landmarkIDs:
+        Begin_time = time.time()
         visitedObstacles = []
         landmarkReached = False
         numtries = 0
@@ -526,7 +527,8 @@ def main():
                     numtries = 0
                     visitedObstacles = []
                 print("Main: Visited obstacles: ", visitedObstacles)
-    print("Succesfully completed the course! Time: 00:15 minutes")
+    
+    print("Succesfully completed the course! Time:", time.time() - Begin_time ,"minutes")
         
 main()
 
