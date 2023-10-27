@@ -436,7 +436,7 @@ def turnDetectObstacle():
             print(arlo.stop())
             return detected, (distance / 14.086079), id
 
-def reposition(visitedObstacles):
+def reposition(visitedObstacles, numtries = 0):
     detected, distance, id = turnDetectObstacle()
     print("reposition: Detected in reposition: ", id)
     print("reposition: Visited obstacles: ", visitedObstacles)
@@ -445,7 +445,7 @@ def reposition(visitedObstacles):
         #TURN TO OBSTACLE
         visitedObstacles.append(id)
         driveWithTime(distance/2)
-    else: reposition(visitedObstacles)
+    elif numtries > 2: reposition(visitedObstacles, numtries + 1)
     return visitedObstacles      
 
 
