@@ -184,12 +184,11 @@ def turnLeft(degree, particles):
     global angular_velocity
     turnTime = time.time()
     endtime = turnTime + (0.0074 * degree + ((degree**2)*0.000001))
-    while time.time() < endtime:       
-        angular_velocity =  angular_velocity + turnParticle(degree)
-        print(angular_velocity)
-        updateParticles(particles) 
+    while time.time() < endtime:        
         print(arlo.go_diff(64, 68, 0, 1))
-
+    angular_velocity = turnParticle(degree)
+    print(angular_velocity)
+    updateParticles(particles)
     # send a stop command
     print(arlo.stop())
     angular_velocity = 0.0
@@ -203,10 +202,9 @@ def turnRight(degree, particles):
     turnTime = time.time()
     endtime = turnTime + (0.0074 * degree + ((degree**2)*0.000001))
     while time.time() < endtime:
-        angular_velocity = angular_velocity - turnParticle(degree)
-        updateParticles(particles)
         print(arlo.go_diff(64, 70, 1, 0))
-
+    angular_velocity = angular_velocity - turnParticle(degree)
+    updateParticles(particles)
     # send a stop command
     print(arlo.stop())
     angular_velocity = 0.0
