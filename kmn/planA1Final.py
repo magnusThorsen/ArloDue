@@ -507,7 +507,7 @@ def searchAndShowLandmark(ImpID):
     cv2.imshow("sasLandmark: Detected Markers", image)
     return detected, 0.0, None
 
-def turnDetectLandmark(landmarkID):
+def turnDetectLandmark(landmarkID, particles):
     counter = 0
     while cv2.waitKey(4) == -1: # Wait for a key pressed event
         # print go diff 
@@ -518,7 +518,7 @@ def turnDetectLandmark(landmarkID):
             landmarkFound = False
             return landmarkFound, 0.0, None
         if not detected: 
-            turnLeft(20)
+            turnLeft(20, particles)
             sleep(0.9)
             counter += 1
             print("tdLandmark: This is the counter: ", counter)
@@ -565,7 +565,7 @@ def searchAndShowObstacle():
                 return detected, distance, marker_id
     return detected, 0.0, 0
 
-def turnDetectObstacle():
+def turnDetectObstacle(particles):
     counter = 0
     while cv2.waitKey(4) == -1: # Wait for a key pressed event
         # print go diff 
@@ -574,7 +574,7 @@ def turnDetectObstacle():
             print(arlo.stop())
             return detected, 0.0, 0
         if not detected: 
-            turnLeft(20)
+            turnLeft(20, particles)
             sleep(0.9)
             counter += 1
             print("tdObstacle: This is the counter: ", counter)

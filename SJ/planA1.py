@@ -296,7 +296,7 @@ def selfLocalize(particles, world, WIN_RF1, WIN_World):
             weightAngle = 1
             for indx in imp_landmarks_index: 
 
-                DW = SL.p_dist_M(dists[indx]/140.86079,landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
+                DW = SL.p_dist_M(dists[indx]/1408.6079,landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
                 if DW == 0:
                     DW = (1/len(particles))
                 weightDist = weightDist * DW
