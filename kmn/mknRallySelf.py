@@ -39,9 +39,7 @@ except ImportError:
 arlo = robot.Robot()
 
 # Driving parameters
-global velocity
 velocity = 0.0 # cm/sec
-global angular_velocity 
 angular_velocity = 0.0 # radians/sec
 
 # Some color constants in BGR format
@@ -256,6 +254,8 @@ def prob_product(landmarks):
 def selfLocalize():
     # Main program #
     try:
+        velocity = 0.0 # cm/sec
+        angular_velocity = 0.0 # radians/sec
         if showGUI:
             # Open windows
             WIN_RF1 = "Robot view"
