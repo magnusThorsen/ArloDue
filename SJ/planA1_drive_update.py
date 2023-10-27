@@ -102,9 +102,9 @@ def turnRobo(angle):
     print("Angle: ", angle)
     # turn the robot accordingly
     if angle > 0:
-        turnLeft(angle)
+        particles = turnLeft(angle,particles)
     elif angle < 0:
-        turnRight(-angle)
+        particles = turnRight(-angle, particles)
     else:
         print("No turn needed")
 
@@ -116,20 +116,28 @@ def angleCalc(tvec):
 
 
 
-def driveWithTime(distance):
+def updateParticles(particles):
+    # Use motor controls to update particles
+    # XXX: Make the robot drive
+    for part in particles: 
+        part.setX(part.getX() + velocity*np.cos(part.getTheta()))
+        part.setY(part.getY() + velocity*np.sin(part.getTheta()))
+        part.setTheta(part.getTheta() + angular_velocity) 
+    return particles
+
+            
+def driveWithTime(distance, particles):
+    global velocity
     shortdist = distance - 25
     timeDrive = shortdist / 16.75
     succeded = True
-    turned = "no"
     print(time.time())
     print("driveWithTime: time",timeDrive)
     print("driveWithTime: distance",distance)
     start_time = time.time()
     end_time = start_time + timeDrive
     left_speed = 31
-    right_speed = 37
-    print(arlo.go_diff(30, 80, 1, 1))
-    sleep(0.2)
+    right_speed = 37.5
     while time.time() < end_time:
         frontSensor = arlo.read_front_ping_sensor()
         rightSensor = arlo.read_right_ping_sensor()
@@ -139,61 +147,74 @@ def driveWithTime(distance):
                 succeded = False
             print(arlo.stop())
             sleep(0.2)
-            end_time = time.time() + 3
+            end_time = time.time() + 5
             print("driveWithTime: turned")
             if rightSensor < 300:
-                turnLeft(90)
-                turned = "Left"
+                particles = turnLeft(90,particles)
                 sleep(0.2)
             elif leftSensor < 300:
-                turnRight(90)
-                turned = "Right"
+                particles = turnRight(90, particles)
                 sleep(0.2)
             elif frontSensor < 250:
                 if leftSensor <= rightSensor:
-                    turnRight(90)
-                    turned = "Right"
+                    particles = turnRight(90, particles)
                     sleep(0.2)
                 else:
-                    turnLeft(90)
-                    turned = "Left"
+                    particles = turnLeft(90,particles)
                     sleep(0.2)
-                    
-        else: 
+        else:
+            velocity = moveParticleForward(distance)
+            updateParticles(particles)
             print(arlo.go_diff(left_speed, right_speed, 1, 1))
-    if turned == "Right":
-        turnLeft(90)
-        sleep(0.2)
-    elif turned == "Left":
-        turnRight(90)
-        sleep(0.2)
-
-    return succeded 
-            
+    print(arlo.stop())
+    velocity = 0.0
+    return succeded, particles
 
 
-
-def turnLeft(degree):
-    sleep(0.041)
-    print(arlo.go_diff(64, 68, 0, 1))
-
-    sleep(0.0074 * degree + ((degree**2)*0.000001))
+def turnLeft(degree, particles):
+    global angular_velocity
+    turnTime = time.time()
+    endtime = turnTime + (0.0074 * degree + ((degree**2)*0.000001))
+    while time.time() < endtime:        
+        print(arlo.go_diff(64, 68, 0, 1))
+    angular_velocity = turnParticle(degree)
+    print(angular_velocity)
+    updateParticles(particles)
     # send a stop command
     print(arlo.stop())
+    angular_velocity = 0.0
+            
+    # Wait a bit before next command
+    sleep(0.2)
+    return particles
+
+
+def turnRight(degree, particles):
+    global angular_velocity
+    turnTime = time.time()
+    endtime = turnTime + (0.0074 * degree + ((degree**2)*0.000001))
+    while time.time() < endtime:
+        print(arlo.go_diff(64, 70, 1, 0))
+    angular_velocity = angular_velocity - turnParticle(degree)
+    updateParticles(particles)
+    # send a stop command
+    print(arlo.stop())
+    angular_velocity = 0.0
         
     # Wait a bit before next command
     sleep(0.2)
+    return particles
 
-def turnRight(degree):
-    sleep(0.041)
-    print(arlo.go_diff(64, 70, 1, 0))
 
-    sleep(0.0074 * degree + ((degree**2)*0.000001))
-    # send a stop command
-    print(arlo.stop())
-        
-    # Wait a bit before next command
-    sleep(0.5)
+def turnParticle(degree):
+    angularVelocity = (degree*(np.pi/180))/(0.0074 * degree + ((degree**2)*0.000001))
+    return angularVelocity
+
+def moveParticleForward(distance):
+    shortdist = (distance - 25)
+    timeDrive = shortdist / 16.75
+    velocity = distance/timeDrive
+    return velocity
 
 
 def searchAndShowLandmark(ImpID): 
@@ -388,7 +409,7 @@ def turnDetectLandmark(landmarkID, particles, world, WIN_RF1, WIN_World):
             landmarkFound = False
             return particles, landmarkFound, 0.0, None
         if not detected: 
-            turnLeft(20)
+            particles = turnLeft(20, particles)
             sleep(0.9)
             counter += 1
             print("tdLandmark: This is the counter: ", counter)
@@ -445,7 +466,7 @@ def turnDetectObstacle(particles, world, WIN_RF1, WIN_World):
             print(arlo.stop())
             return particles, detected, 0.0, 0
         if not detected: 
-            turnLeft(20)
+            particles = turnLeft(20, particles)
             sleep(0.9)
             counter += 1
             print("tdObstacle: This is the counter: ", counter)
@@ -461,7 +482,7 @@ def reposition(visitedObstacles, particles, world, WIN_RF1, WIN_World, numtries 
         print("reposition: driving at ",id )
         #TURN TO OBSTACLE
         visitedObstacles.append(id)
-        driveWithTime(distance/2)
+        _, particles = driveWithTime(distance/2, particles)
     elif numtries > 2: reposition(visitedObstacles, particles, world, WIN_RF1, WIN_World, numtries + 1)
     return particles, visitedObstacles      
 
@@ -510,11 +531,12 @@ def main():
                 print("tvecs", tvecs)
                 
                 if distance < 150:
-                    if driveWithTime(distance):
+                    succ, particles = driveWithTime(distance, particles)
+                    if succ: 
                         landmarkReached = True
                 else: 
-                    driveWithTime(70)
-                    turnRight(40)
+                    _ , particles = driveWithTime(70, particles)
+                    particles = turnRight(40, particles)
 
                 # Self localize and create a path to the landmark
             else: 
@@ -522,8 +544,8 @@ def main():
                 particles, visitedObstacles = reposition(visitedObstacles, particles, world, WIN_RF1, WIN_World)
                 numtries += 1
                 if numtries > 3: 
-                    turnRight(90)
-                    driveWithTime(4)
+                    particles = turnRight(90, particles)
+                    _ , particles = driveWithTime(4, particles)
                     numtries = 0
                     visitedObstacles = []
                 print("Main: Visited obstacles: ", visitedObstacles)
