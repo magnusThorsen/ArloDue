@@ -297,7 +297,9 @@ def selfLocalize(particles, world, WIN_RF1, WIN_World):
             weightAngle = 1
             for indx in imp_landmarks_index: 
                 weightDist = weightDist * SL.p_dist_M(dists[indx],landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
+                print("weightDist", weightDist)
                 weightAngle = weightAngle * SL.p_meas_M(angles[indx],landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
+                print("weightAngle", weightAngle)
             part.setWeight(weightAngle*weightDist)
             Xtbar.append(weightDist*weightAngle)
 
@@ -461,7 +463,7 @@ def main():
         cv2.moveWindow(WIN_World, 500, 50)
     
     # Initialize particles
-    num_particles = 1000
+    num_particles = 10
     particles = SL.initialize_particles(num_particles)
 
     est_pose = SL.particle.estimate_pose(particles) # The estimate of the robots current pose
