@@ -127,6 +127,7 @@ def driveWithTime(distance):
     end_time = start_time + timeDrive
     left_speed = 31
     right_speed = 40
+    print(arlo.go_diff(0, 60, 1, 1))
     while time.time() < end_time:
         frontSensor = arlo.read_front_ping_sensor()
         rightSensor = arlo.read_right_ping_sensor()
