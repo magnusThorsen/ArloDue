@@ -217,7 +217,7 @@ def searchAndShowLandmark(ImpID):
             if marker_id == ImpID:
                 detected = True
                 return detected, distance, translation_vector
-    # Display the image with detected markers
+    #Display the image with detected markers
     #cv2.imshow("sasLandmark: Detected Markers", image)
     return detected, 0.0, None
 
@@ -280,6 +280,7 @@ def selfLocalize(particles, world, WIN_RF1, WIN_World):
     
     particle.add_uncertainty(particles,3.5, 0.1)
     if not isinstance(objectIDs, type(None)): #If the robot can see a landmark then the following
+        print("\n\n\n")
         # List detected objects
         imp_landmarks = [] #landmark id
         imp_landmarks_index = [] #landmark index in a list
@@ -296,7 +297,9 @@ def selfLocalize(particles, world, WIN_RF1, WIN_World):
             weightAngle = 1
             for indx in imp_landmarks_index: 
                 weightDist = weightDist * SL.p_dist_M(dists[indx],landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
+                print("weightDist", weightDist)
                 weightAngle = weightAngle * SL.p_meas_M(angles[indx],landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
+                print("weightAngle", weightAngle)
             part.setWeight(weightAngle*weightDist)
             Xtbar.append(weightDist*weightAngle)
 
@@ -356,12 +359,13 @@ def selfLocalize(particles, world, WIN_RF1, WIN_World):
 
         # Show world
         cv2.imshow(WIN_World, world)
+    return particles
 
 
 def turnDetectLandmark(landmarkID, particles, world, WIN_RF1, WIN_World):
     counter = 0
     while cv2.waitKey(4) == -1: # Wait for a key pressed event
-        selfLocalize(particles, world, WIN_RF1, WIN_World)
+        particles = selfLocalize(particles, world, WIN_RF1, WIN_World)
         # print go diff 
         print("tdLandmark: Finding landmark: ", landmarkID)
         detected, distance, t_vec = searchAndShowLandmark(landmarkID)
@@ -459,7 +463,7 @@ def main():
         cv2.moveWindow(WIN_World, 500, 50)
     
     # Initialize particles
-    num_particles = 1000
+    num_particles = 10
     particles = SL.initialize_particles(num_particles)
 
     est_pose = SL.particle.estimate_pose(particles) # The estimate of the robots current pose
