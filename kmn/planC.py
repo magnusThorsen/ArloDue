@@ -92,15 +92,15 @@ def betterGoDiff(leftSpeed, rightSpeed, directionL, directionR, sleeptime):
    print(arlo.go_diff(leftSpeed, rightSpeed, directionL, directionR))
    sleep(float(sleeptime) - 0.1)
 
-def turnRobo(angle):
+def turnRobo(angle, particles):
     # convert angle to degrees:
     angle = angle * 180 / np.pi
     print("Angle: ", angle)
     # turn the robot accordingly
     if angle > 0:
-        turnLeft(angle)
+        turnLeft(angle, particles)
     elif angle < 0:
-        turnRight(-angle)
+        turnRight(-angle, particles)
     else:
         print("No turn needed")
 
@@ -134,32 +134,14 @@ def angleCalc(tvec):
     sleep(0.5) """
 
 
-def driveWithTime(distance):
-    particles = rs.initialize_particles(num_particles=1000)
+def driveWithTime(distance, particles):
     rs.driveWithTime(distance, particles)
             
+def turnLeft(degree, particles):
+    rs.turnLeft(degree, particles)
 
-def turnLeft(degree):
-    sleep(0.041)
-    print(arlo.go_diff(64, 68, 0, 1))
-
-    sleep(0.0074 * degree + ((degree**2)*0.000001))
-    # send a stop command
-    print(arlo.stop())
-        
-    # Wait a bit before next command
-    sleep(0.2)
-
-def turnRight(degree):
-    sleep(0.041)
-    print(arlo.go_diff(64, 70, 1, 0))
-
-    sleep(0.0074 * degree + ((degree**2)*0.000001))
-    # send a stop command
-    print(arlo.stop())
-        
-    # Wait a bit before next command
-    sleep(0.5)
+def turnRight(degree, particles):
+    rs.turnRight(degree, particles)
 
 """ def sensor(isDriving):
     while (isDriving): # or some other form of loop
@@ -226,7 +208,7 @@ def searchAndShowLandmark(ImpID):
     cv2.imshow("sasLandmark: Detected Markers", image)
     return detected, 0.0, None
 
-def turnDetectLandmark(landmarkID):
+def turnDetectLandmark(landmarkID, particles):
     counter = 0
     while cv2.waitKey(4) == -1: # Wait for a key pressed event
         # print go diff 
@@ -237,7 +219,7 @@ def turnDetectLandmark(landmarkID):
             landmarkFound = False
             return landmarkFound, 0.0, None
         if not detected: 
-            turnLeft(20)
+            turnLeft(20, particles)
             sleep(0.9)
             counter += 1
             print("tdLandmark: This is the counter: ", counter)
@@ -284,7 +266,7 @@ def searchAndShowObstacle():
                 return detected, distance, marker_id
     return detected, 0.0, 0
 
-def turnDetectObstacle():
+def turnDetectObstacle(particles):
     counter = 0
     while cv2.waitKey(4) == -1: # Wait for a key pressed event
         # print go diff 
@@ -293,7 +275,7 @@ def turnDetectObstacle():
             print(arlo.stop())
             return detected, 0.0, 0
         if not detected: 
-            turnLeft(20)
+            turnLeft(20, particles)
             sleep(0.9)
             counter += 1
             print("tdObstacle: This is the counter: ", counter)
@@ -301,7 +283,7 @@ def turnDetectObstacle():
             print(arlo.stop())
             return detected, (distance / 14.086079), id
 
-def reposition(visitedObstacles):
+def reposition(visitedObstacles, particles):
     detected, distance, id = turnDetectObstacle()
     print("reposition: Detected in reposition: ", id)
     print("reposition: Visited obstacles: ", visitedObstacles)
@@ -309,8 +291,8 @@ def reposition(visitedObstacles):
         print("reposition: driving at ",id )
         #TURN TO OBSTACLE
         visitedObstacles.append(id)
-        driveWithTime(distance/2)
-    else: reposition(visitedObstacles)
+        driveWithTime(distance/2, particles)
+    else: reposition(visitedObstacles, particles)
     return visitedObstacles      
 
 
@@ -320,8 +302,9 @@ def main():
         landmarkReached = False
         numtries = 0
         while not landmarkReached:
-            rs.selfLocalize()
-            detected, distance, tvecs = turnDetectLandmark(landmark)
+            particles = rs.initialize_particles(num_particles=1000)
+            rs.selfLocalize(particles)
+            detected, distance, tvecs = turnDetectLandmark(landmark, particles)
             print(landmark)
             if detected:
                 print("Main: Found the landmark: " ,landmark)
@@ -330,24 +313,24 @@ def main():
                 # Drive to the landmark
                 # Turn to landmark
                 # SENSORES
-                turnRobo(angleCalc(tvecs)*0.8)
+                turnRobo(angleCalc(tvecs)*0.8, particles)
                 print("tvecs", tvecs)
                 
                 if distance < 150:
-                    if driveWithTime(distance):
+                    if driveWithTime(distance, particles):
                         landmarkReached = True
                 else: 
-                    driveWithTime(70)
-                    turnRight(30)
+                    driveWithTime(70, particles)
+                    turnRight(30, particles)
 
                 # Self localize and create a path to the landmark
             else: 
                 print("Main: didn't find the landmark")
-                visitedObstacles = reposition(visitedObstacles)
+                visitedObstacles = reposition(visitedObstacles, particles)
                 numtries += 1
                 if numtries > 3: 
-                    turnRight(90)
-                    driveWithTime(4)
+                    turnRight(90, particles)
+                    driveWithTime(4, particles)
                     numtries = 0
                     visitedObstacles = []
                 print("Main: Visited obstacles: ", visitedObstacles)
