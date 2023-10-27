@@ -13,6 +13,9 @@ import math
 showGUI = True  # Whether or not to open GUI windows
 onRobot = True # Whether or not we are running on the Arlo robot
 
+sigma_d = 25 # cm
+sigma_theta = 0.2 # radians
+
 
 def isRunningOnArlo():
     """Return True if we are running on Arlo, otherwise False.
