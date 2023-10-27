@@ -295,19 +295,12 @@ def selfLocalize(particles, world, WIN_RF1, WIN_World):
             weightDist = 1
             weightAngle = 1
             for indx in imp_landmarks_index: 
-                print("dists indx", dists[indx])
-                print("landmark indx", landmarks[objectIDs[indx]][0])
-                print("landmark indx", landmarks[objectIDs[indx]][1])
-                print("partX", part.getX())
-                print("partY", part.getY())
 
                 DW = SL.p_dist_M(dists[indx]/140.86079,landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
                 if DW == 0:
                     DW = (1/len(particles))
                 weightDist = weightDist * DW
-                print("weightDist", weightDist)
                 weightAngle = weightAngle * SL.p_meas_M(angles[indx],landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
-                print("weightAngle", weightAngle)
             part.setWeight(weightAngle*weightDist)
             Xtbar.append(weightDist*weightAngle)
 
@@ -325,8 +318,6 @@ def selfLocalize(particles, world, WIN_RF1, WIN_World):
             Xtbar_norm.append(Xtbar[i]/sum_Xtbar)
 
         # Resampling
-        print("len xtbar_norom", len(Xtbar_norm))
-        print("len particles", len(particles) )
         new_particles = np.random.choice(particles, size=len(particles), replace=True, p=Xtbar_norm)
         
         new2_part = []
