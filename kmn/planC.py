@@ -5,10 +5,7 @@ import sys
 import cv2 # Import the OpenCV library
 import cv2.aruco as aruco
 import numpy as np # Import Numpy library
-from kmn.random_numbers import rand_von_mises
-from kmn.random_numbers import randn
-from kmn.particle import particle
-from kmn.mknRallySelf import selfLocalize
+import mknRallySelf as rs
 
 np.set_printoptions(threshold=sys.maxsize)
 
@@ -365,7 +362,7 @@ def main():
         landmarkReached = False
         numtries = 0
         while not landmarkReached:
-            selfLocalize()
+            rs.selfLocalize()
             detected, distance, tvecs = turnDetectLandmark(landmark)
             print(landmark)
             if detected:
