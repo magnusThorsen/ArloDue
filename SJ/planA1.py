@@ -528,7 +528,7 @@ def main():
                     visitedObstacles = []
                 print("Main: Visited obstacles: ", visitedObstacles)
     
-    print("Succesfully completed the course! Time:", time.time() - Begin_time ,"minutes")
+    print("Succesfully completed the course! Time:", int(time.time() - Begin_time) ,"seconds")
         
 main()
 
