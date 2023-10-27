@@ -301,7 +301,7 @@ def selfLocalize(particles, world, WIN_RF1, WIN_World):
                 print("partX", part.getX())
                 print("partY", part.getY())
 
-                DW = SL.p_dist_M(dists[indx]/14.086079,landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
+                DW = SL.p_dist_M(dists[indx]/140.86079,landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
                 if DW == 0:
                     DW = (1/len(particles))
                 weightDist = weightDist * DW
@@ -471,7 +471,7 @@ def main():
         cv2.moveWindow(WIN_World, 500, 50)
     
     # Initialize particles
-    num_particles = 1000
+    num_particles = 10
     particles = SL.initialize_particles(num_particles)
 
     est_pose = SL.particle.estimate_pose(particles) # The estimate of the robots current pose
