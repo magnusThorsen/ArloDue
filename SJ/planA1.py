@@ -139,7 +139,7 @@ def driveWithTime(distance):
                 succeded = False
             print(arlo.stop())
             sleep(0.2)
-            end_time = time.time() + 5
+            end_time = time.time() + 3
             print("driveWithTime: turned")
             if rightSensor < 300:
                 turnLeft(90)
