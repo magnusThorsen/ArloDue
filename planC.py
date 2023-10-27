@@ -1,4 +1,5 @@
 import time
+from mknRallySelf import 
 from time import sleep
 from pprint import *
 import sys
@@ -26,6 +27,9 @@ def isRunningOnArlo():
     """
     return onRobot
 
+if isRunningOnArlo():
+    sys.path.append("../../../../Arlo/kmn")
+    import mknRallySelf
 
 if isRunningOnArlo():
     # XXX: You need to change this path to point to where your robot.py file is located

@@ -427,7 +427,7 @@ def turnDetectObstacle(particles, world, WIN_RF1, WIN_World):
         detected, distance, id = searchAndShowObstacle()
         if counter == 21:
             print(arlo.stop())
-            return detected, 0.0, 0
+            return particles, detected, 0.0, 0
         if not detected: 
             turnLeft(20)
             sleep(0.9)
@@ -435,10 +435,10 @@ def turnDetectObstacle(particles, world, WIN_RF1, WIN_World):
             print("tdObstacle: This is the counter: ", counter)
         else: 
             print(arlo.stop())
-            return detected, (distance / 14.086079), id
+            return particles, detected, (distance / 14.086079), id
 
 def reposition(visitedObstacles, particles, world, WIN_RF1, WIN_World, numtries = 0):
-    detected, distance, id = turnDetectObstacle(particles, world, WIN_RF1, WIN_World)
+    particles, detected, distance, id = turnDetectObstacle(particles, world, WIN_RF1, WIN_World)
     print("reposition: Detected in reposition: ", id)
     print("reposition: Visited obstacles: ", visitedObstacles)
     if detected and id not in visitedObstacles and id != 0:
@@ -447,7 +447,7 @@ def reposition(visitedObstacles, particles, world, WIN_RF1, WIN_World, numtries 
         visitedObstacles.append(id)
         driveWithTime(distance/2)
     elif numtries > 2: reposition(visitedObstacles, particles, world, WIN_RF1, WIN_World, numtries + 1)
-    return visitedObstacles      
+    return particles, visitedObstacles      
 
 
 def main():
