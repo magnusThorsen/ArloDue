@@ -352,10 +352,10 @@ def selfLocalize(particles, world, WIN_RF1, WIN_World):
         SL.draw_world(est_pose, particles, world)
 
         # Show 10
-        cv2.imshow(WIN_RF1, colour)
+        #cv2.imshow(WIN_RF1, colour)
 
         # Show world
-        cv2.imshow(WIN_World, world)
+        #cv2.imshow(WIN_World, world)
 
 
 def turnDetectLandmark(landmarkID, particles, world, WIN_RF1, WIN_World):
@@ -450,9 +450,9 @@ def reposition(visitedObstacles):
 def main():
     if showGUI:
         # Open windows
-        """ WIN_RF1 = "Robot view"
+        WIN_RF1 = "Robot view"
         cv2.namedWindow(WIN_RF1)
-        cv2.moveWindow(WIN_RF1, 50, 50) """
+        cv2.moveWindow(WIN_RF1, 50, 50)
 
         WIN_World = "World view"
         cv2.namedWindow(WIN_World)
