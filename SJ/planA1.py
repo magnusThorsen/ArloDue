@@ -362,7 +362,7 @@ def selfLocalize(particles, world, WIN_RF1, WIN_World):
 def turnDetectLandmark(landmarkID, particles, world, WIN_RF1, WIN_World):
     counter = 0
     while cv2.waitKey(4) == -1: # Wait for a key pressed event
-        selfLocalize(particles, world, WIN_RF1, WIN_World)
+        particles = selfLocalize(particles, world, WIN_RF1, WIN_World)
         # print go diff 
         print("tdLandmark: Finding landmark: ", landmarkID)
         detected, distance, t_vec = searchAndShowLandmark(landmarkID)
