@@ -471,7 +471,7 @@ def main():
         cv2.moveWindow(WIN_World, 500, 50)
     
     # Initialize particles
-    num_particles = 10
+    num_particles = 1000
     particles = SL.initialize_particles(num_particles)
 
     est_pose = SL.particle.estimate_pose(particles) # The estimate of the robots current pose
