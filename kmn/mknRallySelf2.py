@@ -261,7 +261,7 @@ def updateParticles(particles):
         part.setY(part.getY() + velocity*np.sin(part.getTheta()))
         part.setTheta(part.getTheta() + angular_velocity) 
 
-def selfLocalize():
+def selfLocalize(particles):
     # Main program #
     try:
         velocity = 0.0 # cm/sec
@@ -278,8 +278,6 @@ def selfLocalize():
 
 
         # Initialize particles
-        num_particles = 1000
-        particles = initialize_particles(num_particles)
 
         est_pose = particle.estimate_pose(particles) # The estimate of the robots current pose
 
@@ -303,7 +301,7 @@ def selfLocalize():
 
         # Move the robot according to user input (only for testing)
         
-        action = cv2.waitKey(10)
+        """ action = cv2.waitKey(10)
         if isRunningOnArlo():
             if action == ord('w'): # Forward
                 print("started driveWithTime")
@@ -318,7 +316,7 @@ def selfLocalize():
             elif action == ord('a'): # Left
                 turnLeft(90, particles)
             elif action == ord('d'): # Right
-                turnRight(90, particles)
+                turnRight(90, particles) """
             
         updateParticles(particles)
 
