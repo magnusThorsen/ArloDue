@@ -264,7 +264,7 @@ def detect_aruco_objects(img):
     ids = ids.flatten().tolist()
     dists = dists.tolist()
     angles = angles.tolist()
-    
+
     return ids, dists, angles
 
 
@@ -310,6 +310,8 @@ def selfLocalize(particles, world, WIN_RF1, WIN_World):
             Xtbar_norm.append(Xtbar[i]/sum_Xtbar)
 
         # Resampling
+        print("len xtbar", len(Xtbar))
+        print("len particles", len(particles) )
         new_particles = np.random.choice(particles, size=len(particles), replace=True, p=Xtbar_norm)
         
         new2_part = []
