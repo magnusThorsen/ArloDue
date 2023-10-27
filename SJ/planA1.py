@@ -356,6 +356,7 @@ def selfLocalize(particles, world, WIN_RF1, WIN_World):
 
         # Show world
         cv2.imshow(WIN_World, world)
+    return particles
 
 
 def turnDetectLandmark(landmarkID, particles, world, WIN_RF1, WIN_World):
