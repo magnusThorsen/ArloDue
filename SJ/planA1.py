@@ -218,7 +218,7 @@ def searchAndShowLandmark(ImpID):
                 detected = True
                 return detected, distance, translation_vector
     # Display the image with detected markers
-    cv2.imshow("sasLandmark: Detected Markers", image)
+    #cv2.imshow("sasLandmark: Detected Markers", image)
     return detected, 0.0, None
 
 
@@ -355,7 +355,7 @@ def selfLocalize(particles, world, WIN_RF1, WIN_World):
         #cv2.imshow(WIN_RF1, colour)
 
         # Show world
-        #cv2.imshow(WIN_World, world)
+        cv2.imshow(WIN_World, world)
 
 
 def turnDetectLandmark(landmarkID, particles, world, WIN_RF1, WIN_World):
