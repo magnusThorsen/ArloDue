@@ -132,7 +132,7 @@ def turnParticle(degree):
     return angularVelocity
 
 def moveParticleForward(distance):
-    shortdist = distance - 25
+    shortdist = (distance - 25)
     timeDrive = shortdist / 16.75
     velocity = distance/timeDrive
     return velocity
@@ -185,7 +185,8 @@ def turnLeft(degree, particles):
     turnTime = time.time()
     endtime = turnTime + (0.0074 * degree + ((degree**2)*0.000001))
     while time.time() < endtime:       
-        angular_velocity = turnParticle(degree)
+        angular_velocity =  angular_velocity + turnParticle(degree)
+        print(angular_velocity)
         updateParticles(particles) 
         print(arlo.go_diff(64, 68, 0, 1))
 
@@ -202,7 +203,7 @@ def turnRight(degree, particles):
     turnTime = time.time()
     endtime = turnTime + (0.0074 * degree + ((degree**2)*0.000001))
     while time.time() < endtime:
-        angular_velocity = turnParticle(degree)
+        angular_velocity = angular_velocity - turnParticle(degree)
         updateParticles(particles)
         print(arlo.go_diff(64, 70, 1, 0))
 
@@ -365,6 +366,9 @@ def selfLocalize():
                 #print(sum_Xtbar)
                 for i in range(len(Xtbar)):
                     if sum_Xtbar == 0:
+                        # set weights to uniform distribution
+                        for i in range(len(Xtbar)):
+                            Xtbar_norm.append(1.0/num_particles)
                         break
                     Xtbar_norm.append(Xtbar[i]/sum_Xtbar)
 
