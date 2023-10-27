@@ -455,6 +455,10 @@ def selfLocalize(particles, num_particles):
         
     
     finally: 
+        if camera.isRunningOnArlo():
+            cam = camera.Camera(0, 'arlo', useCaptureThread = True)
+        else:
+            cam = camera.Camera(0, 'macbookpro', useCaptureThread = True)
         # Make sure to clean up even if an exception occurred
         
         # Close all windows
