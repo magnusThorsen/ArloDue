@@ -96,7 +96,7 @@ landmarks = {
 landmark_colors = [CRED, CGREEN, CBLUE, CYELLOW] # Colors used when drawing the landmarks
 
 
-def turnRobo(angle):
+def turnRobo(angle, particles):
     # convert angle to degrees:
     angle = angle * 180 / np.pi
     print("Angle: ", angle)
@@ -107,6 +107,7 @@ def turnRobo(angle):
         particles = turnRight(-angle, particles)
     else:
         print("No turn needed")
+    return particles
 
 
 def angleCalc(tvec):
@@ -527,7 +528,7 @@ def main():
                 # Drive to the landmark
                 # Turn to landmark
                 # SENSORES
-                turnRobo(angleCalc(tvecs)*0.8)
+                particles = turnRobo(angleCalc(tvecs)*0.8, particles)
                 print("tvecs", tvecs)
                 
                 if distance < 150:
