@@ -215,6 +215,23 @@ def turnRight(degree, particles):
     # Wait a bit before next command
     sleep(0.2)
 
+def turnRobo(angle):
+    # convert angle to degrees:
+    angle = angle * 180 / np.pi
+    print("Angle: ", angle)
+    # turn the robot accordingly
+    if angle > 0:
+        turnLeft(angle)
+    elif angle < 0:
+        turnRight(-angle)
+    else:
+        print("No turn needed")
+
+def angleCalc(tvec):
+    beta = np.arccos(np.dot( (tvec/np.linalg.norm(tvec)) , (0,0,1)))
+    print("beta", beta)
+    return beta[0][0]
+
 def updateParticles():
     return True
 
