@@ -56,7 +56,6 @@ isDriving = False
 
 xSize = 640
 ySize = 480
-#focal = 350
 focal = 1335.517241
 
 # Open a camera device for capturing
@@ -87,7 +86,7 @@ CBLACK = (0, 0, 0)
 
 # Landmarks.
 # The robot knows the position of 2 landmarks. Their coordinates are in the unit centimeters [cm].
-landmarkIDs = [1, 2, 3, 4, 1] # 3 er fjernet
+landmarkIDs = [1, 2, 3, 4, 1] 
 landmarks = {
     1: (0.0, 0.0),  # Coordinates for landmark 1
     2: (0.0, 300.0),  # Coordinates for landmark 2
@@ -371,7 +370,7 @@ def turnDetectLandmark(landmarkID, particles, world, WIN_RF1, WIN_World):
         if counter == 21:
             print(arlo.stop())
             landmarkFound = False
-            return landmarkFound, 0.0, None
+            return particles, landmarkFound, 0.0, None
         if not detected: 
             turnLeft(20)
             sleep(0.9)
@@ -380,7 +379,7 @@ def turnDetectLandmark(landmarkID, particles, world, WIN_RF1, WIN_World):
         else: 
             print(arlo.stop())
             landmarkFound = True
-            return landmarkFound, (distance / 14.086079), t_vec
+            return particles, landmarkFound, (distance / 14.086079), t_vec
 
 def searchAndShowObstacle():
     detected = False
@@ -470,7 +469,7 @@ def main():
     # Initialize the robot (XXX: You do this)
 
     # Allocate space for world map
-    world = np.zeros((500,500,3), dtype=np.uint8)
+    world = np.zeros((1000,1000,3), dtype=np.uint8)
 
     # Draw map
     SL.draw_world(est_pose, particles, world)
@@ -480,7 +479,7 @@ def main():
         landmarkReached = False
         numtries = 0
         while not landmarkReached:
-            detected, distance, tvecs = turnDetectLandmark(landmark, particles, world, WIN_RF1, WIN_World)
+            particles, detected, distance, tvecs = turnDetectLandmark(landmark, particles, world, WIN_RF1, WIN_World)
             print(landmark)
             if detected:
                 print("Main: Found the landmark: " ,landmark)
