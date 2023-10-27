@@ -306,11 +306,15 @@ def selfLocalize(particles, world, WIN_RF1, WIN_World):
         #print(sum_Xtbar)
         for i in range(len(Xtbar)):
             if sum_Xtbar == 0:
+                print("sum_Xtbar = 0")
+                # fill with uniform distribution
+                for i in range(len(Xtbar)):
+                    Xtbar_norm.append(1/len(Xtbar))
                 break
             Xtbar_norm.append(Xtbar[i]/sum_Xtbar)
 
         # Resampling
-        print("len xtbar", len(Xtbar_norm))
+        print("len xtbar_norom", len(Xtbar_norm))
         print("len particles", len(particles) )
         new_particles = np.random.choice(particles, size=len(particles), replace=True, p=Xtbar_norm)
         
