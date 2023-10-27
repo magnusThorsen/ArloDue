@@ -212,9 +212,6 @@ def turnRight(degree, particles):
     # Wait a bit before next command
     sleep(0.2)
 
-def updateParticles():
-    return True
-
 sigma_d = 25 # cm
 sigma_theta = 0.2 # radians
 

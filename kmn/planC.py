@@ -135,45 +135,9 @@ def angleCalc(tvec):
 
 
 def driveWithTime(distance):
-    shortdist = distance - 25
-    timeDrive = shortdist / 16.75
-    succeded = True
-    print(time.time())
-    print("driveWithTime: time",timeDrive)
-    print("driveWithTime: distance",distance)
-    start_time = time.time()
-    end_time = start_time + timeDrive
-    left_speed = 31
-    right_speed = 37.5
-    while time.time() < end_time:
-        frontSensor = arlo.read_front_ping_sensor()
-        rightSensor = arlo.read_right_ping_sensor()
-        leftSensor = arlo.read_left_ping_sensor()   
-        if frontSensor < 250 or rightSensor < 200 or leftSensor < 200:
-            succeded = False
-            print(arlo.stop())
-            sleep(0.2)
-            end_time = time.time() + 5
-            print("driveWithTime: turned")
-            if rightSensor < 300:
-                turnLeft(90)
-                sleep(0.2)
-            elif leftSensor < 300:
-                turnRight(90)
-                sleep(0.2)
-            elif frontSensor < 250:
-                if leftSensor <= rightSensor:
-                    turnRight(90)
-                    sleep(0.2)
-                else:
-                    turnLeft(90)
-                    sleep(0.2)
-        else: 
-            print(arlo.go_diff(left_speed, right_speed, 1, 1))
-    return succeded
+    particles = rs.initialize_particles(num_particles=1000)
+    rs.driveWithTime(distance, particles)
             
-
-
 
 def turnLeft(degree):
     sleep(0.041)
