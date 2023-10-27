@@ -238,6 +238,8 @@ def detect_aruco_objects(img):
 
     # Detect markers in the image
     corners, ids, rejected = cv2.aruco.detectMarkers(img, dictionary)
+    if len(corners) == 0:
+        return None, None, None
     rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(corners, 200, cameraMatrix, None)
     dists = np.linalg.norm(tvecs, axis=len(tvecs.shape) - 1) * 100
     dists = dists.reshape((dists.shape[0],))
