@@ -76,7 +76,7 @@ def p_dist_M (dm,lx,ly,part):
     print("dm: ",dm)
     print("lx: ",lx)
     print("ly: ",ly)
-    print("part: ",part)
+    print("part: ",part.getX(),part.getY())
     
     
     result = (1/(np.sqrt(2*(np.pi)*(sigma_d**2))))*math.exp(-(((dm-(dist_part_landm(lx,ly,part.getX(),part.getY())))**2)/(2*sigma_d**2)))
