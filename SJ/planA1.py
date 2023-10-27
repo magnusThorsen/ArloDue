@@ -280,6 +280,7 @@ def selfLocalize(particles, world, WIN_RF1, WIN_World):
     
     particle.add_uncertainty(particles,3.5, 0.1)
     if not isinstance(objectIDs, type(None)): #If the robot can see a landmark then the following
+        print("\n\n\n")
         # List detected objects
         imp_landmarks = [] #landmark id
         imp_landmarks_index = [] #landmark index in a list
