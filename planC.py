@@ -1,5 +1,4 @@
 import time
-from mknRallySelf import 
 from time import sleep
 from pprint import *
 import sys
@@ -366,6 +365,7 @@ def main():
         landmarkReached = False
         numtries = 0
         while not landmarkReached:
+            mknRallySelf.selfLocalize()
             detected, distance, tvecs = turnDetectLandmark(landmark)
             print(landmark)
             if detected:
