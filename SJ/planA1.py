@@ -127,7 +127,7 @@ def driveWithTime(distance):
     start_time = time.time()
     end_time = start_time + timeDrive
     left_speed = 31
-    right_speed = 40
+    right_speed = 37
     print(arlo.go_diff(30, 80, 1, 1))
     sleep(0.2)
     while time.time() < end_time:
@@ -492,6 +492,7 @@ def main():
     SL.draw_world(est_pose, particles, world)
     
     for landmark in landmarkIDs:
+        Begin_time = time.time()
         visitedObstacles = []
         landmarkReached = False
         numtries = 0
@@ -513,7 +514,7 @@ def main():
                     landmarkReached = True
                 else: 
                     driveWithTime(70)
-                    turnRight(30)
+                    turnRight(40)
 
                 # Self localize and create a path to the landmark
             else: 
@@ -526,7 +527,8 @@ def main():
                     numtries = 0
                     visitedObstacles = []
                 print("Main: Visited obstacles: ", visitedObstacles)
-    print("Succesfully completed the course! Time: 00:15 minutes")
+    
+    print("Succesfully completed the course! Time ca. :", int(time.time() - Begin_time)*2 ,"seconds")
         
 main()
 
@@ -540,69 +542,3 @@ main()
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-""" 
-
-# Main program #
-#try:
-
-
-    
-     print("Opening and initializing camera")
-    if camera.isRunningOnArlo():
-        cam = camera.Camera(0, 'arlo', useCaptureThread = True)
-    else:
-        cam = camera.Camera(0, 'macbookpro', useCaptureThread = True)
-    
-while True:
-
-        # Move the robot according to user input (only for testing)
-        action = cv2.waitKey(10)
-        if action == ord('q'): # Quit
-            break
-    
-        if not isRunningOnArlo():
-            if action == ord('w'): # Forward
-                velocity += 4.0
-            elif action == ord('x'): # Backwards
-                velocity -= 4.0
-            elif action == ord('s'): # Stop
-                velocity = 0.0
-                angular_velocity = 0.0
-            elif action == ord('a'): # Left
-                angular_velocity += 0.2
-            elif action == ord('d'): # Right
-                angular_velocity -= 0.2
-        
-        # Use motor controls to update particles
-        # XXX: Make the robot drive
-        
-            
-        
-        
-        
-
-  
-finally: 
-    # Make sure to clean up even if an exception occurred
-    
-    # Close all windows
-    cv2.destroyAllWindows()
-
-    # Clean-up capture thread
-    cam.terminateCaptureThread() 
- """
