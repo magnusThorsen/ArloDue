@@ -4,6 +4,7 @@ import cv2.aruco as aruco
 import particle as particle
 import random_numbers as rn
 import camera as camera
+from pprint import *
 import numpy as np
 import random
 import time
@@ -65,11 +66,28 @@ landmarks = {
 }
 landmark_colors = [CRED, CGREEN] # Colors used when drawing the landmarks
 
-print("Opening and initializing camera")
-if camera.isRunningOnArlo():
-    cam = camera.Camera(0, 'arlo', useCaptureThread = True)
-else:
-    cam = camera.Camera(0, 'macbookpro', useCaptureThread = True)
+try:
+    import picamera2
+    print("Camera.py: Using picamera2 module")
+except ImportError:
+    print("Camera.py: picamera2 module not available")
+    exit(-1)
+
+# Open a camera device for capturing
+imageSize = (xSize, ySize)
+FPS = 30
+cam = picamera2.Picamera2()
+frame_duration_limit = int(1/FPS * 1000000) # Microseconds
+# Change configuration to set resolution, framerate
+picam2_config = cam.create_video_configuration({"size": imageSize, "format": 'RGB888'},
+                                                            controls={"FrameDurationLimits": (frame_duration_limit, frame_duration_limit)},
+                                                            queue=False)
+cam.configure(picam2_config) # Not really necessary
+cam.start(show_preview=False)
+
+pprint(cam.camera_configuration()) # Print the camera configuration in use
+
+time.sleep(1)  # wait for camera to setup
 
 def jet(x):
     """Colour map for drawing particles. This function determines the colour of 
@@ -317,6 +335,12 @@ def selfLocalize():
 
         # Draw map
         draw_world(est_pose, particles, world)
+
+        print("Opening and initializing camera")
+        if camera.isRunningOnArlo():
+            cam = camera.Camera(0, 'arlo', useCaptureThread = True)
+        else:
+            cam = camera.Camera(0, 'macbookpro', useCaptureThread = True)
 
         while True:
 
