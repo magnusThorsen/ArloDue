@@ -65,9 +65,11 @@ landmarks = {
 }
 landmark_colors = [CRED, CGREEN] # Colors used when drawing the landmarks
 
-
-
-
+print("Opening and initializing camera")
+if camera.isRunningOnArlo():
+    cam = camera.Camera(0, 'arlo', useCaptureThread = True)
+else:
+    cam = camera.Camera(0, 'macbookpro', useCaptureThread = True)
 
 def jet(x):
     """Colour map for drawing particles. This function determines the colour of 
@@ -315,12 +317,6 @@ def selfLocalize():
 
         # Draw map
         draw_world(est_pose, particles, world)
-
-        print("Opening and initializing camera")
-        if camera.isRunningOnArlo():
-            cam = camera.Camera(0, 'arlo', useCaptureThread = True)
-        else:
-            cam = camera.Camera(0, 'macbookpro', useCaptureThread = True)
 
         while True:
 
