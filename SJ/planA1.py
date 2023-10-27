@@ -514,7 +514,7 @@ def main():
                     landmarkReached = True
                 else: 
                     driveWithTime(70)
-                    turnRight(30)
+                    turnRight(40)
 
                 # Self localize and create a path to the landmark
             else: 
