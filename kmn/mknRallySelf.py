@@ -39,7 +39,9 @@ except ImportError:
 arlo = robot.Robot()
 
 # Driving parameters
+global velocity
 velocity = 0.0 # cm/sec
+global angular_velocity 
 angular_velocity = 0.0 # radians/sec
 
 # Some color constants in BGR format
@@ -317,7 +319,7 @@ def selfLocalize():
             for part in particles: 
                 part.setX(part.getX() + velocity*np.cos(part.getTheta()))
                 part.setY(part.getY() + velocity*np.sin(part.getTheta()))
-                part.setTheta(part.getTheta() + angular_velocity)
+                part.setTheta(part.getTheta() + angular_velocity) 
                 
             
             # Fetch next frame
