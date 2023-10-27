@@ -254,6 +254,8 @@ def prob_product(landmarks):
 def selfLocalize():
     # Main program #
     try:
+        velocity = 0.0 # cm/sec
+        angular_velocity = 0.0 # radians/sec
         if showGUI:
             # Open windows
             WIN_RF1 = "Robot view"
@@ -317,7 +319,7 @@ def selfLocalize():
             for part in particles: 
                 part.setX(part.getX() + velocity*np.cos(part.getTheta()))
                 part.setY(part.getY() + velocity*np.sin(part.getTheta()))
-                part.setTheta(part.getTheta() + angular_velocity)
+                part.setTheta(part.getTheta() + angular_velocity) 
                 
             
             # Fetch next frame
