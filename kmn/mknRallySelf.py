@@ -132,8 +132,8 @@ def turnParticle(degree):
     return angularVelocity
 
 def moveParticleForward(distance):
-    shortdist = (distance - 25) / 14.086079
-    timeDrive = shortdist / 16.75
+    shortdist = (distance - 25)
+    timeDrive = shortdist / 16.75 / 70
     velocity = distance/timeDrive
     return velocity
 
@@ -365,6 +365,9 @@ def selfLocalize():
                 #print(sum_Xtbar)
                 for i in range(len(Xtbar)):
                     if sum_Xtbar == 0:
+                        # set weights to uniform distribution
+                        for i in range(len(Xtbar)):
+                            Xtbar_norm.append(1.0/num_particles)
                         break
                     Xtbar_norm.append(Xtbar[i]/sum_Xtbar)
 
