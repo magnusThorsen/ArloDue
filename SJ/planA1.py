@@ -142,16 +142,20 @@ def driveWithTime(distance):
             if rightSensor < 300:
                 turnLeft(90)
                 sleep(0.2)
+                turnRight(90)
             elif leftSensor < 300:
                 turnRight(90)
                 sleep(0.2)
+                turnLeft(90)
             elif frontSensor < 250:
                 if leftSensor <= rightSensor:
                     turnRight(90)
                     sleep(0.2)
+                    turnLeft(90)
                 else:
                     turnLeft(90)
                     sleep(0.2)
+                    turnRight(90)
         else: 
             print(arlo.go_diff(left_speed, right_speed, 1, 1))
     return succeded
