@@ -262,12 +262,6 @@ def searchAndShowLandmark(ImpID):
     cv2.imshow("sasLandmark: Detected Markers", image)
     return detected, 0.0, None
 
-
-def selfLocalize():
-    
-    return True
-
-
 def turnDetectLandmark(landmarkID):
     counter = 0
     while cv2.waitKey(4) == -1: # Wait for a key pressed event

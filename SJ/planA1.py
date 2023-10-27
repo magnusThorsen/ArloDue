@@ -120,6 +120,7 @@ def driveWithTime(distance):
     shortdist = distance - 25
     timeDrive = shortdist / 16.75
     succeded = True
+    turned = "no"
     print(time.time())
     print("driveWithTime: time",timeDrive)
     print("driveWithTime: distance",distance)
@@ -142,23 +143,31 @@ def driveWithTime(distance):
             print("driveWithTime: turned")
             if rightSensor < 300:
                 turnLeft(90)
+                turned = "Left"
                 sleep(0.2)
-                turnRight(90)
             elif leftSensor < 300:
                 turnRight(90)
+                turned = "Right"
                 sleep(0.2)
-                turnLeft(90)
             elif frontSensor < 250:
                 if leftSensor <= rightSensor:
                     turnRight(90)
+                    turned = "Right"
                     sleep(0.2)
-                    turnLeft(90)
                 else:
                     turnLeft(90)
+                    turned = "Left"
                     sleep(0.2)
-                    turnRight(90)
+                    
         else: 
             print(arlo.go_diff(left_speed, right_speed, 1, 1))
+    if turned == "Right":
+        turnLeft(90)
+        sleep(0.2)
+    elif turned == "Left":
+        turnRight(90)
+        sleep(0.2)
+
     return succeded 
             
 
