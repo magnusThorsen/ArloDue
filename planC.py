@@ -5,8 +5,8 @@ import sys
 import cv2 # Import the OpenCV library
 import cv2.aruco as aruco
 import numpy as np # Import Numpy library
-import kmn.random_numbers as rn
-import kmn.particle as particle
+from kmn.random_numbers import rn
+from kmn.particle import particle
 from kmn.mknRallySelf import selfLocalize
 
 np.set_printoptions(threshold=sys.maxsize)
