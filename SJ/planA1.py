@@ -19,8 +19,7 @@ showGUI = True  # Whether or not to open GUI windows
 # Driving parameters
 velocity = 0.0 # cm/sec
 angular_velocity = 0.0 # radians/sec
-sigma_d = 50 # cm
-sigma_theta = 0.2 # radians
+
 
 try:
     import picamera2
