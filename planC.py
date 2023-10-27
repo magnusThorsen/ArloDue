@@ -6,8 +6,11 @@ import cv2 # Import the OpenCV library
 import cv2.aruco as aruco
 import numpy as np # Import Numpy library
 
-sys.path.append("../../../../Arlo/kmn")
-import mknRallySelf
+# importing sys
+from mknRallySelf import selfLocalize
+ 
+# adding Folder_2 to the system path
+sys.path.insert(0, '/Arlo/Robot/ArloDue/kmn')
 
 np.set_printoptions(threshold=sys.maxsize)
 
@@ -364,7 +367,7 @@ def main():
         landmarkReached = False
         numtries = 0
         while not landmarkReached:
-            mknRallySelf.selfLocalize()
+            selfLocalize()
             detected, distance, tvecs = turnDetectLandmark(landmark)
             print(landmark)
             if detected:
