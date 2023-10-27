@@ -414,5 +414,3 @@ def selfLocalize(particles):
 
         # Clean-up capture thread
         cam.terminateCaptureThread()
-
-selfLocalize()
