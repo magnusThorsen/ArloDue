@@ -6,6 +6,9 @@ import cv2 # Import the OpenCV library
 import cv2.aruco as aruco
 import numpy as np # Import Numpy library
 
+sys.path.append("../../../../Arlo/kmn")
+import mknRallySelf
+
 np.set_printoptions(threshold=sys.maxsize)
 
 # Create a robot object and initialize
@@ -25,10 +28,6 @@ def isRunningOnArlo():
       You can use this flag to switch the code from running on you laptop to Arlo - you need to do the programming here!
     """
     return onRobot
-
-if isRunningOnArlo():
-    sys.path.append("../../../../Arlo/kmn")
-    import mknRallySelf
 
 if isRunningOnArlo():
     # XXX: You need to change this path to point to where your robot.py file is located
