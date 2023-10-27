@@ -301,7 +301,7 @@ def selfLocalize(particles, world, WIN_RF1, WIN_World):
                 print("partX", part.getX())
                 print("partY", part.getY())
 
-                DW = SL.p_dist_M(dists[indx],landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
+                DW = SL.p_dist_M(dists[indx]/14.086079,landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
                 if DW == 0:
                     DW = (1/len(particles))
                 weightDist = weightDist * DW
