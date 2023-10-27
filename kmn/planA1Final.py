@@ -12,10 +12,22 @@ from time import sleep
 from timeit import default_timer as timer
 import math
 
+np.set_printoptions(threshold=sys.maxsize)
 
 # Flags
 showGUI = True  # Whether or not to open GUI windows
 onRobot = True # Whether or not we are running on the Arlo robot
+
+# Driving parameters
+velocity = 0.0 # cm/sec
+angular_velocity = 0.0 # radians/sec
+
+try:
+    import picamera2
+    print("Camera.py: Using picamera2 module")
+except ImportError:
+    print("Camera.py: picamera2 module not available")
+    exit(-1)
 
 xSize = 640
 ySize = 480
@@ -42,10 +54,6 @@ except ImportError:
 
 arlo = robot.Robot()
 
-# Driving parameters
-velocity = 0.0 # cm/sec
-angular_velocity = 0.0 # radians/sec
-
 
 # Some color constants in BGR format
 CRED = (0, 0, 255)
@@ -66,12 +74,6 @@ landmarks = {
 }
 landmark_colors = [CRED, CGREEN] # Colors used when drawing the landmarks
 
-try:
-    import picamera2
-    print("Camera.py: Using picamera2 module")
-except ImportError:
-    print("Camera.py: picamera2 module not available")
-    exit(-1)
 
 # Open a camera device for capturing
 imageSize = (xSize, ySize)
@@ -139,7 +141,43 @@ def draw_world(est_pose, particles, world):
     cv2.circle(world, a, 5, CMAGENTA, 2)
     cv2.line(world, a, b, CMAGENTA, 2)
 
+def detect_aruco_objects(img):
+    # Define the dictionary
+    dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
+    cameraMatrix = np.array([[focal, 0, xSize/2],
+                            [0, focal, ySize/2],
+                            [0, 0, 1]])
 
+    # Detect markers in the image
+    corners, ids, rejected = cv2.aruco.detectMarkers(img, dictionary)
+    if len(corners) == 0:
+        return None, None, None
+    rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(corners, 200, cameraMatrix, None)
+    dists = np.linalg.norm(tvecs, axis=len(tvecs.shape) - 1) * 100
+    dists = dists.reshape((dists.shape[0],))
+
+
+    angles = np.zeros(dists.shape, dtype=dists.dtype)
+    for i in range(dists.shape[0]):
+        tobj = tvecs[i] * 100 / dists[i]
+        zaxis = np.zeros(tobj.shape, dtype=tobj.dtype)
+        zaxis[0,-1] = 1
+        xaxis = np.zeros(tobj.shape, dtype=tobj.dtype)
+        xaxis[0,0] = 1
+
+        # We want the horizontal angle so project tobjt onto the x-z plane
+        tobj_xz = tobj
+        tobj_xz[0,1] = 0
+        # Should the sign be clockwise or counter-clockwise (left or right)?
+        # In this version it is positive to the left as seen from the camera.
+        direction = -1*np.sign(tobj_xz[0,0])  # The same as np.sign(np.dot(tobj, xaxis.T))
+        angles[i] = direction * np.arccos(np.dot(tobj_xz, zaxis.T))
+    # convert ids, dists and angles to lists 
+    ids = ids.flatten().tolist()
+    dists = dists.tolist()
+    angles = angles.tolist()
+
+    return ids, dists, angles
 
 def initialize_particles(num_particles):
     particles = []

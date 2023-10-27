@@ -419,10 +419,11 @@ def searchAndShowObstacle():
                 return detected, distance, marker_id
     return detected, 0.0, 0
 
-def turnDetectObstacle():
+def turnDetectObstacle(particles, world, WIN_RF1, WIN_World):
     counter = 0
     while cv2.waitKey(4) == -1: # Wait for a key pressed event
         # print go diff 
+        particles = selfLocalize(particles, world, WIN_RF1, WIN_World)
         detected, distance, id = searchAndShowObstacle()
         if counter == 21:
             print(arlo.stop())
@@ -436,8 +437,8 @@ def turnDetectObstacle():
             print(arlo.stop())
             return detected, (distance / 14.086079), id
 
-def reposition(visitedObstacles, numtries = 0):
-    detected, distance, id = turnDetectObstacle()
+def reposition(visitedObstacles, particles, world, WIN_RF1, WIN_World, numtries = 0):
+    detected, distance, id = turnDetectObstacle(particles, world, WIN_RF1, WIN_World)
     print("reposition: Detected in reposition: ", id)
     print("reposition: Visited obstacles: ", visitedObstacles)
     if detected and id not in visitedObstacles and id != 0:
@@ -445,7 +446,7 @@ def reposition(visitedObstacles, numtries = 0):
         #TURN TO OBSTACLE
         visitedObstacles.append(id)
         driveWithTime(distance/2)
-    elif numtries > 2: reposition(visitedObstacles, numtries + 1)
+    elif numtries > 2: reposition(visitedObstacles, particles, world, WIN_RF1, WIN_World, numtries + 1)
     return visitedObstacles      
 
 
@@ -501,7 +502,7 @@ def main():
                 # Self localize and create a path to the landmark
             else: 
                 print("Main: didn't find the landmark")
-                visitedObstacles = reposition(visitedObstacles)
+                particles, visitedObstacles = reposition(visitedObstacles, particles, world, WIN_RF1, WIN_World)
                 numtries += 1
                 if numtries > 3: 
                     turnRight(90)
