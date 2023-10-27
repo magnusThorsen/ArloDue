@@ -134,7 +134,8 @@ def driveWithTime(distance):
         rightSensor = arlo.read_right_ping_sensor()
         leftSensor = arlo.read_left_ping_sensor()   
         if frontSensor < 250 or rightSensor < 200 or leftSensor < 200:
-            succeded = False
+            if time.time() - end_time > 1.5:
+                succeded = False
             print(arlo.stop())
             sleep(0.2)
             end_time = time.time() + 5
@@ -158,7 +159,7 @@ def driveWithTime(distance):
                     turnRight(90)
         else: 
             print(arlo.go_diff(left_speed, right_speed, 1, 1))
-    return succeded
+    return succeded 
             
 
 
