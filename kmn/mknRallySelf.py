@@ -173,7 +173,7 @@ def driveWithTime(distance, particles):
                     turnLeft(90,particles)
                     sleep(0.2)
         else:
-            velocity = velocity + moveParticleForward(distance)
+            velocity = moveParticleForward(distance)
             updateParticles(particles)
             print(arlo.go_diff(left_speed, right_speed, 1, 1))
     print(arlo.stop())
@@ -185,7 +185,7 @@ def turnLeft(degree, particles):
     turnTime = time.time()
     endtime = turnTime + (0.0074 * degree + ((degree**2)*0.000001))
     while time.time() < endtime:       
-        angular_velocity = angular_velocity + turnParticle(degree)
+        angular_velocity = turnParticle(degree)
         updateParticles(particles) 
         print(arlo.go_diff(64, 68, 0, 1))
 
@@ -202,7 +202,7 @@ def turnRight(degree, particles):
     turnTime = time.time()
     endtime = turnTime + (0.0074 * degree + ((degree**2)*0.000001))
     while time.time() < endtime:
-        angular_velocity = angular_velocity + turnParticle(degree)
+        angular_velocity = turnParticle(degree)
         updateParticles(particles)
         print(arlo.go_diff(64, 70, 1, 0))
 
