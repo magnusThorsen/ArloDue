@@ -276,7 +276,7 @@ def selfLocalize(particles, world, WIN_RF1, WIN_World):
     # Detect objects
     objectIDs, dists, angles = detect_aruco_objects(colour)
     
-    particle.add_uncertainty(particles,3.5, 0.1)
+    particle.add_uncertainty(particles,10, 0.2)
     if not isinstance(objectIDs, type(None)): #If the robot can see a landmark then the following
         print("\n\n\n")
         # List detected objects
