@@ -141,7 +141,6 @@ def driveWithTime(distance, particles):
     global velocity
     shortdist = distance - 25
     timeDrive = shortdist / 16.75
-    succeded = True
     print(time.time())
     print("driveWithTime: time",timeDrive)
     print("driveWithTime: distance",distance)
@@ -154,7 +153,6 @@ def driveWithTime(distance, particles):
         rightSensor = arlo.read_right_ping_sensor()
         leftSensor = arlo.read_left_ping_sensor()   
         if frontSensor < 250 or rightSensor < 200 or leftSensor < 200:
-            succeded = False
             print(arlo.stop())
             sleep(0.2)
             end_time = time.time() + 5
@@ -178,7 +176,7 @@ def driveWithTime(distance, particles):
             print(arlo.go_diff(left_speed, right_speed, 1, 1))
     print(arlo.stop())
     velocity = 0.0
-    return succeded
+    return distance
 
 def turnLeft(degree, particles):
     global angular_velocity
@@ -195,6 +193,7 @@ def turnLeft(degree, particles):
             
     # Wait a bit before next command
     sleep(0.2)
+    return degree
 
 
 def turnRight(degree, particles):
@@ -211,6 +210,7 @@ def turnRight(degree, particles):
         
     # Wait a bit before next command
     sleep(0.2)
+    return degree
 
 def updateParticles():
     return True
@@ -302,116 +302,113 @@ def selfLocalize():
         else:
             cam = camera.Camera(0, 'macbookpro', useCaptureThread = True)
 
-        while True:
-
-            # Move the robot according to user input (only for testing)
-            
-            action = cv2.waitKey(10)
-            if action == ord('q'): # Quit
-                break
         
-            if isRunningOnArlo():
-                if action == ord('w'): # Forward
-                    print("started driveWithTime")
-                    driveWithTime(70, particles)
-                    print("ended driveWithTime")
-                elif action == ord('x'): # Backwards
-                    velocity -= 0.0
-                elif action == ord('s'): # Stop
-                    print(arlo.stop())
-                    velocity = 0.0
-                    angular_velocity = 0.0
-                elif action == ord('a'): # Left
-                    turnLeft(90, particles)
-                elif action == ord('d'): # Right
-                    turnRight(90, particles)
-                
-            updateParticles(particles)
 
-            # Fetch next frame
-            colour = cam.get_next_frame()
-            
-            # Detect objects
-            objectIDs, dists, angles = cam.detect_aruco_objects(colour)
-            
-            particle.add_uncertainty(particles,3.5, 0.1)
-            if not isinstance(objectIDs, type(None)): #If the robot can see a landmark then the following
-                # List detected objects
-                imp_landmarks = [] #landmark id
-                imp_landmarks_index = [] #landmark index in a list
-                
-                for i in range(len(objectIDs)):
-                    print("Object ID = ", objectIDs[i], ", Distance = ", dists[i], ", angle = ", angles[i])
-                    if objectIDs[i] in landmarkIDs and not objectIDs[i] in imp_landmarks: #makes sure it only adds a landmark on
-                        imp_landmarks_index.append(i)
-                        imp_landmarks.append(objectIDs[i])
-
-                
-
-                Xtbar = []
-                for part in particles: 
-                    weightDist = 1
-                    weightAngle = 1
-                    for indx in imp_landmarks_index: 
-                        weightDist = weightDist * p_dist_M(dists[indx],landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
-                        weightAngle = weightAngle * p_meas_M(angles[indx],landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
-                    part.setWeight(weightAngle*weightDist)
-                    Xtbar.append(weightDist*weightAngle)
-
-                # Normalize
-                Xtbar_norm = []
-                sum_Xtbar = sum(Xtbar)
-                #print(sum_Xtbar)
-                for i in range(len(Xtbar)):
-                    if sum_Xtbar == 0:
-                        # set weights to uniform distribution
-                        for i in range(len(Xtbar)):
-                            Xtbar_norm.append(1.0/num_particles)
-                        break
-                    Xtbar_norm.append(Xtbar[i]/sum_Xtbar)
-
-                # Resampling
-                new_particles = np.random.choice(particles, size=len(particles), replace=True, p=Xtbar_norm)
-                
-                new2_part = []
-                for part in new_particles: 
-                    new2_part.append(particle.Particle(part.getX(),part.getY(),part.getTheta(),part.getWeight()))
-                
-                #remove 5% of the particles and add new random particles
-            
-                num_elements_to_update = int(len(particles) * 0.05)
-                indices_to_update = random.sample(range(len(particles)), num_elements_to_update)
-                
-                # Create new random particles
-                new_rand_particles = [particle.Particle(600.0*np.random.ranf() - 100.0, 600.0*np.random.ranf() - 250.0, np.mod(2.0*np.pi*np.random.ranf(), 2.0*np.pi), 1.0/num_particles) for _ in range(num_elements_to_update)]
-                
-                
-                for i, index in enumerate(indices_to_update):
-                    new2_part[index] = new_rand_particles[i]
-                
-                particles = new2_part
-
-                
-
-                # Draw detected objects
-                cam.draw_aruco_objects(colour)
-            else:
-                # No observation - reset weights to uniform distribution
-                for p in particles:
-                    p.setWeight(1.0/num_particles)
-
-            
-            est_pose = particle.estimate_pose(particles) # The estimate of the robots current pose
-
-            if showGUI:
-                # Draw map
-                draw_world(est_pose, particles, world)
+        # Move the robot according to user input (only for testing)
         
-                # Show 10
-                cv2.imshow(WIN_RF1, colour)
+        action = cv2.waitKey(10)
+        if isRunningOnArlo():
+            if action == ord('w'): # Forward
+                print("started driveWithTime")
+                driveWithTime(70, particles)
+                print("ended driveWithTime")
+            elif action == ord('x'): # Backwards
+                velocity -= 0.0
+            elif action == ord('s'): # Stop
+                print(arlo.stop())
+                velocity = 0.0
+                angular_velocity = 0.0
+            elif action == ord('a'): # Left
+                turnLeft(90, particles)
+            elif action == ord('d'): # Right
+                turnRight(90, particles)
+            
+        updateParticles(particles)
 
-                # Show world
-                cv2.imshow(WIN_World, world)
+        # Fetch next frame
+        colour = cam.get_next_frame()
+        
+        # Detect objects
+        objectIDs, dists, angles = cam.detect_aruco_objects(colour)
+        
+        particle.add_uncertainty(particles,3.5, 0.1)
+        if not isinstance(objectIDs, type(None)): #If the robot can see a landmark then the following
+            # List detected objects
+            imp_landmarks = [] #landmark id
+            imp_landmarks_index = [] #landmark index in a list
+            
+            for i in range(len(objectIDs)):
+                print("Object ID = ", objectIDs[i], ", Distance = ", dists[i], ", angle = ", angles[i])
+                if objectIDs[i] in landmarkIDs and not objectIDs[i] in imp_landmarks: #makes sure it only adds a landmark on
+                    imp_landmarks_index.append(i)
+                    imp_landmarks.append(objectIDs[i])
+
+            
+
+            Xtbar = []
+            for part in particles: 
+                weightDist = 1
+                weightAngle = 1
+                for indx in imp_landmarks_index: 
+                    weightDist = weightDist * p_dist_M(dists[indx],landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
+                    weightAngle = weightAngle * p_meas_M(angles[indx],landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
+                part.setWeight(weightAngle*weightDist)
+                Xtbar.append(weightDist*weightAngle)
+
+            # Normalize
+            Xtbar_norm = []
+            sum_Xtbar = sum(Xtbar)
+            #print(sum_Xtbar)
+            for i in range(len(Xtbar)):
+                if sum_Xtbar == 0:
+                    # set weights to uniform distribution
+                    for i in range(len(Xtbar)):
+                        Xtbar_norm.append(1.0/num_particles)
+                    break
+                Xtbar_norm.append(Xtbar[i]/sum_Xtbar)
+
+            # Resampling
+            new_particles = np.random.choice(particles, size=len(particles), replace=True, p=Xtbar_norm)
+            
+            new2_part = []
+            for part in new_particles: 
+                new2_part.append(particle.Particle(part.getX(),part.getY(),part.getTheta(),part.getWeight()))
+            
+            #remove 5% of the particles and add new random particles
+        
+            num_elements_to_update = int(len(particles) * 0.05)
+            indices_to_update = random.sample(range(len(particles)), num_elements_to_update)
+            
+            # Create new random particles
+            new_rand_particles = [particle.Particle(600.0*np.random.ranf() - 100.0, 600.0*np.random.ranf() - 250.0, np.mod(2.0*np.pi*np.random.ranf(), 2.0*np.pi), 1.0/num_particles) for _ in range(num_elements_to_update)]
+            
+            
+            for i, index in enumerate(indices_to_update):
+                new2_part[index] = new_rand_particles[i]
+            
+            particles = new2_part
+
+            
+
+            # Draw detected objects
+            cam.draw_aruco_objects(colour)
+        else:
+            # No observation - reset weights to uniform distribution
+            for p in particles:
+                p.setWeight(1.0/num_particles)
+
+        
+        est_pose = particle.estimate_pose(particles) # The estimate of the robots current pose
+
+        if showGUI:
+            # Draw map
+            draw_world(est_pose, particles, world)
+    
+            # Show 10
+            cv2.imshow(WIN_RF1, colour)
+
+            # Show world
+            cv2.imshow(WIN_World, world)
         
     
     finally: 
