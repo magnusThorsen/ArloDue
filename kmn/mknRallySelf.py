@@ -139,7 +139,6 @@ def moveParticleForward(distance):
 
 def driveWithTime(distance):
     global velocity
-    velocity = velocity + moveParticleForward(distance)
     shortdist = distance - 25
     timeDrive = shortdist / 16.75
     succeded = True
@@ -174,6 +173,7 @@ def driveWithTime(distance):
                     turnLeft(90)
                     sleep(0.2)
         else: 
+            velocity = velocity + moveParticleForward(distance)
             print(arlo.go_diff(left_speed, right_speed, 1, 1))
     print(arlo.stop())
     velocity = 0.0
@@ -181,27 +181,29 @@ def driveWithTime(distance):
 
 def turnLeft(degree):
     global angular_velocity
-    angular_velocity = angular_velocity + turnParticle(degree)
-    sleep(0.041)
-    print(arlo.go_diff(64, 68, 0, 1))
-
-    sleep(0.0074 * degree + ((degree**2)*0.000001))
+    turnTime = time.time()
+    endtime = turnTime + (0.0074 * degree + ((degree**2)*0.000001))
+    while time.time() < endtime:
+        angular_velocity = angular_velocity + turnParticle(degree)
+        
+        print(arlo.go_diff(64, 68, 0, 1))
 
     # send a stop command
     print(arlo.stop())
     angular_velocity = 0.0
-        
+            
     # Wait a bit before next command
     sleep(0.2)
 
 
 def turnRight(degree):
     global angular_velocity
-    angular_velocity = angular_velocity - turnParticle(degree)
-    sleep(0.041)
-    print(arlo.go_diff(64, 70, 1, 0))
+    turnTime = time.time()
+    endtime = turnTime + (0.0074 * degree + ((degree**2)*0.000001))
+    while time.time() < endtime:
+        angular_velocity = angular_velocity + turnParticle(degree)
+        print(arlo.go_diff(64, 70, 1, 0))
 
-    sleep(0.0074 * degree + ((degree**2)*0.000001))
     # send a stop command
     print(arlo.stop())
     angular_velocity = 0.0
