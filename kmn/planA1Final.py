@@ -304,7 +304,7 @@ def updateParticles(particles):
         part.setY(part.getY() + velocity*np.sin(part.getTheta()))
         part.setTheta(part.getTheta() + angular_velocity) 
 
-def selfLocalize():
+def selfLocalize(particles, num_particles):
     # Main program #
     try:
         velocity = 0.0 # cm/sec
@@ -318,11 +318,6 @@ def selfLocalize():
             WIN_World = "World view"
             cv2.namedWindow(WIN_World)
             cv2.moveWindow(WIN_World, 500, 50)
-
-
-        # Initialize particles
-        num_particles = 1000
-        particles = initialize_particles(num_particles)
 
         est_pose = particle.estimate_pose(particles) # The estimate of the robots current pose
 
@@ -596,11 +591,15 @@ def reposition(visitedObstacles):
 
 
 def main():
+    # Initialize particles
+    num_particles = 1000
+    particles = initialize_particles(num_particles)
     for landmark in landmarkIDs:
         visitedObstacles = []
         landmarkReached = False
         numtries = 0
         while not landmarkReached:
+            selfLocalize(particles, num_particles)
             detected, distance, tvecs = turnDetectLandmark(landmark)
             print(landmark)
             if detected:
@@ -614,11 +613,11 @@ def main():
                 print("tvecs", tvecs)
                 
                 if distance < 150:
-                    if driveWithTime(distance):
+                    if driveWithTime(distance, particles):
                         landmarkReached = True
                 else: 
-                    driveWithTime(70)
-                    turnRight(30)
+                    driveWithTime(70, particles)
+                    turnRight(30, particles)
 
                 # Self localize and create a path to the landmark
             else: 
