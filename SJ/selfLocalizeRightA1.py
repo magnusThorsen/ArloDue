@@ -72,6 +72,13 @@ def e_l (lx, ly, x, y):
         
 # equation 2
 def p_dist_M (dm,lx,ly,part):
+    #print all values in the input: 
+    print("dm: ",dm)
+    print("lx: ",lx)
+    print("ly: ",ly)
+    print("part: ",part.getX(),part.getY())
+    
+    
     result = (1/(np.sqrt(2*(np.pi)*(sigma_d**2))))*math.exp(-(((dm-(dist_part_landm(lx,ly,part.getX(),part.getY())))**2)/(2*sigma_d**2)))
     return result 
 
