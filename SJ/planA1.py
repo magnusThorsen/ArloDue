@@ -469,7 +469,7 @@ def main():
     # Initialize the robot (XXX: You do this)
 
     # Allocate space for world map
-    world = np.zeros((1000,1000,3), dtype=np.uint8)
+    world = np.zeros((500,500,3), dtype=np.uint8)
 
     # Draw map
     SL.draw_world(est_pose, particles, world)
