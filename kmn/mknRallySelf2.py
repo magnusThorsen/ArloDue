@@ -413,4 +413,4 @@ def selfLocalize(particles):
         cv2.destroyAllWindows()
 
         # Clean-up capture thread
-        cam.terminateCaptureThread()
+        #cam.terminateCaptureThread()
