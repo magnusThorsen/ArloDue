@@ -86,7 +86,7 @@ CBLACK = (0, 0, 0)
 
 # Landmarks.
 # The robot knows the position of 2 landmarks. Their coordinates are in the unit centimeters [cm].
-landmarkIDs = [1, 2] 
+landmarkIDs = [1, 2, 3, 4, 1] 
 landmarks = {
     1: (0.0, 0.0),  # Coordinates for landmark 1
     2: (0.0, 300.0),  # Coordinates for landmark 2
@@ -528,7 +528,7 @@ def main():
                     visitedObstacles = []
                 print("Main: Visited obstacles: ", visitedObstacles)
     
-    print("Succesfully completed the course! Time:", int(time.time() - Begin_time) ,"seconds")
+    print("Succesfully completed the course! Time ca. :", int(time.time() - Begin_time)*2 ,"seconds")
         
 main()
 
@@ -542,69 +542,3 @@ main()
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-""" 
-
-# Main program #
-#try:
-
-
-    
-     print("Opening and initializing camera")
-    if camera.isRunningOnArlo():
-        cam = camera.Camera(0, 'arlo', useCaptureThread = True)
-    else:
-        cam = camera.Camera(0, 'macbookpro', useCaptureThread = True)
-    
-while True:
-
-        # Move the robot according to user input (only for testing)
-        action = cv2.waitKey(10)
-        if action == ord('q'): # Quit
-            break
-    
-        if not isRunningOnArlo():
-            if action == ord('w'): # Forward
-                velocity += 4.0
-            elif action == ord('x'): # Backwards
-                velocity -= 4.0
-            elif action == ord('s'): # Stop
-                velocity = 0.0
-                angular_velocity = 0.0
-            elif action == ord('a'): # Left
-                angular_velocity += 0.2
-            elif action == ord('d'): # Right
-                angular_velocity -= 0.2
-        
-        # Use motor controls to update particles
-        # XXX: Make the robot drive
-        
-            
-        
-        
-        
-
-  
-finally: 
-    # Make sure to clean up even if an exception occurred
-    
-    # Close all windows
-    cv2.destroyAllWindows()
-
-    # Clean-up capture thread
-    cam.terminateCaptureThread() 
- """
