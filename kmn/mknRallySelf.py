@@ -132,7 +132,7 @@ def turnParticle(degree):
     return angularVelocity
 
 def moveParticleForward(distance):
-    shortdist = distance - 25
+    shortdist = (distance - 25) / 14.086079
     timeDrive = shortdist / 16.75
     velocity = distance/timeDrive
     return velocity
