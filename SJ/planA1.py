@@ -260,7 +260,11 @@ def detect_aruco_objects(img):
         # In this version it is positive to the left as seen from the camera.
         direction = -1*np.sign(tobj_xz[0,0])  # The same as np.sign(np.dot(tobj, xaxis.T))
         angles[i] = direction * np.arccos(np.dot(tobj_xz, zaxis.T))
-
+    # convert ids, dists and angles to lists 
+    ids = ids.flatten().tolist()
+    dists = dists.tolist()
+    angles = angles.tolist()
+    
     return ids, dists, angles
 
 
