@@ -495,8 +495,8 @@ def main():
                 print("tvecs", tvecs)
                 
                 if distance < 150:
-                    if driveWithTime(distance):
-                        landmarkReached = True
+                    driveWithTime(distance)
+                    landmarkReached = True
                 else: 
                     driveWithTime(70)
                     turnRight(30)

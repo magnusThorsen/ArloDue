@@ -5,12 +5,7 @@ import sys
 import cv2 # Import the OpenCV library
 import cv2.aruco as aruco
 import numpy as np # Import Numpy library
-
-# importing sys
-from mknRallySelf import selfLocalize
- 
-# adding Folder_2 to the system path
-sys.path.insert(0, '/Arlo/Robot/ArloDue/kmn')
+from kmn.mknRallySelf import selfLocalize
 
 np.set_printoptions(threshold=sys.maxsize)
 
