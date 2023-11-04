@@ -253,10 +253,10 @@ def searchAndShowLandmark(ImpID):
             print(f"sasLandmark: Distance to Marker {marker_id}: {distance} units")
             if marker_id == ImpID:
                 detected = True
-                return detected, distance, translation_vector, len(ids)
+                return detected, distance, translation_vector, len(corners)
     #Display the image with detected markers
     #cv2.imshow("sasLandmark: Detected Markers", image)
-    return detected, 0.0, None, len(ids)
+    return detected, 0.0, None, len(corners)
 
 
 def updateParticle(particles):
