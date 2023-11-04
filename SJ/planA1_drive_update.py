@@ -15,7 +15,7 @@ np.set_printoptions(threshold=sys.maxsize)
 # Create a robot object and initialize
 onRobot = True # Whether or not we are running on the Arlo robot
 needNewLocation = False
-showGUI = False  # Whether or not to open GUI windows
+showGUI = True  # Whether or not to open GUI windows
 # Driving parameters
 velocity = 0.0 # cm/sec
 angular_velocity = 0.0 # radians/sec
@@ -168,8 +168,8 @@ def driveWithTime(distance, particles):
                     particles = turnLeft(90,particles)
                     sleep(0.2)
         else:
-            velocity = moveParticleForward(distance)
-            #particles = updateParticles(particles)
+            velocity = distance
+            particles = updateParticles(particles)
             print(arlo.go_diff(left_speed, right_speed, 1, 1))
     print(arlo.stop())
     velocity = 0.0
