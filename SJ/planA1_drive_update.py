@@ -132,7 +132,6 @@ def driveWithTime(distance, particles):
     shortdist = distance - 25
     timeDrive = shortdist / 16.75
     succeded = True
-    print(time.time())
     print("driveWithTime: time",timeDrive)
     print("driveWithTime: distance",distance)
     start_time = time.time()
@@ -491,7 +490,7 @@ def reposition(visitedObstacles, particles, world, WIN_RF1, WIN_World, numtries 
 def main():
     if showGUI:
         # Open windows
-        #WIN_RF1 = "Robot view"
+        WIN_RF1 = "Robot view"
         #cv2.namedWindow(WIN_RF1)
         #cv2.moveWindow(WIN_RF1, 50, 50)
 
