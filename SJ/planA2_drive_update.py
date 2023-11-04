@@ -546,7 +546,8 @@ def main():
                 print("Main: didn't find the landmark")
                 # do self localize
                 particles, ets_pose = selfLocalize(particles, world, WIN_RF1, WIN_World)
-                particles = reposition(particles, est_pose, landmark)
+                succ, particles = reposition(particles, est_pose, landmark)
+                if succ
                 
                 
                 
