@@ -547,7 +547,8 @@ def main():
                 # do self localize
                 particles, ets_pose = selfLocalize(particles, world, WIN_RF1, WIN_World)
                 succ, particles = reposition(particles, est_pose, landmark)
-                if succ
+                if succ: 
+                    landmarkReached = True
                 
                 
                 
