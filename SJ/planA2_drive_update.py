@@ -253,10 +253,10 @@ def searchAndShowLandmark(ImpID):
             print(f"sasLandmark: Distance to Marker {marker_id}: {distance} units")
             if marker_id == ImpID:
                 detected = True
-                return detected, distance, translation_vector
+                return detected, distance, translation_vector, len(ids)
     #Display the image with detected markers
     #cv2.imshow("sasLandmark: Detected Markers", image)
-    return detected, 0.0, None
+    return detected, 0.0, None, len(ids)
 
 
 def updateParticle(particles):
@@ -402,15 +402,17 @@ def selfLocalize(particles, world, WIN_RF1, WIN_World):
 
 def turnDetectLandmark(landmarkID, particles, world, WIN_RF1, WIN_World):
     counter = 0
+    detCounter = 0 
     while cv2.waitKey(4) == -1: # Wait for a key pressed event
         particles, _ = selfLocalize(particles, world, WIN_RF1, WIN_World)
         # print go diff 
         print("tdLandmark: Finding landmark: ", landmarkID)
-        detected, distance, t_vec = searchAndShowLandmark(landmarkID)
+        detected, distance, t_vec, num_landmark = searchAndShowLandmark(landmarkID)
+        detCounter += num_landmark
         if counter == 21:
             print(arlo.stop())
             landmarkFound = False
-            return particles, landmarkFound, 0.0, None
+            return particles, landmarkFound, 0.0, None, num_landmark
         if not detected: 
             particles = turnLeft(20, particles)
             sleep(0.9)
@@ -419,7 +421,7 @@ def turnDetectLandmark(landmarkID, particles, world, WIN_RF1, WIN_World):
         else: 
             print(arlo.stop())
             landmarkFound = True
-            return particles, landmarkFound, (distance / 14.086079), t_vec
+            return particles, landmarkFound, (distance / 14.086079), t_vec, detCounter
 
 def searchAndShowObstacle():
     detected = False
@@ -537,7 +539,7 @@ def main():
         landmarkReached = False
         numtries = 0
         while not landmarkReached:
-            particles, detected, distance, tvecs = turnDetectLandmark(landmark, particles, world, WIN_RF1, WIN_World)
+            particles, detected, distance, tvecs, num_landmark = turnDetectLandmark(landmark, particles, world, WIN_RF1, WIN_World)
             print(landmark)
             if detected:
                 print("Main: Found the landmark: " ,landmark)
@@ -558,7 +560,7 @@ def main():
                     particles = turnRight(40, particles)
 
                 # Self localize and create a path to the landmark
-            elif landmark == 1:
+            elif num_landmark < 2:
             
                 print("Main: didn't find the landmark")
                 particles, visitedObstacles = reposition_dum(visitedObstacles, particles, world, WIN_RF1, WIN_World)
