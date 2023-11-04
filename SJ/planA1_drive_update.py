@@ -169,6 +169,7 @@ def driveWithTime(distance, particles):
                     sleep(0.2)
         else:
             velocity = distance
+            print(distance)
             particles = updateParticles(particles)
             print(arlo.go_diff(left_speed, right_speed, 1, 1))
     print(arlo.stop())
