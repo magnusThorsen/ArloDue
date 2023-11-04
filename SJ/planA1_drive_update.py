@@ -213,7 +213,7 @@ def turnRight(degree, particles):
 
 def turnParticle(degree):
     angularVelocity = (degree*(np.pi/180))/(0.0074 * degree + ((degree**2)*0.000001))
-    return angularVelocity
+    return degree*(np.pi/180)
 
 def moveParticleForward(distance):
     shortdist = (distance - 25) / 14086.079

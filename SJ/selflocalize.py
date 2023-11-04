@@ -138,7 +138,7 @@ try:
 
 
     # Initialize particles
-    num_particles = 1
+    num_particles = 100
     particles = initialize_particles(num_particles)
 
     est_pose = particle.estimate_pose(particles) # The estimate of the robots current pose
@@ -283,9 +283,8 @@ try:
             for p in particles:
                 p.setWeight(1.0/num_particles)
 
-        #particle.add_uncertainty(particles,5, 0.1)
+        particle.add_uncertainty(particles,5, 0.1)
         est_pose = particle.estimate_pose(particles) # The estimate of the robots current pose
-        print("theta:", est_pose.getTheta())
 
         if showGUI:
             # Draw map
