@@ -486,7 +486,7 @@ def reposition(particles, est_pose, landmark):
     
     particles = turnRobo(angleToRotate, particles)
     succ, particles = driveWithTime(np.linalg.norm(vecfromRobotolandmark), particles)
-    return particles 
+    return succ, particles 
 
 
 
@@ -545,7 +545,7 @@ def main():
             else: 
                 print("Main: didn't find the landmark")
                 # do self localize
-                particles, ets_pose = selfLocalize(particles, world, WIN_RF1, WIN_World)
+                particles, est_pose = selfLocalize(particles, world, WIN_RF1, WIN_World)
                 succ, particles = reposition(particles, est_pose, landmark)
                 if succ: 
                     landmarkReached = True
