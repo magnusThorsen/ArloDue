@@ -168,10 +168,10 @@ def driveWithTime(distance, particles):
                     particles = turnLeft(90,particles)
                     sleep(0.2)
         else:
-            velocity = distance
-            print(distance)
-            particles = updateParticles(particles)
             print(arlo.go_diff(left_speed, right_speed, 1, 1))
+            
+    velocity = distance
+    particles = updateParticles(particles)
     print(arlo.stop())
     velocity = 0.0
     return succeded, particles
