@@ -483,9 +483,14 @@ def reposition(particles, est_pose, landmark):
     #angle between robot and landmark in radians 
     angleToRotate = np.arccos(np.dot(vecfromRobotolandmark, robovec)/(np.linalg.norm(vecfromRobotolandmark)*np.linalg.norm(robovec)))
     print("angle", angleToRotate)
-    
+    distance = np.linalg.norm(vecfromRobotolandmark)
     particles = turnRobo(angleToRotate, particles)
-    succ, particles = driveWithTime(np.linalg.norm(vecfromRobotolandmark), particles)
+    if distance < 150:
+        succ, particles = driveWithTime(distance, particles)
+    else: 
+        succ , particles = driveWithTime(70, particles)
+        particles = turnRight(40, particles)
+    
     return succ, particles 
 
 
