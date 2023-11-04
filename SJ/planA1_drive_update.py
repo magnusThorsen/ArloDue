@@ -15,7 +15,7 @@ np.set_printoptions(threshold=sys.maxsize)
 # Create a robot object and initialize
 onRobot = True # Whether or not we are running on the Arlo robot
 needNewLocation = False
-showGUI = True  # Whether or not to open GUI windows
+showGUI = False  # Whether or not to open GUI windows
 # Driving parameters
 velocity = 0.0 # cm/sec
 angular_velocity = 0.0 # radians/sec
@@ -384,6 +384,7 @@ def selfLocalize(particles, world, WIN_RF1, WIN_World):
 
     
     est_pose = particle.estimate_pose(particles) # The estimate of the robots current pose
+    print(est_pose)
 
     if showGUI:
         # Draw map
