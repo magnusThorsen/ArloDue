@@ -477,7 +477,7 @@ def turnDetectObstacle(particles, world, WIN_RF1, WIN_World):
             print(arlo.stop())
             return particles, detected, (distance / 14.086079), id
 
-def reposition(particles, est_pose, landmark):
+def reposition_clever(particles, est_pose, landmark):
     vecfromRobotolandmark = np.array([landmarks[landmark][0] - est_pose.getX(), landmarks[landmark][1] - est_pose.getY()])
     robovec = np.array([np.cos(est_pose.getTheta()), np.sin(est_pose.getTheta())])
     #angle between robot and landmark in radians 
@@ -494,7 +494,17 @@ def reposition(particles, est_pose, landmark):
     
     return succ, particles 
 
-
+def reposition_dum(visitedObstacles, particles, world, WIN_RF1, WIN_World, numtries = 0):
+    particles, detected, distance, id = turnDetectObstacle(particles, world, WIN_RF1, WIN_World)
+    print("reposition: Detected in reposition: ", id)
+    print("reposition: Visited obstacles: ", visitedObstacles)
+    if detected and id not in visitedObstacles and id != 0:
+        print("reposition: driving at ",id )
+        #TURN TO OBSTACLE
+        visitedObstacles.append(id)
+        _, particles = driveWithTime(distance/2, particles)
+    elif numtries > 2: reposition_dum(visitedObstacles, particles, world, WIN_RF1, WIN_World, numtries + 1)
+    return particles, visitedObstacles
 
 
 
@@ -548,11 +558,23 @@ def main():
                     particles = turnRight(40, particles)
 
                 # Self localize and create a path to the landmark
-            else: 
+            elif landmark == 1:
+            
+                print("Main: didn't find the landmark")
+                particles, visitedObstacles = reposition_dum(visitedObstacles, particles, world, WIN_RF1, WIN_World)
+                numtries += 1
+                if numtries > 3: 
+                    particles = turnRight(90, particles)
+                    _ , particles = driveWithTime(4, particles)
+                    numtries = 0
+                    visitedObstacles = []
+                print("Main: Visited obstacles: ", visitedObstacles)
+
+            else:
                 print("Main: didn't find the landmark")
                 # do self localize
                 particles, est_pose = selfLocalize(particles, world, WIN_RF1, WIN_World)
-                succ, particles = reposition(particles, est_pose, landmark)
+                succ, particles = reposition_clever(particles, est_pose, landmark)
                 if succ: 
                     landmarkReached = True
                 
