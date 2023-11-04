@@ -21,6 +21,11 @@ velocity = 0.0 # cm/sec
 angular_velocity = 0.0 # radians/sec
 
 
+WIN_RF1 = "Robot view"
+WIN_World = "World view"
+
+
+
 try:
     import picamera2
     print("Camera.py: Using picamera2 module")
@@ -491,11 +496,9 @@ def reposition(visitedObstacles, particles, world, WIN_RF1, WIN_World, numtries 
 def main():
     if showGUI:
         # Open windows
-        WIN_RF1 = "Robot view"
         #cv2.namedWindow(WIN_RF1)
         #cv2.moveWindow(WIN_RF1, 50, 50)
 
-        WIN_World = "World view"
         cv2.namedWindow(WIN_World)
         cv2.moveWindow(WIN_World, 500, 50)
     
