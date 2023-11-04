@@ -126,8 +126,8 @@ def updateParticles(particles):
     # Use motor controls to update particles
     # XXX: Make the robot drive
     for part in particles: 
-        part.setX(part.getX() + velocity)#*np.cos(part.getTheta()))
-        part.setY(part.getY() + velocity)#*np.sin(part.getTheta()))
+        part.setX(part.getX() + velocity*np.cos(part.getTheta()))
+        part.setY(part.getY() + velocity*np.sin(part.getTheta()))
         part.setTheta(part.getTheta() + angular_velocity) 
     return particles
 
@@ -169,7 +169,7 @@ def driveWithTime(distance, particles):
                     sleep(0.2)
         else:
             print(arlo.go_diff(left_speed, right_speed, 1, 1))
-            
+
     velocity = distance
     particles = updateParticles(particles)
     print(arlo.stop())
