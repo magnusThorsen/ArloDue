@@ -489,6 +489,7 @@ def reposition(particles, est_pose, landmark):
         succ, particles = driveWithTime(distance, particles)
     else: 
         succ , particles = driveWithTime(70, particles)
+        succ = False
         particles = turnRight(40, particles)
     
     return succ, particles 
