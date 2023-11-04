@@ -389,7 +389,7 @@ def selfLocalize(particles, world, WIN_RF1, WIN_World):
 
     
     est_pose = particle.estimate_pose(particles) # The estimate of the robots current pose
-    print(est_pose)
+    print("X:",est_pose.getX()," Y:", est_pose.getY()," Theta:", est_pose.getTheta())
 
     if showGUI:
         # Draw map
