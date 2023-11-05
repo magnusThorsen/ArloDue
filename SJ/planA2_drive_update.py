@@ -583,7 +583,7 @@ def main():
                 
                 
     
-    print("Succesfully completed the course! Time ca. :", int(time.time() - Begin_time)*2 ,"seconds")
+    print("Succesfully completed the course! Time ca. :", int(time.time() - Begin_time)*6 ,"seconds")
         
 main()
 
