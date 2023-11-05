@@ -148,7 +148,7 @@ def driveWithTime(distance, particles):
         rightSensor = arlo.read_right_ping_sensor()
         leftSensor = arlo.read_left_ping_sensor()   
         if frontSensor < 250 or rightSensor < 200 or leftSensor < 200:
-            if time.time() - end_time > 1.5:
+            if time.time() - end_time > 1.5: # Hvis robotten stadig er langt væk fra målet tidsmæssigt, sætter vi succ til false
                 succeded = False
             print(arlo.stop())
             sleep(0.2)
@@ -211,12 +211,6 @@ def turnRight(degree, particles):
     sleep(0.2)
     return particles
 
-
-def moveParticleForward(distance):
-    shortdist = (distance - 25) / 14086.079
-    timeDrive = shortdist / 16.75
-    velocity = distance/timeDrive
-    return velocity
 
 
 def searchAndShowLandmark(ImpID): 
@@ -308,12 +302,12 @@ def detect_aruco_objects(img):
 
 def selfLocalize(particles, world, WIN_RF1, WIN_World): 
     # Fetch next frame
-    colour = cam.capture_array("main")
+    img = cam.capture_array("main")
 
     num_particles = len(particles)
     
     # Detect objects
-    objectIDs, dists, angles = detect_aruco_objects(colour)
+    objectIDs, dists, angles = detect_aruco_objects(img)
     
     particle.add_uncertainty(particles,10, 0.2)
     if not isinstance(objectIDs, type(None)): #If the robot can see a landmark then the following
@@ -335,7 +329,7 @@ def selfLocalize(particles, world, WIN_RF1, WIN_World):
             for indx in imp_landmarks_index: 
 
                 DW = SL.p_dist_M(dists[indx]/1408.6079,landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
-                if DW == 0:
+                if DW == 0: # vægtene blev for små og crashede derfor
                     DW = (1/len(particles))
                 weightDist = weightDist * DW
                 weightAngle = weightAngle * SL.p_meas_M(angles[indx],landmarks[objectIDs[indx]][0],landmarks[objectIDs[indx]][1],part)
@@ -580,9 +574,7 @@ def main():
                 if succ: 
                     landmarkReached = True
                 
-                
-                
-    
+
     print("Succesfully completed the course! Time ca. :", int(time.time() - Begin_time)*6 ,"seconds")
         
 main()
