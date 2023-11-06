@@ -557,7 +557,7 @@ def main():
                     particles = turnRight(40, particles)
 
                 # Self localize and create a path to the landmark
-            elif num_landmark < 1:
+            elif landmark < 2 :
             
                 print("Main: didn't find the landmark")
                 particles, visitedObstacles = reposition_dum(visitedObstacles, particles, world, WIN_RF1, WIN_World)
