@@ -492,6 +492,7 @@ def reposition_clever(particles, est_pose, landmark):
     return succ, particles 
 
 def reposition_dum(visitedObstacles, particles, world, WIN_RF1, WIN_World, numtries = 0):
+    print("BEING DUMB!!")
     particles, detected, distance, id = turnDetectObstacle(particles, world, WIN_RF1, WIN_World)
     print("reposition: Detected in reposition: ", id)
     print("reposition: Visited obstacles: ", visitedObstacles)
