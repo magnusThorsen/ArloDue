@@ -2,14 +2,19 @@ import cv2
 import particle
 import camera
 import numpy as np
+import random
 import time
 from timeit import default_timer as timer
 import sys
+import math
 
 
 # Flags
 showGUI = True  # Whether or not to open GUI windows
-onRobot = False # Whether or not we are running on the Arlo robot
+onRobot = True # Whether or not we are running on the Arlo robot
+
+sigma_d = 150 # cm
+sigma_theta = 0.2 # radians
 
 
 def isRunningOnArlo():
@@ -17,22 +22,6 @@ def isRunningOnArlo():
       You can use this flag to switch the code from running on you laptop to Arlo - you need to do the programming here!
     """
     return onRobot
-
-
-if isRunningOnArlo():
-    # XXX: You need to change this path to point to where your robot.py file is located
-    sys.path.append("../")
-
-
-try:
-    import robot
-    onRobot = True
-    
-except ImportError:
-    print("selflocalize.py: robot module not present - forcing not running on Arlo!")
-    onRobot = False
-
-
 
 
 
@@ -48,19 +37,52 @@ CBLACK = (0, 0, 0)
 
 # Landmarks.
 # The robot knows the position of 2 landmarks. Their coordinates are in the unit centimeters [cm].
-landmarkIDs = [1, 9]
+landmarkIDs = [1,2,3,4]
 landmarks = {
     1: (0.0, 0.0),  # Coordinates for landmark 1
-    9: (300.0, 0.0)  # Coordinates for landmark 2
+    2: (0.0, 300.0),  # Coordinates for landmark 2
+    3: (400.0, 0.0),  # Coordinates for landmark 3
+    4: (400.0, 300.0)  # Coordinates for landmark 4
 }
-landmark_colors = [CRED, CGREEN] # Colors used when drawing the landmarks
+landmark_colors = [CRED, CGREEN, CBLUE, CYELLOW] # Colors used when drawing the landmarks
 
 
+def dist_part_landm(lx, ly, x, y):
+            d = np.sqrt(((lx - x)**2) + ((ly - y)**2))
+            return d
 
-def gaussian_likelihood(x, mean, sigma):
-    # Compute the likelihood of x given a Gaussian distribution with mean and sigma
-    exponent = -0.5 * ((x - mean) / sigma) ** 2
-    return (1.0 / (sigma * np.sqrt(2 * np.pi))) * np.exp(exponent)
+def e_l (lx, ly, x, y):
+    result =  np.array([(lx - x) /dist_part_landm(lx,ly,x,y), (ly - y) /dist_part_landm(lx,ly,x,y)])
+    return result
+
+        
+# equation 2
+def p_dist_M (dm,lx,ly,part):
+    result = (1/(np.sqrt(2*(np.pi)*(sigma_d**2))))*math.exp(-(((dm-(dist_part_landm(lx,ly,part.getX(),part.getY())))**2)/(2*sigma_d**2)))
+    return result 
+
+# Equation 4
+def phi_i (lx, ly, part):
+    x = part.getX()
+    y = part.getY()
+    theta = part.getTheta()
+    e_theta_i = (np.array([np.cos(theta),np.sin(theta)])) 
+    e_theta_i_hat = np.array([-np.sin(theta),np.cos(theta)])
+    result = np.sign(np.dot(e_theta_i_hat,e_l(lx, ly, x, y)))*np.arccos(np.dot(e_theta_i,e_l(lx, ly, x, y)))
+    return result 
+    
+# equation 3 
+def p_meas_M (tm,lx,ly, part):
+    result = (1/(np.sqrt(2*(np.pi)*(sigma_theta**2))))*math.exp(-(((tm-(phi_i(lx,ly,part)))**2)/(2*sigma_theta**2)))
+    return result 
+
+# Equation 5
+def prob_product(landmarks):
+    result = 1
+    for landmark in landmarks:
+        result = dist_part_landm(landmark) * result
+    return result 
+
 
 def jet(x):
     """Colour map for drawing particles. This function determines the colour of 
@@ -76,8 +98,8 @@ def draw_world(est_pose, particles, world):
     This functions draws robots position in the world coordinate system."""
 
     # Fix the origin of the coordinate system
-    offsetX = 100
-    offsetY = 250
+    offsetX = 30
+    offsetY = 30
 
     # Constant needed for transforming from world coordinates to screen coordinates (flip the y-axis)
     ymax = world.shape[0]
@@ -116,193 +138,10 @@ def draw_world(est_pose, particles, world):
 
 def initialize_particles(num_particles):
     particles = []
-    for i in range(num_particles):
+    for p in range(num_particles):
         # Random starting points. 
         p = particle.Particle(600.0*np.random.ranf() - 100.0, 600.0*np.random.ranf() - 250.0, np.mod(2.0*np.pi*np.random.ranf(), 2.0*np.pi), 1.0/num_particles)
         particles.append(p)
 
     return particles
-
-
-# Main program #
-try:
-    if showGUI:
-        # Open windows
-        WIN_RF1 = "Robot view"
-        cv2.namedWindow(WIN_RF1)
-        cv2.moveWindow(WIN_RF1, 50, 50)
-
-        WIN_World = "World view"
-        cv2.namedWindow(WIN_World)
-        cv2.moveWindow(WIN_World, 500, 50)
-
-
-    # Initialize particles
-    num_particles = 100
-    particles = initialize_particles(num_particles)
-
-    est_pose = particle.estimate_pose(particles) # The estimate of the robots current pose
-
-    # Driving parameters
-    velocity = 0.0 # cm/sec
-    angular_velocity = 0.0 # radians/sec
-
-
-    # initializing robot XXX
-    if isRunningOnArlo():
-        spaceRanger = robot.Robot() # Create a robot object
-
-
-    # Allocate space for world map
-    world = np.zeros((500,500,3), dtype=np.uint8)
-
-    # Draw map
-    draw_world(est_pose, particles, world)
-
-    print("Opening and initializing camera")
-    if camera.isRunningOnArlo():
-        cam = camera.Camera(0, 'arlo', useCaptureThread = True)
-    else:
-        cam = camera.Camera(0, 'macbookpro', useCaptureThread = True)
-
-    while True:
-
-        # Move the robot according to user input (only for testing)
-        action = cv2.waitKey(10)
-        if action == ord('q'): # Quit
-            break
-    
-        if not isRunningOnArlo():
-            if action == ord('w'): # Forward
-                velocity += 4.0
-            elif action == ord('x'): # Backwards
-                velocity -= 4.0
-            elif action == ord('s'): # Stop
-                velocity = 0.0
-                angular_velocity = 0.0
-            elif action == ord('a'): # Left
-                angular_velocity += 0.2
-            elif action == ord('d'): # Right
-                angular_velocity -= 0.2
-
-
-
-        
-        # Use motor controls to update particles
-        # XXX: Make the robot drive
-        def updateParticles():
-            for i in particles:
-                particle.move_particle()
-        # XXX: You do this
-        
-       
-
-        
-
-        
-
-
-        # Fetch next frame
-        colour = cam.get_next_frame()
-        
-        # Detect objects
-        objectIDs, dists, angles = cam.detect_aruco_objects(colour)
-        if not isinstance(objectIDs, type(None)):
-            # List detected objects
-            for i in range(len(objectIDs)):
-                print("Object ID = ", objectIDs[i], ", Distance = ", dists[i], ", angle = ", angles[i])
-                if objectIDs[i] == 9:
-                    x0 = 300
-                    y0 = 0
-                    r2 = dists[i]**2
-                    for part in particles:
-                        # Magnus bud:jeg er mega dejlig 3====D
-                        x = np.random.randint(300 - (dists[i]-1), 300 + (dists[i]-1))
-                        y =  (y0 - np.sqrt(r2 - x**2 + 2*x* x0- x0**2)) * np.random.choice([-1,1])
-                        part.setX(x)
-                        part.setY(y)
-                        
-                        # calculate the angle between the vector ((x,y) - (x0,y0)) and (5,0) in radians
-                        v1 = np.array([x0-x,y0-y])
-                        v2 = np.array([1,1])
-                        angle = np.arccos(np.dot(v1,v2) / (np.linalg.norm(v1) * np.linalg.norm(v2)))   
-                        part.setTheta(angle)            
-
-                        
-                elif objectIDs[i] == 1:
-                    x0 = 0
-                    y0 = 0
-                    r2 = dists[i]**2
-                    for part in particles:
-                        x = np.random.randint(-(dists[i]-1),(dists[i]-1))
-                        y =  (y0 - np.sqrt(r2 - x**2 + 2*x* x0- x0**2)) * np.random.choice([-1,1])
-                        part.setX(x)
-                        part.setY(y)
-                    
-                
-                # XXX: Do something for each detected object - remember, the same ID may appear several times
-                
-                
-        
-
-            # Compute particle weights
-            # XXX: You do this
-            
-            # Define the standard deviations for your measurement noise
-            """ distance_sigma = 1.0  # Adjust this based on your sensor noise
-            angle_sigma = 0.1    # Adjust this based on your sensor noise
-            
-            for part in particles:
-                expected_measurement = part.getExpectedMeasurements(landmarks)  # Compute expected measurement based on particle's pose
-                actual_measurement = (objectIDs[0], dists[0], angles[0])  # The detected object's measurements
-
-                # Calculate the likelihood of distance and angle using Gaussian distributions
-                distance_likelihood = gaussian_likelihood(actual_measurement[1], expected_measurement[1], distance_sigma)
-                angle_likelihood = gaussian_likelihood(actual_measurement[2], expected_measurement[2], angle_sigma)
-
-                # Calculate the weight as the product of likelihood
-                particle_weight = distance_likelihood * angle_likelihood
-
-                # Update the particle's weight
-                part.setWeight(particle_weight)
-
-            # Normalize particle weights to form a probability distribution
-            total_weight = sum(particle.getWeight() for particle in particles)
-            for i in range(len(particles)):
-                particle = particles[i]
-                particle.setWeight(particle.getWeight() / total_weight) """
-
-            # Resampling
-            # XXX: You do this
-
-            # Draw detected objects
-            cam.draw_aruco_objects(colour)
-        else:
-            
-            # No observation - reset weights to uniform distribution
-            for p in particles:
-                p.setWeight(1.0/num_particles)
-
-        particle.add_uncertainty(particles,5, 0.1)
-        est_pose = particle.estimate_pose(particles) # The estimate of the robots current pose
-
-        if showGUI:
-            # Draw map
-            draw_world(est_pose, particles, world)
-    
-            # Show frame
-            cv2.imshow(WIN_RF1, colour)
-
-            # Show world
-            cv2.imshow(WIN_World, world)
-    
-  
-finally: 
-    # Make sure to clean up even if an exception occurred
-    
-    # Close all windows
-    cv2.destroyAllWindows()
-
-    # Clean-up capture thread
-    cam.terminateCaptureThread()
 
