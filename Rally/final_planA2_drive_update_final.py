@@ -537,6 +537,7 @@ def main():
         while not landmarkReached:
             particles, detected, distance, tvecs, num_landmark = turnDetectLandmark(landmark, particles, world, WIN_RF1, WIN_World)
             print(landmark)
+            print("Num_landmarks ", num_landmark)
             if detected:
                 print("Main: Found the landmark: " ,landmark)
                 # Find the distance of the landmark
