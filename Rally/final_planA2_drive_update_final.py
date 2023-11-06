@@ -474,6 +474,7 @@ def turnDetectObstacle(particles, world, WIN_RF1, WIN_World):
             return particles, detected, (distance / 14.086079), id
 
 def reposition_clever(particles, est_pose, landmark):
+    print("BEING CLEVER!!")
     vecfromRobotolandmark = np.array([landmarks[landmark][0] - est_pose.getX(), landmarks[landmark][1] - est_pose.getY()])
     robovec = np.array([np.cos(est_pose.getTheta()), np.sin(est_pose.getTheta())])
     #angle between robot and landmark in radians 
