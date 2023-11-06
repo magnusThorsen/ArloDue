@@ -561,7 +561,7 @@ def main():
                 print("Main: didn't find the landmark")
                 particles, visitedObstacles = reposition_dum(visitedObstacles, particles, world, WIN_RF1, WIN_World)
                 numtries += 1
-                if numtries > 3: 
+                if numtries > 1: 
                     particles = turnRight(90, particles)
                     _ , particles = driveWithTime(4, particles)
                     numtries = 0
