@@ -6,7 +6,7 @@ import random
 import cv2 # Import the OpenCV library
 import cv2.aruco as aruco
 import numpy as np # Import Numpy library
-import selfLocalizeRightA1 as SL
+import SJ.selfLocalize as SL
 import camera
 import particle
 

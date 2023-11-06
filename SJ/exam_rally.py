@@ -6,7 +6,7 @@ import random
 import cv2 # Import the OpenCV library
 import cv2.aruco as aruco
 import numpy as np # Import Numpy library
-import selfLocalizeRightA1 as SL
+import SJ.selfLocalize as SL
 import camera
 import particle
 
@@ -490,7 +490,7 @@ def reposition_clever(particles, est_pose, landmark):
     
     return succ, particles 
 
-def reposition_dum(visitedObstacles, particles, world, WIN_RF1, WIN_World, numtries = 0):
+def reposition_KISS(visitedObstacles, particles, world, WIN_RF1, WIN_World, numtries = 0):
     particles, detected, distance, id = turnDetectObstacle(particles, world, WIN_RF1, WIN_World)
     print("reposition: Detected in reposition: ", id)
     print("reposition: Visited obstacles: ", visitedObstacles)
@@ -499,7 +499,7 @@ def reposition_dum(visitedObstacles, particles, world, WIN_RF1, WIN_World, numtr
         #TURN TO OBSTACLE
         visitedObstacles.append(id)
         _, particles = driveWithTime(distance/2, particles)
-    elif numtries > 2: reposition_dum(visitedObstacles, particles, world, WIN_RF1, WIN_World, numtries + 1)
+    elif numtries > 2: reposition_KISS(visitedObstacles, particles, world, WIN_RF1, WIN_World, numtries + 1)
     return particles, visitedObstacles
 
 
@@ -557,7 +557,7 @@ def main():
             elif num_landmark < 2:
             
                 print("Main: didn't find the landmark")
-                particles, visitedObstacles = reposition_dum(visitedObstacles, particles, world, WIN_RF1, WIN_World)
+                particles, visitedObstacles = reposition_KISS(visitedObstacles, particles, world, WIN_RF1, WIN_World)
                 numtries += 1
                 if numtries > 3: 
                     particles = turnRight(90, particles)
